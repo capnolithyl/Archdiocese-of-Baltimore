@@ -48,21 +48,9 @@ if ( ! function_exists( 'balt_posted_by' ) ) :
 	}
 endif;
 
-if ( ! function_exists( 'balt_comment_count' ) ) :
-	/**
-	 * Prints HTML with the comment count for the current post.
-	 */
-	function balt_comment_count() {
-		if ( ! post_password_required() && ( comments_open() || get_comments_number() ) ) {
-			/* translators: %s: Name of current post. Only visible to screen readers. */
-			comments_popup_link( sprintf( __( 'Leave a comment<span class="sr-only"> on %s</span>', 'baltimore' ), get_the_title() ) );
-		}
-	}
-endif;
-
 if ( ! function_exists( 'balt_entry_meta' ) ) :
 	/**
-	 * Prints HTML with meta information for the categories, tags and comments.
+	 * Prints HTML with post meta information.
 	 * This template tag is used in the entry header.
 	 */
 	function balt_entry_meta() {
@@ -99,11 +87,6 @@ if ( ! function_exists( 'balt_entry_meta' ) ) :
 			}
 		}
 
-		// Comment count.
-		if ( ! is_singular() ) {
-			balt_comment_count();
-		}
-
 		// Edit post link.
 		edit_post_link(
 			sprintf(
@@ -124,7 +107,7 @@ endif;
 
 if ( ! function_exists( 'balt_entry_footer' ) ) :
 	/**
-	 * Prints HTML with meta information for the categories, tags and comments.
+	 * Prints HTML with post meta information.
 	 */
 	function balt_entry_footer() {
 
@@ -158,11 +141,6 @@ if ( ! function_exists( 'balt_entry_footer' ) ) :
 					$tags_list // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				);
 			}
-		}
-
-		// Comment count.
-		if ( ! is_singular() ) {
-			balt_comment_count();
 		}
 
 		// Edit post link.
@@ -212,44 +190,6 @@ if ( ! function_exists( 'balt_post_thumbnail' ) ) :
 
 			<?php
 		endif; // End is_singular().
-	}
-endif;
-
-if ( ! function_exists( 'balt_comment_avatar' ) ) :
-	/**
-	 * Returns the HTML markup to generate a user avatar.
-	 *
-	 * @param mixed $id_or_email The Gravatar to retrieve. Accepts a user_id, gravatar md5 hash,
-	 *                           user email, WP_User object, WP_Post object, or WP_Comment object.
-	 */
-	function balt_get_user_avatar_markup( $id_or_email = null ) {
-
-		if ( ! isset( $id_or_email ) ) {
-			$id_or_email = get_current_user_id();
-		}
-
-		return sprintf( '<div class="vcard">%s</div>', get_avatar( $id_or_email, balt_get_avatar_size() ) );
-	}
-endif;
-
-if ( ! function_exists( 'balt_discussion_avatars_list' ) ) :
-	/**
-	 * Displays a list of avatars involved in a discussion for a given post.
-	 *
-	 * @param array $comment_authors Comment authors to list as avatars.
-	 */
-	function balt_discussion_avatars_list( $comment_authors ) {
-		if ( empty( $comment_authors ) ) {
-			return;
-		}
-		echo '<ol>', "\n";
-		foreach ( $comment_authors as $id_or_email ) {
-			printf(
-				"<li>%s</li>\n",
-				balt_get_user_avatar_markup( $id_or_email ) // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-			);
-		}
-		echo '</ol>', "\n";
 	}
 endif;
 

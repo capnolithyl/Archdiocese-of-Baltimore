@@ -59,7 +59,7 @@ if ( ! function_exists( 'balt_setup' ) ) :
 		 */
 		load_theme_textdomain( 'baltimore', get_template_directory() . '/languages' );
 
-		// Add default posts and comments RSS feed links to head.
+		// Add default post RSS feed links to the document head.
 		add_theme_support( 'automatic-feed-links' );
 
 		/*
@@ -86,15 +86,12 @@ if ( ! function_exists( 'balt_setup' ) ) :
 		);
 
 		/*
-		 * Switch default core markup for search form, comment form, and comments
-		 * to output valid HTML5.
+		 * Switch default core markup to output valid HTML5.
 		 */
 		add_theme_support(
 			'html5',
 			array(
 				'search-form',
-				'comment-form',
-				'comment-list',
 				'gallery',
 				'caption',
 				'style',
@@ -145,11 +142,6 @@ add_action( 'widgets_init', 'balt_widgets_init' );
  */
 function balt_scripts() {
 	wp_enqueue_style( 'baltimore-style', get_stylesheet_uri(), array(), BALT_VERSION );
-	wp_enqueue_script( 'baltimore-script', get_template_directory_uri() . '/js/script.min.js', array(), BALT_VERSION, true );
-
-	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
-		wp_enqueue_script( 'comment-reply' );
-	}
 }
 add_action( 'wp_enqueue_scripts', 'balt_scripts' );
 
@@ -209,6 +201,11 @@ function balt_modify_heading_levels( $args, $block_type ) {
 	return $args;
 }
 add_filter( 'register_block_type_args', 'balt_modify_heading_levels', 10, 2 );
+
+/**
+ * Disable WordPress comments, trackbacks, and pingbacks.
+ */
+require get_template_directory() . '/inc/comments.php';
 
 /**
  * Custom template tags for this theme.

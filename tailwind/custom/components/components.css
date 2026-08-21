@@ -30,8 +30,7 @@
  */
 .entry-meta,
 .entry-footer,
-.post-navigation,
-#comments {
+.post-navigation {
 	@apply max-w-content mx-auto mb-6;
 }
 
