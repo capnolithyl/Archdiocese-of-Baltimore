@@ -12,7 +12,8 @@ import paramiko
 
 
 LOCAL_ROOT = Path(os.environ.get("DEPLOY_LOCAL_PATH", "deploy/baltimore")).resolve()
-REMOTE_ROOT = os.environ.get("DEPLOY_SFTP_PATH", "").rstrip("/")
+REMOTE_ROOT_RAW = os.environ.get("DEPLOY_SFTP_PATH", "").rstrip("/")
+REMOTE_ROOT = posixpath.normpath(REMOTE_ROOT_RAW) if REMOTE_ROOT_RAW else ""
 HOST = os.environ.get("DEPLOY_SFTP_HOST", "")
 PORT = int(os.environ.get("DEPLOY_SFTP_PORT") or "22")
 USERNAME = os.environ.get("DEPLOY_SFTP_USER", "")
@@ -31,7 +32,7 @@ def validate_configuration() -> None:
             "DEPLOY_SFTP_HOST": HOST,
             "DEPLOY_SFTP_USER": USERNAME,
             "DEPLOY_SFTP_PASSWORD": PASSWORD,
-            "DEPLOY_SFTP_PATH": REMOTE_ROOT,
+            "DEPLOY_SFTP_PATH": REMOTE_ROOT_RAW,
         }.items()
         if not value
     ]
@@ -42,29 +43,36 @@ def validate_configuration() -> None:
     if not LOCAL_ROOT.is_dir():
         fail(f"local build directory does not exist: {LOCAL_ROOT}")
 
-    remote_path = PurePosixPath(REMOTE_ROOT)
-    remote_parts = remote_path.parts
+    if not REMOTE_ROOT_RAW.startswith("/"):
+        fail("remote path must be absolute")
 
-    # The deploy mirrors the build and removes stale remote files, so refuse to
-    # operate anywhere except the expected WordPress theme directory.
-    if remote_path.name != "baltimore":
-        fail("remote path must end in /baltimore")
+    if REMOTE_ROOT_RAW != REMOTE_ROOT:
+        fail("remote path must be normalized and may not contain . or .. segments")
 
-    if "wp-content" not in remote_parts or "themes" not in remote_parts:
-        fail("remote path must be inside a WordPress wp-content/themes directory")
+    remote_parts = PurePosixPath(REMOTE_ROOT).parts
+    if tuple(remote_parts[-3:]) != ("wp-content", "themes", "baltimore"):
+        fail("remote path must end exactly in /wp-content/themes/baltimore")
+
+
+def remote_lstat(sftp: paramiko.SFTPClient, path: str):
+    try:
+        return sftp.lstat(path)
+    except OSError:
+        return None
 
 
 def remote_exists(sftp: paramiko.SFTPClient, path: str) -> bool:
-    try:
-        sftp.stat(path)
-        return True
-    except OSError:
-        return False
+    return remote_lstat(sftp, path) is not None
 
 
 def ensure_remote_directory(sftp: paramiko.SFTPClient, path: str) -> None:
-    if remote_exists(sftp, path):
-        if not stat.S_ISDIR(sftp.stat(path).st_mode):
+    attributes = remote_lstat(sftp, path)
+
+    if attributes is not None:
+        if stat.S_ISLNK(attributes.st_mode):
+            sftp.remove(path)
+            sftp.mkdir(path)
+        elif not stat.S_ISDIR(attributes.st_mode):
             sftp.remove(path)
             sftp.mkdir(path)
         return
@@ -77,14 +85,19 @@ def ensure_remote_directory(sftp: paramiko.SFTPClient, path: str) -> None:
 
 
 def remove_remote_tree(sftp: paramiko.SFTPClient, path: str) -> None:
-    attributes = sftp.stat(path)
+    attributes = sftp.lstat(path)
+
+    if stat.S_ISLNK(attributes.st_mode):
+        sftp.remove(path)
+        return
 
     if stat.S_ISDIR(attributes.st_mode):
         for child in sftp.listdir_attr(path):
             remove_remote_tree(sftp, posixpath.join(path, child.filename))
         sftp.rmdir(path)
-    else:
-        sftp.remove(path)
+        return
+
+    sftp.remove(path)
 
 
 def upload_tree(sftp: paramiko.SFTPClient, local_dir: Path, remote_dir: str) -> None:
@@ -95,15 +108,26 @@ def upload_tree(sftp: paramiko.SFTPClient, local_dir: Path, remote_dir: str) -> 
             fail(f"symlinks are not supported in deploy output: {local_path}")
 
         remote_path = posixpath.join(remote_dir, local_path.name)
+        remote_attributes = remote_lstat(sftp, remote_path)
 
         if local_path.is_dir():
-            if remote_exists(sftp, remote_path) and not stat.S_ISDIR(sftp.stat(remote_path).st_mode):
-                sftp.remove(remote_path)
+            if remote_attributes is not None and (
+                stat.S_ISLNK(remote_attributes.st_mode)
+                or not stat.S_ISDIR(remote_attributes.st_mode)
+            ):
+                if stat.S_ISDIR(remote_attributes.st_mode) and not stat.S_ISLNK(remote_attributes.st_mode):
+                    remove_remote_tree(sftp, remote_path)
+                else:
+                    sftp.remove(remote_path)
+
             upload_tree(sftp, local_path, remote_path)
             continue
 
-        if remote_exists(sftp, remote_path) and stat.S_ISDIR(sftp.stat(remote_path).st_mode):
-            remove_remote_tree(sftp, remote_path)
+        if remote_attributes is not None:
+            if stat.S_ISLNK(remote_attributes.st_mode):
+                sftp.remove(remote_path)
+            elif stat.S_ISDIR(remote_attributes.st_mode):
+                remove_remote_tree(sftp, remote_path)
 
         relative_path = local_path.relative_to(LOCAL_ROOT).as_posix()
         print(f"Uploading {relative_path}")
