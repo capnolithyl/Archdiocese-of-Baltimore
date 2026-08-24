@@ -1,6 +1,8 @@
 #!/usr/bin/env node
 
-import { execSync } from 'node:child_process';
+import { execFileSync, execSync } from 'node:child_process';
+import { createInterface } from 'node:readline/promises';
+import { stdin as input, stdout as output } from 'node:process';
 
 function run(command) {
 	console.log(`\n> ${command}`);
@@ -10,7 +12,7 @@ function run(command) {
 	});
 }
 
-function output(command) {
+function outputOf(command) {
 	return execSync(command, {
 		encoding: 'utf8',
 		stdio: ['ignore', 'pipe', 'pipe'],
@@ -23,29 +25,60 @@ function fail(message) {
 	process.exit(1);
 }
 
-const branch = output('git branch --show-current');
-if (branch !== 'main') {
-	fail(`current branch is "${branch || '(detached HEAD)'}"; switch to main first`);
+function commit(message) {
+	console.log(`\n> git commit -m "${message}"`);
+	execFileSync('git', ['commit', '-m', message], {
+		stdio: 'inherit',
+	});
 }
 
-const status = output('git status --porcelain');
-if (status) {
-	fail('working tree is not clean; commit or stash your changes first');
+async function main() {
+	const branch = outputOf('git branch --show-current');
+	if (branch !== 'main') {
+		fail(`current branch is "${branch || '(detached HEAD)'}"; switch to main first`);
+	}
+
+	const status = outputOf('git status --porcelain');
+	let commitMessage = '';
+
+	if (status) {
+		console.log('Changes to ship:');
+		console.log(status);
+
+		const readline = createInterface({ input, output });
+		try {
+			commitMessage = (await readline.question('\nCommit message: ')).trim();
+		} finally {
+			readline.close();
+		}
+
+		if (!commitMessage) {
+			fail('commit message cannot be empty');
+		}
+	} else {
+		console.log('Working tree is clean; shipping existing commit(s) from main.');
+	}
+
+	try {
+		// Prove the exact production bundle can be built before creating a commit
+		// or changing anything remote.
+		run('npm run bundle');
+
+		if (status) {
+			run('git add -A');
+			commit(commitMessage);
+		}
+
+		// Do not deploy if GitHub rejects the push for any reason.
+		run('git push origin main');
+
+		// Upload the already-built bundle from this machine, whose IP is whitelisted.
+		run('npm run deploy:upload');
+	} catch (error) {
+		fail('a build, commit, push, or deployment command failed; see the output above');
+	}
+
+	console.log('\nShip complete.');
 }
 
-console.log('Shipping Baltimore theme from clean main branch.');
-
-try {
-	// Prove the exact production bundle can be built before changing anything remote.
-	run('npm run bundle');
-
-	// Do not deploy if GitHub rejects the push for any reason.
-	run('git push origin main');
-
-	// Upload the already-built bundle from this machine, whose IP is whitelisted.
-	run('npm run deploy:upload');
-} catch (error) {
-	fail('a build, push, or deployment command failed; see the output above');
-}
-
-console.log('\nShip complete.');
+main();
