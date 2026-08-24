@@ -16,3 +16,4 @@ baltimore.zip
 
 # Ignore .DS_Store files from macOS:
 .DS_Store
+/.vscode/baltimore.zip
