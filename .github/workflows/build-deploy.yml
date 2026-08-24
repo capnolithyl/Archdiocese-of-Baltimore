@@ -1,4 +1,4 @@
-name: Build and deploy theme
+name: Validate theme build
 
 on:
   pull_request:
@@ -12,13 +12,9 @@ on:
 permissions:
   contents: read
 
-concurrency:
-  group: baltimore-staging-deploy
-  cancel-in-progress: false
-
 jobs:
   build:
-    name: Build production theme
+    name: Validate production build
     runs-on: ubuntu-latest
 
     steps:
@@ -36,46 +32,3 @@ jobs:
 
       - name: Build production bundle
         run: npm run bundle
-
-      - name: Upload theme artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: baltimore-theme-${{ github.sha }}
-          path: baltimore.zip
-          if-no-files-found: error
-          retention-days: 14
-
-  deploy:
-    name: Deploy to staging
-    if: github.event_name != 'pull_request'
-    needs: build
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Check out deployment script
-        uses: actions/checkout@v4
-
-      - name: Download built theme
-        uses: actions/download-artifact@v4
-        with:
-          name: baltimore-theme-${{ github.sha }}
-
-      - name: Extract built theme
-        run: unzip -q baltimore.zip -d deploy
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.13'
-
-      - name: Install SFTP dependency
-        run: python -m pip install --disable-pip-version-check 'paramiko>=3.5,<5'
-
-      - name: Deploy theme over SFTP
-        env:
-          DEPLOY_SFTP_HOST: ${{ secrets.DEPLOY_SFTP_HOST }}
-          DEPLOY_SFTP_PORT: ${{ secrets.DEPLOY_SFTP_PORT }}
-          DEPLOY_SFTP_USER: ${{ secrets.DEPLOY_SFTP_USER }}
-          DEPLOY_SFTP_PASSWORD: ${{ secrets.DEPLOY_SFTP_PASSWORD }}
-          DEPLOY_SFTP_PATH: ${{ secrets.DEPLOY_SFTP_PATH }}
-        run: python scripts/deploy_sftp.py
