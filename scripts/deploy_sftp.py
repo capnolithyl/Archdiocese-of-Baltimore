@@ -52,20 +52,31 @@ def load_configuration() -> dict[str, Any]:
     except (TypeError, ValueError):
         fail("SFTP port must be a number")
 
-    remote_root_raw = str(config["remotePath"]).rstrip("/")
-    remote_root = posixpath.normpath(remote_root_raw)
+    remote_base_raw = str(config["remotePath"]).rstrip("/")
+    remote_base = posixpath.normpath(remote_base_raw)
 
-    if not remote_root_raw.startswith("/"):
+    if not remote_base_raw.startswith("/"):
         fail("remotePath must be absolute")
 
-    if remote_root_raw != remote_root:
+    if remote_base_raw != remote_base:
         fail("remotePath must be normalized and may not contain . or .. segments")
 
-    remote_parts = PurePosixPath(remote_root).parts
+    remote_parts = PurePosixPath(remote_base).parts
     if tuple(remote_parts[-3:]) != ("wp-content", "themes", "baltimore"):
         fail("remotePath must end exactly in /wp-content/themes/baltimore")
 
-    config["remotePath"] = remote_root
+    deploy_path = posixpath.join(remote_base, "theme")
+    deploy_parts = PurePosixPath(deploy_path).parts
+    if tuple(deploy_parts[-4:]) != (
+        "wp-content",
+        "themes",
+        "baltimore",
+        "theme",
+    ):
+        fail("deploy path must end exactly in /wp-content/themes/baltimore/theme")
+
+    config["remotePath"] = remote_base
+    config["deployPath"] = deploy_path
     return config
 
 
@@ -204,9 +215,10 @@ def main() -> None:
 
     config = load_configuration()
     temp_dir, local_root = extract_bundle()
-    remote_root = config["remotePath"]
+    remote_root = config["deployPath"]
 
     print(f"Using SFTP config: {CONFIG_PATH}")
+    print(f"Deploy target: {remote_root}")
     print("Connecting to deployment server...")
 
     client = paramiko.SSHClient()
