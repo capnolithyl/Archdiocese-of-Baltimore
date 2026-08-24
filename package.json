@@ -26,7 +26,11 @@
 		"production": "run-p \"production:**\"",
 		"prod": "npm run production",
 		"zip": "node node_scripts/zip.js baltimore",
-		"bundle": "run-s production zip"
+		"bundle": "run-s production zip",
+		"deploy:setup": "python -m pip install --disable-pip-version-check \"paramiko>=3.5,<5\"",
+		"deploy:upload": "python scripts/deploy_sftp.py",
+		"deploy": "run-s bundle deploy:upload",
+		"ship": "node node_scripts/ship.js"
 	},
 	"devDependencies": {
 		"@_tw/typography": "^0.5.22",
