@@ -1,0 +1,161 @@
+#!/usr/bin/env python3
+
+from __future__ import annotations
+
+import os
+import posixpath
+import stat
+import sys
+from pathlib import Path, PurePosixPath
+
+import paramiko
+
+
+LOCAL_ROOT = Path(os.environ.get("DEPLOY_LOCAL_PATH", "deploy/baltimore")).resolve()
+REMOTE_ROOT = os.environ.get("DEPLOY_SFTP_PATH", "").rstrip("/")
+HOST = os.environ.get("DEPLOY_SFTP_HOST", "")
+PORT = int(os.environ.get("DEPLOY_SFTP_PORT") or "22")
+USERNAME = os.environ.get("DEPLOY_SFTP_USER", "")
+PASSWORD = os.environ.get("DEPLOY_SFTP_PASSWORD", "")
+
+
+def fail(message: str) -> None:
+    print(f"Deployment aborted: {message}", file=sys.stderr)
+    raise SystemExit(1)
+
+
+def validate_configuration() -> None:
+    missing = [
+        name
+        for name, value in {
+            "DEPLOY_SFTP_HOST": HOST,
+            "DEPLOY_SFTP_USER": USERNAME,
+            "DEPLOY_SFTP_PASSWORD": PASSWORD,
+            "DEPLOY_SFTP_PATH": REMOTE_ROOT,
+        }.items()
+        if not value
+    ]
+
+    if missing:
+        fail(f"missing required environment variable(s): {', '.join(missing)}")
+
+    if not LOCAL_ROOT.is_dir():
+        fail(f"local build directory does not exist: {LOCAL_ROOT}")
+
+    remote_path = PurePosixPath(REMOTE_ROOT)
+    remote_parts = remote_path.parts
+
+    # The deploy mirrors the build and removes stale remote files, so refuse to
+    # operate anywhere except the expected WordPress theme directory.
+    if remote_path.name != "baltimore":
+        fail("remote path must end in /baltimore")
+
+    if "wp-content" not in remote_parts or "themes" not in remote_parts:
+        fail("remote path must be inside a WordPress wp-content/themes directory")
+
+
+def remote_exists(sftp: paramiko.SFTPClient, path: str) -> bool:
+    try:
+        sftp.stat(path)
+        return True
+    except OSError:
+        return False
+
+
+def ensure_remote_directory(sftp: paramiko.SFTPClient, path: str) -> None:
+    if remote_exists(sftp, path):
+        if not stat.S_ISDIR(sftp.stat(path).st_mode):
+            sftp.remove(path)
+            sftp.mkdir(path)
+        return
+
+    parent = posixpath.dirname(path)
+    if parent and parent != path:
+        ensure_remote_directory(sftp, parent)
+
+    sftp.mkdir(path)
+
+
+def remove_remote_tree(sftp: paramiko.SFTPClient, path: str) -> None:
+    attributes = sftp.stat(path)
+
+    if stat.S_ISDIR(attributes.st_mode):
+        for child in sftp.listdir_attr(path):
+            remove_remote_tree(sftp, posixpath.join(path, child.filename))
+        sftp.rmdir(path)
+    else:
+        sftp.remove(path)
+
+
+def upload_tree(sftp: paramiko.SFTPClient, local_dir: Path, remote_dir: str) -> None:
+    ensure_remote_directory(sftp, remote_dir)
+
+    for local_path in sorted(local_dir.iterdir(), key=lambda path: path.name):
+        if local_path.is_symlink():
+            fail(f"symlinks are not supported in deploy output: {local_path}")
+
+        remote_path = posixpath.join(remote_dir, local_path.name)
+
+        if local_path.is_dir():
+            if remote_exists(sftp, remote_path) and not stat.S_ISDIR(sftp.stat(remote_path).st_mode):
+                sftp.remove(remote_path)
+            upload_tree(sftp, local_path, remote_path)
+            continue
+
+        if remote_exists(sftp, remote_path) and stat.S_ISDIR(sftp.stat(remote_path).st_mode):
+            remove_remote_tree(sftp, remote_path)
+
+        relative_path = local_path.relative_to(LOCAL_ROOT).as_posix()
+        print(f"Uploading {relative_path}")
+        sftp.put(str(local_path), remote_path)
+
+
+def prune_remote_tree(sftp: paramiko.SFTPClient, local_dir: Path, remote_dir: str) -> None:
+    local_names = {path.name for path in local_dir.iterdir()}
+
+    for remote_item in sftp.listdir_attr(remote_dir):
+        remote_path = posixpath.join(remote_dir, remote_item.filename)
+        local_path = local_dir / remote_item.filename
+
+        if remote_item.filename not in local_names:
+            print(f"Removing stale {remote_path.removeprefix(REMOTE_ROOT).lstrip('/')}")
+            remove_remote_tree(sftp, remote_path)
+            continue
+
+        if stat.S_ISDIR(remote_item.st_mode) and local_path.is_dir():
+            prune_remote_tree(sftp, local_path, remote_path)
+
+
+def main() -> None:
+    validate_configuration()
+
+    print("Connecting to deployment server...")
+
+    client = paramiko.SSHClient()
+    client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+
+    try:
+        client.connect(
+            hostname=HOST,
+            port=PORT,
+            username=USERNAME,
+            password=PASSWORD,
+            look_for_keys=False,
+            allow_agent=False,
+            timeout=30,
+            auth_timeout=30,
+            banner_timeout=30,
+        )
+
+        with client.open_sftp() as sftp:
+            print("Uploading production theme build...")
+            upload_tree(sftp, LOCAL_ROOT, REMOTE_ROOT)
+            prune_remote_tree(sftp, LOCAL_ROOT, REMOTE_ROOT)
+    finally:
+        client.close()
+
+    print("Deployment complete.")
+
+
+if __name__ == "__main__":
+    main()
