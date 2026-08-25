@@ -40,10 +40,7 @@ html {
  * primary headings return to the stronger foreground color.
  */
 body {
-	@apply bg-background text-body font-body;
-	font-size: 1rem;
-	font-weight: 400;
-	line-height: 1.7;
+	@apply bg-background text-body font-body text-base font-normal leading-[1.7];
 }
 
 /**
@@ -54,10 +51,7 @@ body {
  */
 h1,
 h2 {
-	@apply font-heading text-foreground;
-	font-weight: 600;
-	line-height: 1.25;
-	text-wrap: balance;
+	@apply font-heading text-foreground font-semibold leading-tight text-balance;
 }
 
 h1 {
@@ -69,11 +63,8 @@ h2 {
 }
 
 h3 {
-	@apply font-body text-foreground;
+	@apply font-body text-foreground text-base font-bold leading-snug text-balance;
 	font-size: var(--font-size-h3);
-	font-weight: 700;
-	line-height: 1.375;
-	text-wrap: balance;
 }
 
 /**
@@ -83,16 +74,40 @@ h3 {
  */
 
 p {
-	text-wrap: pretty;
+	@apply text-pretty;
 }
 
 strong,
 b {
-	font-weight: 700;
+	@apply font-bold;
 }
 
 small {
-	font-size: 0.875em;
+	@apply text-sm;
+}
+
+/**
+ * Reusable eyebrow/kicker treatment based on recurring Figma Make labels such
+ * as "Our Mission" and "What We Do". The class is intentionally independent
+ * of the underlying element so markup can remain semantic. Components can
+ * override the default tertiary color when the design uses another accent.
+ */
+.eyebrow {
+	@apply font-body text-tertiary text-sm font-bold leading-tight tracking-[0.18em] uppercase;
+}
+
+/**
+ * Large editorial quotations are visually prominent in the design but should
+ * remain semantic blockquotes rather than becoming headings. The font size is
+ * taken from the recurring quote treatment in the Figma Make interior design.
+ */
+blockquote {
+	@apply font-heading font-semibold leading-tight text-balance;
+	font-size: clamp(2rem, 4vw, 3.5rem);
+}
+
+blockquote p {
+	@apply text-balance;
 }
 
 /**
@@ -100,17 +115,13 @@ small {
  * and button-style links can opt out of the underline in their component CSS.
  */
 a {
-	@apply text-primary;
-	text-decoration-line: underline;
-	text-decoration-thickness: 0.08em;
-	text-underline-offset: 0.18em;
+	@apply text-primary underline decoration-[0.08em] underline-offset-[0.18em];
 }
 
 a:hover {
-	text-decoration-thickness: 0.12em;
+	@apply decoration-[0.12em];
 }
 
 a:focus-visible {
-	outline: 2px solid var(--wp--preset--color--secondary);
-	outline-offset: 3px;
+	@apply outline-secondary outline-2 outline-offset-[3px];
 }
