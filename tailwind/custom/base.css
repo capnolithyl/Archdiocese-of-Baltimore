@@ -7,12 +7,27 @@
  */
 
 :root {
-	--font-size-h1: clamp(3rem, 2.35rem + 2.8vw, 4.5rem);
-	--font-size-h2: clamp(2.375rem, 1.95rem + 1.8vw, 3.5rem);
-	--font-size-h3: clamp(1.875rem, 1.65rem + 1vw, 2.5rem);
-	--font-size-h4: clamp(1.5rem, 1.4rem + 0.5vw, 2rem);
-	--font-size-h5: clamp(1.25rem, 1.2rem + 0.25vw, 1.5rem);
-	--font-size-h6: clamp(1.125rem, 1.1rem + 0.125vw, 1.25rem);
+	/**
+	 * Canonical inner-page heading sizes derived from the recurring Figma Make
+	 * values. The generated design varies some section headings slightly, but
+	 * these values represent the most common/sensible semantic hierarchy rather
+	 * than preserving AI-generated one-off variants.
+	 */
+	--font-size-h1: clamp(2.4rem, 5vw, 4.5rem);
+	--font-size-h2: clamp(1.8rem, 3vw, 2.5rem);
+	--font-size-h3: 1rem;
+}
+
+/**
+ * The homepage deliberately uses a larger display scale in the approved design.
+ * WordPress adds the `home` body class on the front page, allowing the same
+ * semantic heading elements to inherit the homepage scale without introducing
+ * separate heading markup or breakpoint-specific classes.
+ */
+body.home {
+	--font-size-h1: clamp(3.5rem, 8vw, 7rem);
+	--font-size-h2: clamp(2.8rem, 4.8vw, 4.8rem);
+	--font-size-h3: 1rem;
 }
 
 html {
@@ -22,7 +37,7 @@ html {
 
 /**
  * Lato is the default reading face. Body copy uses the softer body color while
- * headings return to the stronger foreground color.
+ * primary headings return to the stronger foreground color.
  */
 body {
 	@apply bg-background text-body font-body;
@@ -32,19 +47,16 @@ body {
 }
 
 /**
- * A consistent semantic heading hierarchy takes precedence over one-off sizes
- * in individual mockups. Components may still override presentation when the
- * design genuinely requires it, but document structure should remain intact.
+ * The design consistently uses EB Garamond for primary page/section headings
+ * and Lato for smaller card/subsection headings. Individual components may
+ * still change color, tracking, or line-height when the approved design calls
+ * for it, but semantic heading levels should remain intact.
  */
 h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+h2 {
 	@apply font-heading text-foreground;
 	font-weight: 600;
-	line-height: 1.08;
+	line-height: 1.25;
 	text-wrap: balance;
 }
 
@@ -57,24 +69,18 @@ h2 {
 }
 
 h3 {
+	@apply font-body text-foreground;
 	font-size: var(--font-size-h3);
-	line-height: 1.12;
+	font-weight: 700;
+	line-height: 1.375;
+	text-wrap: balance;
 }
 
-h4 {
-	font-size: var(--font-size-h4);
-	line-height: 1.18;
-}
-
-h5 {
-	font-size: var(--font-size-h5);
-	line-height: 1.22;
-}
-
-h6 {
-	font-size: var(--font-size-h6);
-	line-height: 1.25;
-}
+/**
+ * h4-h6 are intentionally not assigned project-specific sizes yet. Add them
+ * when the approved design establishes a recurring treatment rather than
+ * inventing a scale that is not present in the source design.
+ */
 
 p {
 	text-wrap: pretty;
