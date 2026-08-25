@@ -77,11 +77,12 @@ if ( ! function_exists( 'balt_setup' ) ) :
 		 */
 		add_theme_support( 'post-thumbnails' );
 
-		// This theme uses wp_nav_menu() in two locations.
+		// This theme uses wp_nav_menu() in three locations.
 		register_nav_menus(
 			array(
-				'menu-1' => __( 'Primary', 'baltimore' ),
-				'menu-2' => __( 'Footer Menu', 'baltimore' ),
+				'menu-1'          => __( 'Primary', 'baltimore' ),
+				'menu-2'          => __( 'Footer Menu', 'baltimore' ),
+				'footer-services' => __( 'Our Services', 'baltimore' ),
 			)
 		);
 
@@ -201,6 +202,11 @@ function balt_modify_heading_levels( $args, $block_type ) {
 	return $args;
 }
 add_filter( 'register_block_type_args', 'balt_modify_heading_levels', 10, 2 );
+
+/**
+ * ACF options pages and global theme settings.
+ */
+require get_template_directory() . '/inc/acf-options.php';
 
 /**
  * Disable WordPress comments, trackbacks, and pingbacks.
