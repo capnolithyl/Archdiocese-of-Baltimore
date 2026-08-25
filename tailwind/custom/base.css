@@ -1,20 +1,110 @@
 /**
- * Custom styles to immediately follow Tailwind’s `base` layer
+ * Custom styles to immediately follow Tailwind's `base` layer.
+ *
+ * Keep this layer focused on durable element defaults. Component-specific
+ * typography belongs with the component so the base hierarchy remains useful
+ * throughout both the front end and block editor.
  */
 
-/**
- * This uses the background and foreground colors declared in the `theme.json`
- * file and is applied both to the front end and in the block editor.
- */
-body {
-	@apply bg-background text-foreground font-sans;
+:root {
+	--font-size-h1: clamp(3rem, 2.35rem + 2.8vw, 4.5rem);
+	--font-size-h2: clamp(2.375rem, 1.95rem + 1.8vw, 3.5rem);
+	--font-size-h3: clamp(1.875rem, 1.65rem + 1vw, 2.5rem);
+	--font-size-h4: clamp(1.5rem, 1.4rem + 0.5vw, 2rem);
+	--font-size-h5: clamp(1.25rem, 1.2rem + 0.25vw, 1.5rem);
+	--font-size-h6: clamp(1.125rem, 1.1rem + 0.125vw, 1.25rem);
 }
 
+html {
+	-webkit-text-size-adjust: 100%;
+	text-size-adjust: 100%;
+}
+
+/**
+ * Lato is the default reading face. Body copy uses the softer body color while
+ * headings return to the stronger foreground color.
+ */
+body {
+	@apply bg-background text-body font-body;
+	font-size: 1rem;
+	font-weight: 400;
+	line-height: 1.7;
+}
+
+/**
+ * A consistent semantic heading hierarchy takes precedence over one-off sizes
+ * in individual mockups. Components may still override presentation when the
+ * design genuinely requires it, but document structure should remain intact.
+ */
 h1,
 h2,
 h3,
 h4,
 h5,
 h6 {
-	@apply font-heading;
+	@apply font-heading text-foreground;
+	font-weight: 600;
+	line-height: 1.08;
+	text-wrap: balance;
+}
+
+h1 {
+	font-size: var(--font-size-h1);
+}
+
+h2 {
+	font-size: var(--font-size-h2);
+}
+
+h3 {
+	font-size: var(--font-size-h3);
+	line-height: 1.12;
+}
+
+h4 {
+	font-size: var(--font-size-h4);
+	line-height: 1.18;
+}
+
+h5 {
+	font-size: var(--font-size-h5);
+	line-height: 1.22;
+}
+
+h6 {
+	font-size: var(--font-size-h6);
+	line-height: 1.25;
+}
+
+p {
+	text-wrap: pretty;
+}
+
+strong,
+b {
+	font-weight: 700;
+}
+
+small {
+	font-size: 0.875em;
+}
+
+/**
+ * Links are visibly identifiable without relying on color alone. Navigation
+ * and button-style links can opt out of the underline in their component CSS.
+ */
+a {
+	@apply text-primary;
+	text-decoration-line: underline;
+	text-decoration-thickness: 0.08em;
+	text-underline-offset: 0.18em;
+}
+
+a:hover {
+	text-decoration-thickness: 0.12em;
+}
+
+a:focus-visible {
+	outline: 2px solid var(--wp--preset--color--secondary);
+	outline-offset: 3px;
 }
