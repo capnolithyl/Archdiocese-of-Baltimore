@@ -54,6 +54,8 @@
 		ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
 		"Liberation Mono", "Courier New", monospace;
 
+	--font-body: var(--wp--preset--font-family--body);
+	--font-heading: var(--wp--preset--font-family--heading);
 	/**
 	 * Add your theme below:
 	 */
