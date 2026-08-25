@@ -39,7 +39,7 @@ if (! defined('BALT_TYPOGRAPHY_CLASSES')) {
 	 */
 	define(
 		'BALT_TYPOGRAPHY_CLASSES',
-		'prose prose-neutral max-w-none prose-a:text-primary'
+		'prose prose-baltimore max-w-none'
 	);
 }
 
