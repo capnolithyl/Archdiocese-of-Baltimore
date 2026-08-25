@@ -21,55 +21,176 @@
 }
 
 /**
- * By default, _tw uses Tailwind Typography's Neutral gray scale. If you are
- * adapting an existing design and you need to set specific colors throughout,
- * you can do so here. In your `./theme/functions.php file, you will need to
- * replace `-neutral` with `-baltimore`.
+ * Baltimore long-form content colors. Paragraph and supporting copy in the
+ * Figma Make source consistently use the Body/Muted palette, while headings
+ * and strong text use Foreground and links use Primary. Gold is reserved for
+ * accents such as quote borders and list markers.
  */
 @utility prose-baltimore {
-	--tw-prose-body: --theme(--color-foreground, initial);
+	--tw-prose-body: --theme(--color-body, initial);
 	--tw-prose-headings: --theme(--color-foreground, initial);
-	--tw-prose-lead: --theme(--color-foreground, initial);
+	--tw-prose-lead: --theme(--color-body, initial);
 	--tw-prose-links: --theme(--color-primary, initial);
 	--tw-prose-bold: --theme(--color-foreground, initial);
-	--tw-prose-counters: --theme(--color-foreground, initial);
-	--tw-prose-bullets: --theme(--color-foreground, initial);
-	--tw-prose-hr: --theme(--color-foreground, initial);
+	--tw-prose-counters: --theme(--color-primary, initial);
+	--tw-prose-bullets: --theme(--color-secondary, initial);
+	--tw-prose-hr: --theme(--color-gray-200, initial);
 	--tw-prose-quotes: --theme(--color-foreground, initial);
-	--tw-prose-quote-borders: --theme(--color-primary, initial);
-	--tw-prose-captions: --theme(--color-foreground, initial);
+	--tw-prose-quote-borders: --theme(--color-secondary, initial);
+	--tw-prose-captions: --theme(--color-muted, initial);
 	--tw-prose-kbd: --theme(--color-foreground, initial);
 	--tw-prose-kbd-shadows: --theme(--color-foreground, initial);
 	--tw-prose-code: --theme(--color-foreground, initial);
 	--tw-prose-pre-code: --theme(--color-background, initial);
 	--tw-prose-pre-bg: --theme(--color-foreground, initial);
-	--tw-prose-th-borders: --theme(--color-foreground, initial);
-	--tw-prose-td-borders: --theme(--color-foreground, initial);
+	--tw-prose-th-borders: --theme(--color-gray-200, initial);
+	--tw-prose-td-borders: --theme(--color-gray-200, initial);
 	--tw-prose-invert-body: --theme(--color-background, initial);
 	--tw-prose-invert-headings: --theme(--color-background, initial);
 	--tw-prose-invert-lead: --theme(--color-background, initial);
-	--tw-prose-invert-links: --theme(--color-primary, initial);
+	--tw-prose-invert-links: --theme(--color-secondary, initial);
 	--tw-prose-invert-bold: --theme(--color-background, initial);
-	--tw-prose-invert-counters: --theme(--color-background, initial);
-	--tw-prose-invert-bullets: --theme(--color-background, initial);
-	--tw-prose-invert-hr: --theme(--color-background, initial);
+	--tw-prose-invert-counters: --theme(--color-secondary, initial);
+	--tw-prose-invert-bullets: --theme(--color-secondary, initial);
+	--tw-prose-invert-hr: --theme(--color-gray-200, initial);
 	--tw-prose-invert-quotes: --theme(--color-background, initial);
-	--tw-prose-invert-quote-borders: --theme(--color-primary, initial);
+	--tw-prose-invert-quote-borders: --theme(--color-secondary, initial);
 	--tw-prose-invert-captions: --theme(--color-background, initial);
 	--tw-prose-invert-kbd: --theme(--color-background, initial);
 	--tw-prose-invert-kbd-shadows: --theme(--color-background, initial);
 	--tw-prose-invert-code: --theme(--color-background, initial);
 	--tw-prose-invert-pre-code: --theme(--color-foreground, initial);
 	--tw-prose-invert-pre-bg: --theme(--color-background, initial);
-	--tw-prose-invert-th-borders: --theme(--color-background, initial);
-	--tw-prose-invert-td-borders: --theme(--color-background, initial);
+	--tw-prose-invert-th-borders: --theme(--color-gray-200, initial);
+	--tw-prose-invert-td-borders: --theme(--color-gray-200, initial);
 }
 
 /**
- * Import Tailwind Typography fork. If you want to make extensive changes to
- * Tailwind Typography, you may want to replace the import below with the
- * contents of this file and then edit it directly:
+ * Import Tailwind Typography fork. The Baltimore overrides below intentionally
+ * come after this import so the project design system wins over generic prose
+ * defaults without leaking those rules into navigation, cards or other UI.
  *
  * https://github.com/gregsullivan/_tw-typography/blob/master/index.css
  */
 @import "@_tw/typography";
+
+/**
+ * Long-form/editorial typography.
+ *
+ * Paragraph sizing, line-height, colors, links and the semantic blockquote
+ * treatment are derived from recurring Figma Make styles. The source design
+ * does not contain editorial tables or captions, so those use restrained
+ * Baltimore defaults rather than invented Figma values.
+ */
+.prose-baltimore {
+	@apply font-body text-body;
+}
+
+/**
+ * Tailwind Typography ships its own heading scale. Pin prose headings back to
+ * the canonical Baltimore hierarchy so page content and the editor do not
+ * quietly diverge from the global design system.
+ */
+.prose-baltimore
+	:where(h1):not(:where([class~="not-prose"], [class~="not-prose"] *)),
+.prose-baltimore
+	:where(h2):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+	@apply font-heading text-foreground font-semibold leading-tight text-balance;
+}
+
+.prose-baltimore
+	:where(h1):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+	font-size: var(--font-size-h1);
+}
+
+.prose-baltimore
+	:where(h2):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+	font-size: var(--font-size-h2);
+}
+
+.prose-baltimore
+	:where(h3):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+	@apply font-body text-foreground text-base font-bold leading-snug text-balance;
+}
+
+.prose-baltimore
+	:where(p):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+	@apply text-body text-base leading-relaxed;
+}
+
+.prose-baltimore
+	:where(a):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+	@apply text-primary font-medium;
+}
+
+.prose-baltimore
+	:where(ul):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+	@apply list-disc pl-6;
+}
+
+.prose-baltimore
+	:where(ol):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+	@apply list-decimal pl-6;
+}
+
+.prose-baltimore
+	:where(li):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+	@apply text-body text-base leading-relaxed;
+}
+
+.prose-baltimore
+	:where(li):not(:where([class~="not-prose"], [class~="not-prose"] *))::marker {
+	@apply text-secondary;
+}
+
+/**
+ * The Figma source's actual semantic blockquote uses a gold rule, EB Garamond,
+ * italic copy and a relaxed 20–24px treatment. Large feature/banner quotations
+ * should use a component-specific display treatment instead of redefining the
+ * long-form quote style.
+ */
+.prose-baltimore
+	:where(blockquote):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+	@apply border-secondary font-heading text-foreground my-8 border-l-4 pl-6 font-medium italic leading-relaxed;
+	font-size: clamp(1.25rem, 1.05rem + 0.75vw, 1.5rem);
+	quotes: none;
+}
+
+.prose-baltimore
+	:where(blockquote p):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+	@apply text-inherit;
+}
+
+/**
+ * The Figma Make source currently contains no editorial table treatment. Keep
+ * tables quiet, readable and consistent with the site's existing neutral
+ * borders until an approved design establishes something more specific.
+ */
+.prose-baltimore
+	:where(table):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+	@apply my-8 w-full border-collapse text-left text-sm;
+}
+
+.prose-baltimore
+	:where(th):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+	@apply border-gray-200 text-foreground border-b-2 px-3 py-3 font-bold;
+}
+
+.prose-baltimore
+	:where(td):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+	@apply border-gray-200 text-body border-b px-3 py-3 align-top;
+}
+
+/**
+ * Captions are intentionally subdued supporting copy. This covers both native
+ * table captions and WordPress figure/image captions.
+ */
+.prose-baltimore
+	:where(caption):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+	@apply text-muted mt-3 caption-bottom text-left text-sm leading-relaxed;
+}
+
+.prose-baltimore
+	:where(figcaption):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+	@apply text-muted mt-3 text-sm leading-relaxed;
+}
