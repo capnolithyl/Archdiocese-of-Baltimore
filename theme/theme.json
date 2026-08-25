@@ -5,35 +5,55 @@
 		"color": {
 			"palette": [
 				{
-					"slug": "background",
-					"color": "#ffffff",
-					"name": "Background"
+				"slug": "primary",
+				"color": "#002D62",
+				"name": "Primary"
 				},
 				{
-					"slug": "foreground",
-					"color": "#404040",
-					"name": "Foreground"
+				"slug": "secondary",
+				"color": "#C9A840",
+				"name": "Secondary"
 				},
 				{
-					"slug": "primary",
-					"color": "#b91c1c",
-					"name": "Primary"
+				"slug": "tertiary",
+				"color": "#BE2026",
+				"name": "Tertiary"
 				},
 				{
-					"slug": "secondary",
-					"color": "#15803d",
-					"name": "Secondary"
+				"slug": "foreground",
+				"color": "#0F1A2E",
+				"name": "Foreground"
 				},
 				{
-					"slug": "tertiary",
-					"color": "#0369a1",
-					"name": "Tertiary"
+				"slug": "body",
+				"color": "#4A5565",
+				"name": "Body"
+				},
+				{
+				"slug": "muted",
+				"color": "#6B6B7B",
+				"name": "Muted"
+				},
+				{
+				"slug": "background",
+				"color": "#F5F3EE",
+				"name": "Background"
+				},
+				{
+				"slug": "surface",
+				"color": "#F0EDE8",
+				"name": "Surface"
+				},
+				{
+				"slug": "white",
+				"color": "#FFFFFF",
+				"name": "White"
 				}
 			]
-		},
+			},
 		"layout": {
-			"contentSize": "40rem",
-			"wideSize": "60rem"
+			"contentSize": "900px",
+			"wideSize": "1504px"
 		}
 	}
 }

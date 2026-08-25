@@ -19,3 +19,13 @@ baltimore.zip
 
 # Ignore .DS_Store files from macOS:
 .DS_Store
+
+# Local environment files and secrets:
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Other editor/project settings:
+.idea/
