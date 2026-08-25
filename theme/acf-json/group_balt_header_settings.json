@@ -1,0 +1,66 @@
+{
+    "key": "group_balt_header_settings",
+    "title": "Header Settings",
+    "fields": [
+        {
+            "key": "field_balt_header_images_tab",
+            "label": "Images",
+            "name": "",
+            "type": "tab",
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_balt_site_logo",
+            "label": "Site Logo",
+            "name": "balt_site_logo",
+            "type": "image",
+            "instructions": "Primary site logo, typically used over the transparent/dark header state.",
+            "required": 0,
+            "return_format": "id",
+            "library": "all",
+            "preview_size": "medium"
+        },
+        {
+            "key": "field_balt_site_logo_alt",
+            "label": "Alternate Site Logo",
+            "name": "balt_site_logo_alt",
+            "type": "image",
+            "instructions": "Alternate logo for contrasting header states, such as a white/sticky header after scrolling.",
+            "required": 0,
+            "return_format": "id",
+            "library": "all",
+            "preview_size": "medium"
+        },
+        {
+            "key": "field_balt_default_featured_image",
+            "label": "Default Featured Image",
+            "name": "balt_default_featured_image",
+            "type": "image",
+            "instructions": "Fallback image used when a page or other supported content item does not have its own featured image.",
+            "required": 0,
+            "return_format": "id",
+            "library": "all",
+            "preview_size": "medium"
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "options_page",
+                "operator": "==",
+                "value": "theme-header-settings"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "Global header branding and image fallbacks.",
+    "show_in_rest": 0,
+    "modified": 1787673600
+}
