@@ -79,11 +79,12 @@ if (! function_exists('balt_setup')) :
 		 */
 		add_theme_support('post-thumbnails');
 
-		// This theme uses wp_nav_menu() in two locations.
+		// This theme uses wp_nav_menu() in three locations.
 		register_nav_menus(
 			array(
-				'menu-1' => __('Primary', 'baltimore'),
-				'menu-2' => __('Footer Menu', 'baltimore'),
+				'menu-1'          => __('Primary', 'baltimore'),
+				'menu-2'          => __('Footer Menu', 'baltimore'),
+				'footer-services' => __('Our Services', 'baltimore'),
 			)
 		);
 

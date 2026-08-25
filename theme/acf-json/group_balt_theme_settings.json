@@ -1,0 +1,196 @@
+{
+    "key": "group_balt_theme_settings",
+    "title": "Theme Settings",
+    "fields": [
+        {
+            "key": "field_balt_theme_contact_tab",
+            "label": "Contact",
+            "name": "",
+            "type": "tab",
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_balt_contact_address",
+            "label": "Address",
+            "name": "balt_contact_address",
+            "type": "textarea",
+            "instructions": "Organization mailing/street address. Line breaks are preserved for footer display.",
+            "required": 0,
+            "rows": 3,
+            "new_lines": "br"
+        },
+        {
+            "key": "field_balt_contact_email",
+            "label": "General Email",
+            "name": "balt_contact_email",
+            "type": "email",
+            "required": 0,
+            "wrapper": {
+                "width": "50"
+            }
+        },
+        {
+            "key": "field_balt_contact_fax",
+            "label": "Fax Number",
+            "name": "balt_contact_fax",
+            "type": "text",
+            "required": 0,
+            "wrapper": {
+                "width": "50"
+            }
+        },
+        {
+            "key": "field_balt_contact_phone",
+            "label": "Phone Number",
+            "name": "balt_contact_phone",
+            "type": "text",
+            "required": 0,
+            "wrapper": {
+                "width": "50"
+            }
+        },
+        {
+            "key": "field_balt_contact_phone_availability",
+            "label": "Phone Availability",
+            "name": "balt_contact_phone_availability",
+            "type": "text",
+            "instructions": "For example: Mon–Fri, 8am–6pm.",
+            "required": 0,
+            "wrapper": {
+                "width": "50"
+            }
+        },
+        {
+            "key": "field_balt_emergency_hotline",
+            "label": "24/7 Emergency Hotline",
+            "name": "balt_emergency_hotline",
+            "type": "text",
+            "required": 0
+        },
+        {
+            "key": "field_balt_theme_hours_tab",
+            "label": "Office Hours",
+            "name": "",
+            "type": "tab",
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_balt_office_hours",
+            "label": "Office Hours",
+            "name": "balt_office_hours",
+            "type": "repeater",
+            "instructions": "Add one row per schedule grouping, such as Monday–Friday or Saturday.",
+            "required": 0,
+            "layout": "table",
+            "button_label": "Add Hours",
+            "rows_per_page": 20,
+            "sub_fields": [
+                {
+                    "key": "field_balt_office_hours_days",
+                    "label": "Days / Label",
+                    "name": "days",
+                    "type": "text",
+                    "instructions": "For example: Monday–Friday.",
+                    "required": 1,
+                    "wrapper": {
+                        "width": "40"
+                    },
+                    "parent_repeater": "field_balt_office_hours"
+                },
+                {
+                    "key": "field_balt_office_hours_time",
+                    "label": "Hours",
+                    "name": "hours",
+                    "type": "text",
+                    "instructions": "For example: 8:30am–4:30pm or Closed.",
+                    "required": 1,
+                    "wrapper": {
+                        "width": "60"
+                    },
+                    "parent_repeater": "field_balt_office_hours"
+                }
+            ]
+        },
+        {
+            "key": "field_balt_office_hours_notes",
+            "label": "Office Hours Notes",
+            "name": "balt_office_hours_notes",
+            "type": "textarea",
+            "instructions": "Optional note for holidays, appointment requirements, seasonal schedules, or other exceptions.",
+            "required": 0,
+            "rows": 3,
+            "new_lines": "br"
+        },
+        {
+            "key": "field_balt_theme_social_tab",
+            "label": "Social Media",
+            "name": "",
+            "type": "tab",
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_balt_social_media",
+            "label": "Social Media Links",
+            "name": "balt_social_media",
+            "type": "repeater",
+            "instructions": "Choose a Font Awesome brand icon and provide its destination URL.",
+            "required": 0,
+            "layout": "table",
+            "button_label": "Add Social Link",
+            "rows_per_page": 20,
+            "sub_fields": [
+                {
+                    "key": "field_balt_social_icon",
+                    "label": "Icon",
+                    "name": "icon",
+                    "type": "font-awesome",
+                    "instructions": "Choose the matching social-media brand icon.",
+                    "required": 1,
+                    "icon_sets": [
+                        "brands"
+                    ],
+                    "custom_icon_set": "",
+                    "default_value": "",
+                    "default_label": "",
+                    "allow_null": 0,
+                    "show_preview": 1,
+                    "enqueue_fa": 1,
+                    "fa_live_preview": "",
+                    "save_format": "class",
+                    "parent_repeater": "field_balt_social_media"
+                },
+                {
+                    "key": "field_balt_social_link",
+                    "label": "Link",
+                    "name": "link",
+                    "type": "link",
+                    "required": 1,
+                    "return_format": "array",
+                    "parent_repeater": "field_balt_social_media"
+                }
+            ]
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "options_page",
+                "operator": "==",
+                "value": "theme-settings"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "Global organization contact information, office hours, and social-media links.",
+    "show_in_rest": 0,
+    "modified": 1787673600
+}
