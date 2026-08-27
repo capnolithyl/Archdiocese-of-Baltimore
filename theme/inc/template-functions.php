@@ -1,46 +1,124 @@
 <?php
 /**
- * Functions which enhance the theme by hooking into WordPress
+ * Functions which enhance the theme by hooking into WordPress.
  *
  * @package Archdiocese_of_Baltimore
  */
 
 /**
- * Filters the default archive titles.
+ * Keep archive titles clean and let the template provide the archive context
+ * separately as an eyebrow label.
+ *
+ * @return string
  */
 function balt_get_the_archive_title() {
-	if ( is_category() ) {
-		$title = __( 'Category Archives: ', 'baltimore' ) . '<span>' . single_term_title( '', false ) . '</span>';
-	} elseif ( is_tag() ) {
-		$title = __( 'Tag Archives: ', 'baltimore' ) . '<span>' . single_term_title( '', false ) . '</span>';
-	} elseif ( is_author() ) {
-		$title = __( 'Author Archives: ', 'baltimore' ) . '<span>' . get_the_author_meta( 'display_name' ) . '</span>';
-	} elseif ( is_year() ) {
-		$title = __( 'Yearly Archives: ', 'baltimore' ) . '<span>' . get_the_date( _x( 'Y', 'yearly archives date format', 'baltimore' ) ) . '</span>';
-	} elseif ( is_month() ) {
-		$title = __( 'Monthly Archives: ', 'baltimore' ) . '<span>' . get_the_date( _x( 'F Y', 'monthly archives date format', 'baltimore' ) ) . '</span>';
-	} elseif ( is_day() ) {
-		$title = __( 'Daily Archives: ', 'baltimore' ) . '<span>' . get_the_date() . '</span>';
-	} elseif ( is_post_type_archive() ) {
-		$cpt   = get_post_type_object( get_queried_object()->name );
-		$title = sprintf(
-			/* translators: %s: Post type singular name */
-			esc_html__( '%s Archives', 'baltimore' ),
-			$cpt->labels->singular_name
-		);
-	} elseif ( is_tax() ) {
-		$tax   = get_taxonomy( get_queried_object()->taxonomy );
-		$title = sprintf(
-			/* translators: %s: Taxonomy singular name */
-			esc_html__( '%s Archives', 'baltimore' ),
-			$tax->labels->singular_name
-		);
-	} else {
-		$title = __( 'Archives:', 'baltimore' );
+	if ( is_category() || is_tag() || is_tax() ) {
+		return single_term_title( '', false );
 	}
-	return $title;
+
+	if ( is_author() ) {
+		return get_the_author_meta( 'display_name' );
+	}
+
+	if ( is_year() ) {
+		return get_the_date( _x( 'Y', 'yearly archives date format', 'baltimore' ) );
+	}
+
+	if ( is_month() ) {
+		return get_the_date( _x( 'F Y', 'monthly archives date format', 'baltimore' ) );
+	}
+
+	if ( is_day() ) {
+		return get_the_date();
+	}
+
+	if ( is_post_type_archive() ) {
+		return post_type_archive_title( '', false );
+	}
+
+	return __( 'Archives', 'baltimore' );
 }
 add_filter( 'get_the_archive_title', 'balt_get_the_archive_title' );
+
+/**
+ * Return a short archive-context label for the visual eyebrow treatment.
+ *
+ * @return string
+ */
+function balt_get_archive_eyebrow() {
+	if ( is_category() ) {
+		return __( 'Category', 'baltimore' );
+	}
+
+	if ( is_tag() ) {
+		return __( 'Topic', 'baltimore' );
+	}
+
+	if ( is_tax() ) {
+		$taxonomy = get_taxonomy( get_queried_object()->taxonomy ?? '' );
+		return $taxonomy ? $taxonomy->labels->singular_name : __( 'Archive', 'baltimore' );
+	}
+
+	if ( is_author() ) {
+		return __( 'Author', 'baltimore' );
+	}
+
+	if ( is_date() ) {
+		return __( 'Archive', 'baltimore' );
+	}
+
+	if ( is_post_type_archive() ) {
+		$post_type = get_post_type_object( get_queried_object()->name ?? '' );
+		return $post_type ? $post_type->labels->name : __( 'Archive', 'baltimore' );
+	}
+
+	return __( 'Archive', 'baltimore' );
+}
+
+/**
+ * Return the configured global fallback featured image attachment ID.
+ *
+ * @return int
+ */
+function balt_get_default_featured_image_id() {
+	if ( ! function_exists( 'get_field' ) ) {
+		return 0;
+	}
+
+	return absint( get_field( 'balt_default_featured_image', 'option' ) );
+}
+
+/**
+ * Return a post's featured image, optionally falling back to Theme Settings.
+ *
+ * @param int  $post_id        Post ID. Defaults to the current post.
+ * @param bool $allow_fallback Whether to use the global fallback image.
+ * @return int
+ */
+function balt_get_featured_image_id( $post_id = 0, $allow_fallback = true ) {
+	$post_id  = $post_id ? absint( $post_id ) : get_the_ID();
+	$image_id = $post_id ? get_post_thumbnail_id( $post_id ) : 0;
+
+	if ( ! $image_id && $allow_fallback ) {
+		$image_id = balt_get_default_featured_image_id();
+	}
+
+	return absint( $image_id );
+}
+
+/**
+ * Return a human-readable content type label for cards and single headers.
+ *
+ * @param int $post_id Post ID. Defaults to the current post.
+ * @return string
+ */
+function balt_get_content_type_label( $post_id = 0 ) {
+	$post_id   = $post_id ? absint( $post_id ) : get_the_ID();
+	$post_type = $post_id ? get_post_type( $post_id ) : '';
+	$object    = $post_type ? get_post_type_object( $post_type ) : null;
+
+	return $object ? $object->labels->singular_name : __( 'Content', 'baltimore' );
+}
 
 /**
  * Determines whether the post thumbnail can be displayed.
@@ -50,12 +128,11 @@ function balt_can_show_post_thumbnail() {
 }
 
 /**
- * Create the continue reading link
+ * Create the continue reading link.
  *
  * @param string $more_string The string shown within the more link.
  */
 function balt_continue_reading_link( $more_string ) {
-
 	if ( ! is_admin() ) {
 		$continue_reading = sprintf(
 			/* translators: %s: Name of current post. */

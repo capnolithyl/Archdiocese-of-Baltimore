@@ -1,6 +1,6 @@
 <?php
 /**
- * The template for displaying archive pages
+ * The template for displaying archive pages.
  *
  * @link https://developer.wordpress.org/themes/basics/template-hierarchy/
  *
@@ -10,36 +10,38 @@
 get_header();
 ?>
 
-	<section id="primary">
-		<main id="main">
-
-		<?php if ( have_posts() ) : ?>
-
-			<header class="page-header">
-				<?php the_archive_title( '<h1 class="page-title">', '</h1>' ); ?>
-			</header><!-- .page-header -->
-
-			<?php
-			// Start the Loop.
-			while ( have_posts() ) :
-				the_post();
-				get_template_part( 'template-parts/content/content', 'excerpt' );
-
-				// End the loop.
-			endwhile;
-
-			// Previous/next page navigation.
-			balt_the_posts_navigation();
-
-		else :
-
-			// If no content, include the "No posts found" template.
-			get_template_part( 'template-parts/content/content', 'none' );
-
-		endif;
+<section id="primary" class="template-page template-archive">
+	<main id="main">
+		<?php
+		get_template_part(
+			'template-parts/layout/archive-header',
+			null,
+			array(
+				'eyebrow'     => balt_get_archive_eyebrow(),
+				'title'       => get_the_archive_title(),
+				'description' => get_the_archive_description(),
+			)
+		);
 		?>
-		</main><!-- #main -->
-	</section><!-- #primary -->
+
+		<div class="template-listing">
+			<?php if ( have_posts() ) : ?>
+				<div class="template-card-grid">
+					<?php
+					while ( have_posts() ) :
+						the_post();
+						get_template_part( 'template-parts/content/content', 'excerpt' );
+					endwhile;
+					?>
+				</div>
+
+				<?php balt_the_posts_navigation(); ?>
+			<?php else : ?>
+				<?php get_template_part( 'template-parts/content/content', 'none' ); ?>
+			<?php endif; ?>
+		</div>
+	</main><!-- #main -->
+</section><!-- #primary -->
 
 <?php
 get_footer();
