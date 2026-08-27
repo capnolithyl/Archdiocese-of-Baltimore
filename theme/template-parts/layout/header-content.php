@@ -10,16 +10,29 @@
 
 ?>
 
-<header id="masthead">
+<header id="masthead" class="fixed top-admin-bar left-0 right-0 bg-primary z-50">
 
-	<div>
-	</div>
+    <div class="hidden lg:block">
+        <nav class="max-w-wide mx-auto px-6 lg:px-10 flex items-center justify-end gap-6 h-9">
+            <?php
+			wp_nav_menu(
+				array(
+					'theme_location' => 'dpi-top-bar',
+					'menu_id'        => 'top-bar-menu',
+					'items_wrap'     => '<ul id="%1$s" class="%2$s" aria-label="submenu">%3$s</ul>',
+				)
+			);
+			?>
+        </nav>
+    </div>
 
-	<nav id="site-navigation" aria-label="<?php esc_attr_e('Main Navigation', 'baltimore'); ?>">
-		<button aria-controls="primary-menu"
-			aria-expanded="false"><?php esc_html_e('Primary Menu', 'baltimore'); ?></button>
+    <div>
 
-		<?php
+    </div>
+
+    <nav id="site-navigation" aria-label="<?php esc_attr_e('Main Navigation', 'baltimore'); ?>">
+
+        <?php
 		wp_nav_menu(
 			array(
 				'theme_location' => 'menu-1',
@@ -28,6 +41,6 @@
 			)
 		);
 		?>
-	</nav><!-- #site-navigation -->
+    </nav>
 
-</header><!-- #masthead -->
+</header>

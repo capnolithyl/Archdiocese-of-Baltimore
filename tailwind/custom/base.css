@@ -24,6 +24,19 @@
  * semantic heading elements to inherit the homepage scale without introducing
  * separate heading markup or breakpoint-specific classes.
  */
+:root {
+	--header-height: 0px;
+	--wp-admin-bar-height: 0px;
+
+	&:has(#wpadminbar) {
+		--wp-admin-bar-height: 32px;
+
+		@media screen and (max-width: 782px) {
+			--wp-admin-bar-height: 46px;
+		}
+	}
+}
+
 body.home {
 	--font-size-h1: clamp(3.5rem, 8vw, 7rem);
 	--font-size-h2: clamp(2.8rem, 4.8vw, 4.8rem);
