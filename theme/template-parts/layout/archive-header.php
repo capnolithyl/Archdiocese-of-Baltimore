@@ -24,7 +24,7 @@ $count       = isset( $args['count'] ) ? absint( $args['count'] ) : null;
 		<?php endif; ?>
 
 		<?php if ( $description ) : ?>
-			<div class="template-hero__description"><?php echo wp_kses_post( wpautop( $description ) ); ?></div>
+			<div class="template-hero__description"><?php echo wp_kses_post( $description ); ?></div>
 		<?php endif; ?>
 
 		<?php if ( null !== $count ) : ?>
