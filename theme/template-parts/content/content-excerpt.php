@@ -12,6 +12,9 @@ $post_type  = get_post_type();
 $type_label = balt_get_content_type_label();
 $categories = 'post' === $post_type ? get_the_category() : array();
 $eyebrow    = ! empty( $categories ) ? $categories[0]->name : $type_label;
+$excerpt    = has_excerpt()
+	? get_the_excerpt()
+	: wp_trim_words( wp_strip_all_tags( strip_shortcodes( get_the_content() ) ), 28, '&hellip;' );
 ?>
 
 <article id="post-<?php the_ID(); ?>" <?php post_class( 'template-card' ); ?>>
@@ -46,9 +49,11 @@ $eyebrow    = ! empty( $categories ) ? $categories[0]->name : $type_label;
 			<?php the_title( sprintf( '<h2 class="template-card__title"><a href="%s" rel="bookmark">', esc_url( get_permalink() ) ), '</a></h2>' ); ?>
 		</header>
 
-		<div class="template-card__excerpt">
-			<?php the_excerpt(); ?>
-		</div>
+		<?php if ( $excerpt ) : ?>
+			<div class="template-card__excerpt">
+				<p><?php echo wp_kses_post( $excerpt ); ?></p>
+			</div>
+		<?php endif; ?>
 
 		<a class="template-card__link" href="<?php the_permalink(); ?>">
 			<?php esc_html_e( 'Read More', 'baltimore' ); ?>
