@@ -1,0 +1,332 @@
+/**
+ * Standard WordPress template styling.
+ *
+ * These templates cover WordPress states that are often absent from the Figma
+ * deliverable. They intentionally reuse Baltimore's established palette,
+ * typography, containers, card language, and restrained gold accents rather
+ * than introducing a separate mini design system.
+ */
+
+.template-page {
+	@apply bg-background;
+}
+
+.template-hero {
+	@apply border-secondary bg-primary border-t-4 text-white;
+}
+
+.template-hero__inner {
+	@apply max-w-wide mx-auto px-6 py-16 lg:px-10 lg:py-24;
+}
+
+.template-hero__eyebrow {
+	@apply text-secondary mb-4;
+}
+
+.template-hero__title {
+	@apply max-w-content m-0 text-white;
+}
+
+.template-hero__description {
+	@apply max-w-editorial mt-6 text-lg leading-relaxed text-white/80;
+}
+
+.template-hero__description > :first-child,
+.template-hero__description > :last-child {
+	@apply my-0;
+}
+
+.template-hero__count {
+	@apply mt-5 text-sm font-bold tracking-[0.12em] text-white/70 uppercase;
+}
+
+.template-listing {
+	@apply max-w-wide mx-auto px-6 py-12 lg:px-10 lg:py-20;
+}
+
+.template-card-grid {
+	@apply grid gap-6 md:grid-cols-2 xl:grid-cols-3;
+}
+
+.template-card {
+	@apply border-foreground/10 flex min-w-0 flex-col overflow-hidden rounded-xl border bg-white shadow-sm;
+	transition:
+		transform 180ms ease,
+		box-shadow 180ms ease;
+}
+
+@media (hover: hover) {
+	.template-card:hover {
+		@apply shadow-lg;
+		transform: translateY(-0.2rem);
+	}
+}
+
+.template-card__media {
+	@apply block overflow-hidden no-underline;
+	aspect-ratio: 16 / 10;
+}
+
+.template-card__image {
+	@apply h-full w-full object-cover;
+	transition: transform 250ms ease;
+}
+
+@media (hover: hover) {
+	.template-card:hover .template-card__image {
+		transform: scale(1.025);
+	}
+}
+
+.template-card__body {
+	@apply flex flex-1 flex-col p-6;
+}
+
+.template-card__meta {
+	@apply text-muted mb-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs font-bold tracking-[0.1em] uppercase;
+}
+
+.template-card__eyebrow {
+	@apply text-tertiary;
+}
+
+.template-card__header {
+	@apply m-0;
+}
+
+.template-card__title {
+	@apply font-body text-foreground m-0 text-xl font-bold leading-snug;
+}
+
+.template-card__title a {
+	@apply text-inherit no-underline;
+}
+
+.template-card__title a:hover {
+	@apply text-primary;
+}
+
+.template-card__excerpt {
+	@apply text-body mt-4 leading-relaxed;
+}
+
+.template-card__excerpt > :first-child,
+.template-card__excerpt > :last-child {
+	@apply my-0;
+}
+
+.template-card__link {
+	@apply text-primary mt-auto inline-flex items-center gap-2 pt-6 text-sm font-bold tracking-[0.1em] no-underline uppercase;
+}
+
+.template-card__link:hover {
+	@apply text-foreground;
+}
+
+.template-button {
+	@apply inline-flex min-h-12 items-center justify-center rounded-sm border px-6 py-3 text-sm font-bold tracking-[0.08em] no-underline uppercase transition-colors;
+}
+
+.template-button--primary {
+	@apply border-primary bg-primary text-white;
+}
+
+.template-button--primary:hover {
+	@apply border-foreground bg-foreground text-white;
+}
+
+.navigation.pagination {
+	@apply mt-12;
+}
+
+.navigation.pagination .nav-links {
+	@apply flex flex-wrap items-center justify-center gap-2;
+}
+
+.navigation.pagination .page-numbers {
+	@apply border-foreground/15 text-primary inline-flex min-h-11 min-w-11 items-center justify-center rounded-sm border bg-white px-3 font-bold no-underline;
+}
+
+.navigation.pagination .page-numbers:hover {
+	@apply border-primary;
+}
+
+.navigation.pagination .page-numbers.current {
+	@apply border-primary bg-primary text-white;
+}
+
+.site-search-form {
+	@apply flex w-full flex-col gap-3 sm:flex-row;
+}
+
+.site-search-form__label {
+	@apply min-w-0 flex-1;
+}
+
+.site-search-form__field {
+	@apply border-foreground/20 text-foreground placeholder:text-muted min-h-12 w-full rounded-sm border bg-white px-4 py-3 outline-none;
+}
+
+.site-search-form__field:focus {
+	@apply border-primary ring-primary/20 ring-4;
+}
+
+.site-search-form__submit {
+	@apply border-secondary bg-secondary text-primary min-h-12 cursor-pointer rounded-sm border px-7 py-3 text-sm font-bold tracking-[0.08em] uppercase transition-colors;
+}
+
+.site-search-form__submit:hover {
+	@apply bg-white;
+}
+
+.template-search__form-wrap {
+	@apply max-w-content mx-auto -mt-6 px-6 lg:px-10;
+	position: relative;
+	z-index: 2;
+}
+
+.template-search__form-wrap .site-search-form {
+	@apply border-foreground/10 rounded-xl border bg-white p-4 shadow-lg;
+}
+
+.template-empty-state {
+	@apply border-foreground/10 max-w-editorial mx-auto rounded-xl border bg-white px-6 py-10 text-center shadow-sm md:px-10 md:py-14;
+}
+
+.template-empty-state__eyebrow {
+	@apply mb-3;
+}
+
+.template-empty-state__title {
+	@apply m-0;
+}
+
+.template-empty-state > p:not(.template-empty-state__eyebrow) {
+	@apply text-body mx-auto mt-4 max-w-small leading-relaxed;
+}
+
+.template-empty-state__actions {
+	@apply mt-7 flex flex-wrap justify-center gap-3;
+}
+
+.template-empty-state__search {
+	@apply mx-auto mt-8 max-w-small;
+}
+
+.template-404__main {
+	@apply min-h-[70vh] px-6 py-16 lg:px-10 lg:py-24;
+}
+
+.template-404__inner {
+	@apply max-w-editorial mx-auto text-center;
+}
+
+.template-404__code {
+	@apply font-heading text-secondary/45 m-0 font-semibold leading-none;
+	font-size: clamp(7rem, 20vw, 14rem);
+}
+
+.template-404__eyebrow {
+	@apply -mt-5 mb-4;
+}
+
+.template-404 h1 {
+	@apply m-0;
+}
+
+.template-404__intro {
+	@apply text-body mx-auto mt-5 max-w-small text-lg leading-relaxed;
+}
+
+.template-404__actions {
+	@apply mt-8 flex justify-center;
+}
+
+.template-404__search {
+	@apply mx-auto mt-10 max-w-small;
+}
+
+.template-single__hero {
+	@apply border-secondary bg-primary border-t-4 text-white;
+}
+
+.template-single__hero-inner {
+	@apply max-w-content mx-auto px-6 py-16 lg:px-10 lg:py-24;
+}
+
+.template-single__eyebrow {
+	@apply text-secondary mb-4;
+}
+
+.template-single__title {
+	@apply m-0 text-white;
+}
+
+.template-single__meta {
+	@apply mt-6 flex flex-wrap items-center gap-3 text-sm font-bold tracking-[0.04em] text-white/70;
+}
+
+.template-single__featured-image {
+	@apply max-w-content relative z-10 mx-auto -mt-8 overflow-hidden rounded-xl px-6 lg:px-0;
+}
+
+.template-single__featured-image-element {
+	@apply h-auto w-full object-cover;
+	aspect-ratio: 16 / 9;
+}
+
+.template-single__content-wrap {
+	@apply max-w-editorial mx-auto px-6 py-12 lg:px-0 lg:py-16;
+}
+
+.template-single__content {
+	@apply max-w-none;
+}
+
+.template-single__footer {
+	@apply border-foreground/10 text-muted mx-0 mt-10 mb-0 flex max-w-none flex-wrap gap-x-5 gap-y-2 border-t pt-6 text-sm;
+}
+
+.template-single__footer a {
+	@apply text-primary;
+}
+
+.template-single-page .post-navigation {
+	@apply max-w-content mx-auto mb-16 px-6 lg:px-0;
+}
+
+.template-single-page .post-navigation .nav-links {
+	@apply grid gap-4 md:grid-cols-2;
+}
+
+.template-single-page .post-navigation .nav-next {
+	@apply md:text-right;
+}
+
+.template-single-page .post-navigation a {
+	@apply border-foreground/10 flex h-full flex-col gap-2 rounded-xl border bg-white p-6 no-underline shadow-sm transition-shadow;
+}
+
+.template-single-page .post-navigation a:hover {
+	@apply shadow-md;
+}
+
+.post-navigation__label {
+	@apply text-tertiary text-xs font-bold tracking-[0.12em] uppercase;
+}
+
+.post-navigation__title {
+	@apply font-heading text-foreground text-xl font-semibold leading-snug;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.template-card,
+	.template-card__image {
+		transition: none;
+	}
+
+	.template-card:hover,
+	.template-card:hover .template-card__image {
+		transform: none;
+	}
+}
