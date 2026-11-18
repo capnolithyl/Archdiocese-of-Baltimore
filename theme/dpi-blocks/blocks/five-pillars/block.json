@@ -1,0 +1,44 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "dpi/five-pillars",
+  "version": "1.0.0",
+  "title": "Pillars",
+  "category": "baltimore",
+  "icon": "columns",
+  "description": "Interactive pillar showcase with an image collage, descriptions, and links.",
+  "keywords": [
+    "pillars",
+    "mission",
+    "accordion",
+    "images"
+  ],
+  "textdomain": "baltimore",
+  "acf": {
+    "mode": "preview",
+    "renderCallback": "balt_render_ported_dpi_block",
+    "blockVersion": 3
+  },
+  "supports": {
+    "anchor": true,
+    "align": [
+      "wide",
+      "full"
+    ],
+    "color": {
+      "background": true,
+      "text": true,
+      "link": true
+    },
+    "spacing": {
+      "margin": true,
+      "padding": true
+    },
+    "html": false
+  },
+  "style": [
+    "balt-ported-dpi-defaults",
+    "file:./style.css"
+  ],
+  "script": "file:./view.js"
+}

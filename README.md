@@ -15,7 +15,7 @@ Custom PHP WordPress theme based on **_tw**, using Tailwind CSS 4, `theme.json` 
 | Search | Standard search form and search results page implemented; **live typeahead search is not implemented** |
 | Comments | Disabled by `theme/inc/comments.php`: discussion support, admin links/screens, API routes and feeds |
 | Homepage | **Approved homepage composition is not built yet** |
-| Custom Gutenberg/ACF blocks | No site block registration in this repository. Architecture assigns reusable blocks to the separate `dpi-blocks` plugin (not audited here) |
+| Custom Gutenberg/ACF blocks | **Theme-owned:** `dpi/hero`, `dpi/five-pillars`, `dpi/feature-banner`, `dpi/community-slider`, `dpi/stats`, preserving original block names and ACF field keys. Other `dpi/*` blocks remain in the plugin. |
 | GIS | External existing plugin; integration and configuration later |
 | Staff / ministries | No theme CPT implementation; planned as reusable plugin modules |
 

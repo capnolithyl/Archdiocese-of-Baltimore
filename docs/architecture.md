@@ -43,6 +43,7 @@ The theme and `dpi-blocks` intentionally have different responsibilities.
 - Baltimore-specific presentation and styling.
 - `theme.json` design-system settings.
 - Baltimore-specific ACF field groups and Options Pages.
+- Theme-owned copies of `dpi/hero`, `dpi/five-pillars`, `dpi/feature-banner`, `dpi/community-slider`, and `dpi/stats` including their ACF fields and runtime assets. When DPI Blocks is active, its template override resolver uses the copies under `dpi-blocks/blocks/`; when inactive, the theme registers the same block names independently.
 - Site-specific Gutenberg patterns/compositions.
 - Site-specific relationships and integration code where those relationships are not reusable enough to belong in the plugin.
 - Presentation/integration of the GIS plugin.
@@ -50,7 +51,7 @@ The theme and `dpi-blocks` intentionally have different responsibilities.
 
 ### DPI Blocks owns
 
-- Reusable custom Gutenberg/ACF blocks.
+- Reusable custom Gutenberg/ACF blocks **excluding the five theme-owned copies listed above**.
 - Each reusable block's `block.json` registration.
 - Reusable block render templates/rendering helpers.
 - Reusable block JavaScript/behavior.
@@ -67,8 +68,8 @@ A reusable component should not contain Baltimore-specific colors, copy, URLs, o
 
 ACF Local JSON is split by owner:
 
-- Baltimore-specific field groups: `theme/acf-json/` in the Baltimore theme repository.
-- Reusable block/content-module field groups: the `acf-json/` owned by `dpi-blocks`.
+- Baltimore-specific field groups and the five copied block field groups: `theme/acf-json/` in the Baltimore theme repository.
+- Remaining reusable block/content-module field groups: the `acf-json/` owned by `dpi-blocks`.
 
 Do not keep the same field group in both repositories.
 
@@ -356,7 +357,8 @@ This section records decisions that materially affect implementation. Add or sup
 | 2026-08 | Accepted | Figma is the visual source of truth; the Figma Make React project is not production architecture. |
 | 2026-08 | Accepted | The production site uses a classic PHP WordPress theme, not Full Site Editing/block templates. |
 | 2026-08 | Accepted | Tailwind/PostCSS is the theme styling/build layer; do not introduce a competing frontend framework without a concrete requirement. |
-| 2026-08 | Accepted | Reusable Gutenberg/ACF blocks live in the separate `dpi-blocks` plugin rather than the Baltimore theme. |
+| 2026-08 | Superseded | Reusable Gutenberg/ACF blocks live in the separate `dpi-blocks` plugin rather than the Baltimore theme. |
+| 2026-11-18 | Accepted | Five blocks (`dpi/hero`, `dpi/five-pillars`, `dpi/feature-banner`, `dpi/community-slider`, `dpi/stats`) now live in the Baltimore theme, retaining their identifiers and ACF field keys. Other plugin modules remain separate. |
 | 2026-08 | Accepted | Baltimore-specific ACF Local JSON belongs in the theme; reusable plugin fields belong in `dpi-blocks`. |
 | 2026-08 | Accepted | Ministry, Staff, and Office are canonical CPTs supplied through opt-in reusable DPI Blocks content modules, with Baltimore-specific extensions where necessary. |
 | 2026-08 | Accepted | News remains WordPress Posts; Campaigns remain Pages by default; Resources are not a CPT by default. |
