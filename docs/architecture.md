@@ -10,7 +10,7 @@ When implementation and this document disagree, verify the current code and upda
 
 The project has two code repositories:
 
-- Theme: `marcus-diocesan/Archdiocese-of-Baltimore`
+- Theme: `capnolithyl/Archdiocese-of-Baltimore`
 - Shared blocks/content plugin: `marcus-diocesan/dpi-blocks`
 
 GitHub is the canonical source for code. The Figma design is the source of truth for visual design and interaction intent, but the Figma Make React/Tailwind prototype is design documentation rather than production architecture.

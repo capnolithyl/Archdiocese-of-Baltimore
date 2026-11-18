@@ -1,63 +1,52 @@
-Archdiocese of Baltimore
-========================
+# Archdiocese of Baltimore
 
-A custom theme based on \_tw
+Custom PHP WordPress theme based on **_tw**, using Tailwind CSS 4, `theme.json` and ACF Pro. This repository is the site-specific theme, not the shared block plugin or WordPress database.
 
-## Quickstart
+## Current source-code status (November 18, 2026)
 
-### Installation
+| Area | Status |
+| --- | --- |
+| Theme/build | Present: PHP theme, Tailwind/PostCSS, esbuild, lint/format config, GitHub Actions |
+| Design system | Present: Baltimore palette, Lato + EB Garamond, base styles and archive/card styles |
+| ACF options | Present: header images, footer options, contact details, office hours and social links |
+| Menus | Primary, utility, footer and services locations registered; **final header/footer UI is unfinished** |
+| WordPress templates | Present: page, single, home/posts index, archive, category/tag/taxonomy fallback, search, 404, index |
+| Archive display | Custom listing cards, archive headers, excerpts, pagination and empty states implemented; visual QA remains |
+| Search | Standard search form and search results page implemented; **live typeahead search is not implemented** |
+| Comments | Disabled by `theme/inc/comments.php`: discussion support, admin links/screens, API routes and feeds |
+| Homepage | **Approved homepage composition is not built yet** |
+| Custom Gutenberg/ACF blocks | No site block registration in this repository. Architecture assigns reusable blocks to the separate `dpi-blocks` plugin (not audited here) |
+| GIS | External existing plugin; integration and configuration later |
+| Staff / ministries | No theme CPT implementation; planned as reusable plugin modules |
 
-1. Move this folder to `wp-content/themes` in your local development environment
-2. Run `npm install && npm run dev` in this folder
-3. Activate this theme in your local WordPress installation
+This table is based on code in this repository, **not a live WordPress/site test**.
 
-Using WordPress Multisite? Don’t forget that your theme must first be enabled via the Network Admin in order to be available for activation on a network site.
+## Sprint 1: homepage by December 4, 2026
 
-### Development
+Complete the design-aligned header/footer and theme shell, reusable homepage blocks, Gutenberg page assembly, functional live search suggestions, and desktop/mobile QA. Sample data is sufficient for component testing. The content team owns real copy and data; migration, GIS, archives for new CPTs and production launch are outside this sprint.
 
-4. Run `npm run watch`
-5. Add [Tailwind utility classes](https://tailwindcss.com/docs/utility-first) with abandon
+Design reference: https://motto-lever-19676077.figma.site/
 
-### Deployment
+## Development
 
-6. Run `npm run bundle`
-7. Upload the resulting zip file to your site using the “Upload Theme” button on the “Add Themes” administration page
+Requires a WordPress installation, ACF Pro and Node.js/npm. Run commands from the repository root:
 
-Or [deploy with the tool of your choice](https://underscoretw.com/docs/deployment/#h-other-deployment-options)!
+```bash
+npm ci
+npm run dev
+npm run watch
+```
 
-## Full Documentation
+Theme code lives in `theme/`. Generated theme CSS and compiled editor JavaScript are ignored by Git.
 
-### Fundamentals
+## Build and deploy
 
-* [Installation](https://underscoretw.com/docs/installation/)  
-  Generate your custom theme, install it in WordPress and run your first Tailwind builds
-* [Development](https://underscoretw.com/docs/development/)  
-  Watch for changes, build for production and learn more about how _tw, WordPress and Tailwind work together
-* [Deployment](https://underscoretw.com/docs/deployment/)  
-  Share your new WordPress theme with the world
-* [Troubleshooting](https://underscoretw.com/docs/troubleshooting/)  
-  Find solutions to potential issues and answers to frequently asked questions
+```bash
+npm run bundle     # build theme and create baltimore.zip
+npm run deploy     # build + SFTP upload using local settings
+npm run ship       # build, commit on main, push and deploy
+```
 
-### In Depth
+Never commit SFTP credentials; the deploy script reads local ignored settings. GitHub Actions validates production bundles but does not deploy.
 
-* [Using Tailwind Typography](https://underscoretw.com/docs/tailwind-typography/)  
-  Customize front-end and back-end typographic styles
-* [JavaScript Bundling with esbuild](https://underscoretw.com/docs/esbuild/)  
-  Install and bundle JavaScript libraries (very quickly)
-* [Adding custom fonts](https://underscoretw.com/docs/custom-fonts/)
-  Host your fonts yourself or use a third party—and then add those fonts to your WordPress theme
-* [Linting and Code Formatting](https://underscoretw.com/docs/linting-code-formatting/)  
-  Catch bugs and stop thinking about formatting
-* [Keeping your theme up-to-date](https://underscoretw.com/docs/updating/)
-  How to update (and whether or not you should)
-
-### Extras
-
-* [On Tailwind and WordPress](https://underscoretw.com/docs/wordpress-tailwind/)  
-  Understand how WordPress and Tailwind work together
-* [Styling HTML from outside the theme](https://underscoretw.com/docs/styling-html-from-outside-the-theme/)
-  Work with WordPress core, plugins and JavaScript libraries
-* [Managing Styles for Custom Blocks](https://underscoretw.com/docs/custom-blocks/)  
-  Learn strategies for using Tailwind in theme-specific custom blocks
-* [Setting Up Browsersync](https://underscoretw.com/docs/browsersync/)  
-  Add live reloads and synchronized cross-device testing to your workflow
+See [docs/architecture.md](docs/architecture.md) for code ownership, plugin boundaries, deployment conventions and architectural decisions.
