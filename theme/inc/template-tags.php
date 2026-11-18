@@ -48,63 +48,6 @@ if ( ! function_exists( 'balt_posted_by' ) ) :
 	}
 endif;
 
-if ( ! function_exists( 'balt_entry_meta' ) ) :
-	/**
-	 * Prints HTML with post meta information.
-	 * This template tag is used in the entry header.
-	 */
-	function balt_entry_meta() {
-
-		// Hide author, post date, category and tag text for pages.
-		if ( 'post' === get_post_type() ) {
-
-			// Posted by.
-			balt_posted_by();
-
-			// Posted on.
-			balt_posted_on();
-
-			/* translators: used between list items, there is a space after the comma. */
-			$categories_list = get_the_category_list( __( ', ', 'baltimore' ) );
-			if ( $categories_list ) {
-				printf(
-				/* translators: 1: posted in label, only visible to screen readers. 2: list of categories. */
-					'<span><span class="sr-only">%1$s</span>%2$s</span>',
-					esc_html__( 'Posted in', 'baltimore' ),
-					$categories_list // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-				);
-			}
-
-			/* translators: used between list items, there is a space after the comma. */
-			$tags_list = get_the_tag_list( '', __( ', ', 'baltimore' ) );
-			if ( $tags_list ) {
-				printf(
-				/* translators: 1: tags label, only visible to screen readers. 2: list of tags. */
-					'<span><span class="sr-only">%1$s</span>%2$s</span>',
-					esc_html__( 'Tags:', 'baltimore' ),
-					$tags_list // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-				);
-			}
-		}
-
-		// Edit post link.
-		edit_post_link(
-			sprintf(
-				wp_kses(
-				/* translators: %s: Name of current post. Only visible to screen readers. */
-					__( 'Edit <span class="sr-only">%s</span>', 'baltimore' ),
-					array(
-						'span' => array(
-							'class' => array(),
-						),
-					)
-				),
-				get_the_title()
-			)
-		);
-	}
-endif;
-
 if ( ! function_exists( 'balt_entry_footer' ) ) :
 	/**
 	 * Prints HTML with post meta information.

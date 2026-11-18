@@ -83,6 +83,7 @@ if (! function_exists('balt_setup')) :
 		register_nav_menus(
 			array(
 				'menu-1'          => __('Primary', 'baltimore'),
+				'dpi-top-bar'     => __('Utility Navigation', 'baltimore'),
 				'menu-2'          => __('Footer Menu', 'baltimore'),
 				'footer-services' => __('Our Services', 'baltimore'),
 			)
@@ -102,9 +103,6 @@ if (! function_exists('balt_setup')) :
 			)
 		);
 
-		// Add theme support for selective refresh for widgets.
-		add_theme_support('customize-selective-refresh-widgets');
-
 		// Add support for editor styles.
 		add_theme_support('editor-styles');
 
@@ -119,27 +117,6 @@ if (! function_exists('balt_setup')) :
 	}
 endif;
 add_action('after_setup_theme', 'balt_setup');
-
-/**
- * Register widget area.
- *
- * @link https://developer.wordpress.org/themes/functionality/sidebars/#registering-a-sidebar
- */
-function balt_widgets_init()
-{
-	register_sidebar(
-		array(
-			'name'          => __('Footer', 'baltimore'),
-			'id'            => 'sidebar-1',
-			'description'   => __('Add widgets here to appear in your footer.', 'baltimore'),
-			'before_widget' => '<section id="%1$s" class="widget %2$s">',
-			'after_widget'  => '</section>',
-			'before_title'  => '<h2 class="widget-title">',
-			'after_title'   => '</h2>',
-		)
-	);
-}
-add_action('widgets_init', 'balt_widgets_init');
 
 /**
  * Enqueue scripts and styles.
@@ -167,6 +144,7 @@ function balt_enqueue_block_editor_script()
 			get_template_directory_uri() . '/js/block-editor.min.js',
 			array(
 				'wp-blocks',
+				'wp-dom-ready',
 				'wp-edit-post',
 			),
 			BALT_VERSION,
