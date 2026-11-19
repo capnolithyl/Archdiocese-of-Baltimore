@@ -40,7 +40,7 @@ The layout uses Tailwind only: four 460px cards in one row at wide breakpoints, 
 
 ### Media Center
 
-The **Media Center** block (\`balt/media-center\`) uses the latest **three published entries** in each tab. The tabs are Campaigns, Events, Podcasts, Videos, Press, Letters and Homilies, with a View All link to each post type's archive. Editors can change the block's eyebrow and heading. Posts supply their own featured images, titles and publication dates; no hardcoded Figma imagery or Archbishop message is included.
+The **Media Center** block (\`balt/media-center\`) displays the latest **three published entries per tab**. Editors can configure and reorder **1–7 tabs** using an ACF repeater. Each tab has a searchable **Content Source** dropdown with all available public post types (including standard Posts and other registered CPTs) and their hierarchical categories; an optional label overrides the automatic tab name. For an entire post type, its View All button leads to the post-type archive. For an individual category, it leads to that category archive. Tabs use the same Figma layout regardless of the selected source. Existing blocks with no tab configuration continue to display the original seven media types until editors choose their own tabs. Posts supply their own featured images, titles and publication dates; no hardcoded Figma imagery or Archbishop message is included.
 
 Registered in \`theme/inc/media-post-types.php\`:
 

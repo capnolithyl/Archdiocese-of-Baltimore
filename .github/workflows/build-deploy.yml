@@ -172,11 +172,29 @@ jobs:
           const group = JSON.parse(readFileSync('theme/acf-json/group_balt_media_center.json', 'utf8'));
           const render = readFileSync('theme/blocks/media-center/render.php', 'utf8');
           const script = readFileSync('theme/blocks/media-center/view.js', 'utf8');
+          const sources = readFileSync('theme/inc/media-center.php', 'utf8');
+          for (const token of ['balt_media_center_source_choices', 'acf/load_field/key=field_balt_media_center_tab_source', 'get_post_types(', 'get_object_taxonomies(', 'get_terms(', 'get_term_link(', 'is_object_in_taxonomy(']) {
+            if (!sources.includes(token)) throw new Error('Media Center category/type source handler missing: ' + token);
+          }
+          for (const token of ["get_field( 'tabs' )", 'array_slice( $configured_tabs, 0, 7 )', 'balt_media_center_resolve_source(', "['tax_query']", "'include_children' => true", "'tab-' . $index", "'panel-' . $index"]) {
+            if (!render.includes(token)) throw new Error('Dynamic Media Center render missing: ' + token);
+          }
+          if (render.includes("'-panel-' . $type") || render.includes("'-tab-' . $type")) {
+            throw new Error('Media Center tab DOM IDs must be based on row order');
+          }
           if (block.name !== 'balt/media-center' || block.viewScript !== 'file:./view.js') {
             throw new Error('Media Center block registration is incorrect');
           }
-          if (group.fields.map(f => f.name).join(',') !== 'eyebrow,heading') {
+          if (group.fields.map(f => f.name).join(',') !== 'eyebrow,heading,tabs') {
             throw new Error('Media Center block field schema is incorrect');
+          }
+          const tabs = group.fields.find(f => f.name === 'tabs');
+          if (tabs.type !== 'repeater' || tabs.min !== 1 || tabs.max !== 7) {
+            throw new Error('Media Center must allow 1–7 tabs');
+          }
+          if (tabs.sub_fields.map(f => f.name).join(',') !== 'source,label' ||
+              tabs.sub_fields[0].type !== 'select' || tabs.sub_fields[0].ui !== 1) {
+            throw new Error('Media Center tab source picker is incorrect');
           }
           for (const token of ["balt_media_types()", "get_posts(", "'numberposts'     => 3", 'get_post_type_archive_link(', 'get_the_post_thumbnail(', 'data-balt-media-panel', 'data-balt-media-tab']) {
             if (!render.includes(token)) throw new Error('Media Center renderer missing: ' + token);

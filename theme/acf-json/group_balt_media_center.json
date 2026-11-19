@@ -39,6 +39,70 @@
       "maxlength": "",
       "prepend": "",
       "append": ""
+    },
+    {
+      "key": "field_balt_media_center_tabs",
+      "label": "Tabs",
+      "name": "tabs",
+      "type": "repeater",
+      "instructions": "Choose 1–7 tabs. Each can show all posts of a content type or posts in one of its categories. Drag rows to reorder tabs. When not configured, the block displays the original seven Media Center types.",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "layout": "block",
+      "pagination": 0,
+      "min": 1,
+      "max": 7,
+      "collapsed": "field_balt_media_center_tab_source",
+      "button_label": "Add Tab",
+      "rows_per_page": 7,
+      "sub_fields": [
+        {
+          "key": "field_balt_media_center_tab_source",
+          "label": "Content Source",
+          "name": "source",
+          "type": "select",
+          "instructions": "Choose a post type (all posts) or one of its categories. The list includes other registered public post types and hierarchical taxonomies.",
+          "required": 1,
+          "conditional_logic": 0,
+          "wrapper": {
+            "width": "60",
+            "class": "",
+            "id": ""
+          },
+          "choices": {},
+          "default_value": "",
+          "return_format": "value",
+          "allow_null": 0,
+          "multiple": 0,
+          "ui": 1,
+          "ajax": 0,
+          "placeholder": "Select a post type or category"
+        },
+        {
+          "key": "field_balt_media_center_tab_label",
+          "label": "Tab Label (optional)",
+          "name": "label",
+          "type": "text",
+          "instructions": "Leave blank to use the post type or category name.",
+          "required": 0,
+          "conditional_logic": 0,
+          "wrapper": {
+            "width": "40",
+            "class": "",
+            "id": ""
+          },
+          "default_value": "",
+          "placeholder": "Use source name",
+          "maxlength": "",
+          "prepend": "",
+          "append": ""
+        }
+      ]
     }
   ],
   "location": [
@@ -57,6 +121,6 @@
   "instruction_placement": "label",
   "hide_on_screen": "",
   "active": true,
-  "description": "Displays the latest three published items per Media Center tab.",
+  "description": "A configurable tabbed grid of the latest three published posts per selected content source.",
   "show_in_rest": 0
 }
