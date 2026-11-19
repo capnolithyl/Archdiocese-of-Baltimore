@@ -176,7 +176,7 @@ jobs:
           for (const token of ['balt_media_center_source_choices', 'acf/load_field/key=field_balt_media_center_tab_source', 'get_post_types(', 'get_object_taxonomies(', 'get_terms(', 'get_term_link(', 'is_object_in_taxonomy(']) {
             if (!sources.includes(token)) throw new Error('Media Center category/type source handler missing: ' + token);
           }
-          for (const token of ["get_field( 'tabs' )", 'array_slice( $configured_tabs, 0, 7 )', 'balt_media_center_resolve_source(', "['tax_query']", "'include_children' => true", "'tab-' . $index", "'panel-' . $index"]) {
+          for (const token of ["get_field( 'tabs' )", 'array_slice( $configured_tabs, 0, 7 )', 'balt_media_center_resolve_source(', "['tax_query']", "'include_children' => true", "'-tab-' . $index", "'-panel-' . $index"]) {
             if (!render.includes(token)) throw new Error('Dynamic Media Center render missing: ' + token);
           }
           if (render.includes("'-panel-' . $type") || render.includes("'-tab-' . $type")) {
