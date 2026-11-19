@@ -63,7 +63,7 @@ if ( empty( $categories ) ) {
 	if ( ! empty( $is_preview ) ) {
 		printf(
 			'<div %1$s><p>%2$s</p></div>',
-			get_block_wrapper_attributes( array( 'class' => 'dpi-block dpi-community-slider dpi-block--placeholder' ) ), // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			get_block_wrapper_attributes( array( 'class' => 'dpi-block dpi-community-slider dpi-block--placeholder' ) ),
 			esc_html__( 'Select at least one post category.', 'dpi-blocks' )
 		);
 	}
@@ -135,9 +135,9 @@ $dpi_render_footer_cta = static function ( array $link ) use ( $is_preview ) {
 	?>
 	<div class="dpi-community-slider__footer">
 		<?php
-		echo dpi_blocks_link_open( $link, 'dpi-community-slider__cta dpi-button', ! empty( $is_preview ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo dpi_blocks_link_open( $link, 'dpi-community-slider__cta dpi-button', ! empty( $is_preview ) );
 		echo esc_html( $link['title'] );
-		echo dpi_blocks_link_close( ! empty( $is_preview ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo dpi_blocks_link_close( ! empty( $is_preview ) );
 		?>
 	</div>
 	<?php
@@ -145,7 +145,7 @@ $dpi_render_footer_cta = static function ( array $link ) use ( $is_preview ) {
 
 $wrapper_attributes = get_block_wrapper_attributes( $wrapper_args );
 ?>
-<section <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+<section <?php echo $wrapper_attributes;?>
 <?php
 if ( $heading ) :
 	?>

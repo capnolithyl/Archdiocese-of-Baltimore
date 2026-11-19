@@ -40,7 +40,7 @@ $eyebrow    = ! empty( $categories ) ? $categories[0]->name : balt_get_content_t
 				'full',
 				false,
 				array( 'class' => 'template-single__featured-image-element' )
-			); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			);
 			?>
 		</figure>
 	<?php endif; ?>

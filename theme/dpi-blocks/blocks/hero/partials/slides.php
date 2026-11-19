@@ -24,7 +24,7 @@ $dpi_slides = $dpi_get_field( 'slides', array() );
 		<div class="dpi-hero__media">
 			<?php if ( $dpi_image_id ) : ?>
 				<?php
-				echo wp_get_attachment_image( $dpi_image_id, 'full', false, array( 'alt' => '' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				echo wp_get_attachment_image( $dpi_image_id, 'full', false, array( 'alt' => '' ) );
 				?>
 			<?php elseif ( ! empty( $is_preview ) ) : ?>
 			<p class="dpi-block--placeholder">

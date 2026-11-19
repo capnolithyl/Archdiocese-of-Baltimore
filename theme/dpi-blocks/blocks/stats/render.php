@@ -31,7 +31,7 @@ if ( ! $items ) {
 	if ( ! empty( $is_preview ) ) {
 		printf(
 			'<div %1$s><p>%2$s</p></div>',
-			get_block_wrapper_attributes( array( 'class' => 'dpi-block dpi-stats dpi-block--placeholder' ) ), // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			get_block_wrapper_attributes( array( 'class' => 'dpi-block dpi-stats dpi-block--placeholder' ) ),
 			esc_html__( 'Add at least one statistic.', 'dpi-blocks' )
 		);
 	}
@@ -45,7 +45,7 @@ $wrapper_attributes = get_block_wrapper_attributes(
 	)
 );
 ?>
-<section <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
+<section <?php echo $wrapper_attributes;?>>
 	<ul class="dpi-stats__list">
 		<?php foreach ( $items as $item ) : ?>
 			<li class="dpi-stats__item">
