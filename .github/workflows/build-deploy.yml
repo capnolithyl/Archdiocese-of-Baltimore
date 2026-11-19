@@ -48,3 +48,30 @@ jobs:
             }
           }
           NODE
+
+      - name: Verify Feature Grid fields and responsive utilities
+        run: |
+          node --input-type=module <<'NODE'
+          import { readFileSync } from 'node:fs';
+
+          const group = JSON.parse(readFileSync('theme/acf-json/group_balt_feature_grid.json', 'utf8'));
+          const block = JSON.parse(readFileSync('theme/blocks/feature-grid/block.json', 'utf8'));
+          const repeater = group.fields.find(field => field.name === 'items');
+          if (block.name !== 'balt/feature-grid' || repeater?.min !== 1 || repeater?.max !== 6) {
+            throw new Error('Feature Grid name or ACF item limits are incorrect');
+          }
+          const fields = new Map(repeater.sub_fields.map(field => [field.name, field.type]));
+          for (const [name, type] of [['icon', 'font-awesome'], ['heading', 'text'], ['description', 'textarea'], ['link', 'link']]) {
+            if (fields.get(name) !== type) throw new Error('Missing Feature Grid ACF field: ' + name);
+          }
+          if (repeater.sub_fields.find(field => field.name === 'icon')?.save_format !== 'class') {
+            throw new Error('Font Awesome field must return icon classes');
+          }
+
+          for (const path of ['theme/style.css', 'theme/style-editor.css']) {
+            const css = readFileSync(path, 'utf8');
+            for (const token of ['grid-cols-6', 'col-span-2', 'col-span-3', '336px', 'bg-surface']) {
+              if (!css.includes(token)) throw new Error('Feature Grid Tailwind utility missing: ' + token + ' in ' + path);
+            }
+          }
+          NODE

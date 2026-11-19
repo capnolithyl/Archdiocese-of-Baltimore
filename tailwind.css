@@ -2,6 +2,7 @@
 @import "tailwindcss/theme";
 
 @source "./theme/dpi-blocks/blocks/hero";
+@source "./theme/blocks/feature-grid";
 
 @import "./tailwind/tailwind-theme.css";
 

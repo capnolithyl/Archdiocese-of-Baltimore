@@ -1,0 +1,16 @@
+<?php
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
+/** Register the theme's Navigate / Feature Grid ACF block. */
+function balt_register_feature_grid_block(): void {
+	register_block_type( get_template_directory() . '/blocks/feature-grid' );
+}
+add_action( 'init', 'balt_register_feature_grid_block', 5 );
+
+/** Render an ACF preview without depending on the separate DPI Blocks plugin. */
+function balt_render_feature_grid_block( $block, $content = '', $is_preview = false, $post_id = 0, $wp_block = null, $context = null ): void {
+	require get_template_directory() . '/blocks/feature-grid/render.php';
+}

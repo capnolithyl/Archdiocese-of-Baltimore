@@ -1,0 +1,35 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "balt/feature-grid",
+  "version": "1.0.0",
+  "title": "Navigate / Feature Grid",
+  "category": "baltimore",
+  "icon": "screenoptions",
+  "description": "Explore the Archdiocese with one to six icon-linked feature cards.",
+  "keywords": [
+    "navigate",
+    "explore",
+    "feature grid",
+    "icon links"
+  ],
+  "textdomain": "baltimore",
+  "acf": {
+    "mode": "preview",
+    "renderCallback": "balt_render_feature_grid_block",
+    "blockVersion": 3
+  },
+  "supports": {
+    "anchor": true,
+    "align": [
+      "full"
+    ],
+    "html": false
+  },
+  "attributes": {
+    "align": {
+      "type": "string",
+      "default": "full"
+    }
+  }
+}
