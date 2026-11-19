@@ -199,6 +199,16 @@ function balt_hero_acf_field_group( array $group ): array {
 }
 add_filter( 'dpi_blocks/acf_field_group/key=group_dpi_hero', 'balt_hero_acf_field_group' );
 
+/** Keep Feature Banner fields aligned with the simplified theme-owned slider. */
+function balt_feature_banner_acf_field_group( array $group ): array {
+	$path   = get_template_directory() . '/acf-json/group_dpi_feature_banner.json';
+	$fields = wp_json_file_decode( $path, array( 'associative' => true ) );
+
+	return is_array( $fields ) ? $fields : $group;
+}
+add_filter( 'dpi_blocks/acf_field_group/key=group_dpi_feature_banner', 'balt_feature_banner_acf_field_group' );
+
+
 function balt_hero_block_metadata( array $metadata ): array {
 	$metadata['supports'] = array(
 		'anchor' => true,

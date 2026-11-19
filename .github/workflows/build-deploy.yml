@@ -75,3 +75,37 @@ jobs:
             }
           }
           NODE
+
+      - name: Verify featured banner slider fields and Tailwind styling
+        run: |
+          node --input-type=module <<'NODE'
+          import { readFileSync } from 'node:fs';
+
+          const fields = JSON.parse(readFileSync('theme/acf-json/group_dpi_feature_banner.json', 'utf8'));
+          const block = JSON.parse(readFileSync('theme/dpi-blocks/blocks/feature-banner/block.json', 'utf8'));
+          if (block.name !== 'dpi/feature-banner' || fields.fields.length !== 1) {
+            throw new Error('Feature Banner registration or field simplification failed');
+          }
+
+          const slides = fields.fields[0];
+          if (slides.name !== 'slides' || slides.min !== 1 || slides.max !== 5) {
+            throw new Error('Featured slides must have a 1–5 limit');
+          }
+          const expected = ['image', 'eyebrow', 'headline', 'content', 'buttons'];
+          if (slides.sub_fields.map(field => field.name).join(',') !== expected.join(',')) {
+            throw new Error('Featured slide fields differ from the expected fields');
+          }
+          const buttons = slides.sub_fields.find(field => field.name === 'buttons');
+          if (buttons.max !== 2) throw new Error('Expected at most two buttons');
+
+          const markup = readFileSync('theme/dpi-blocks/blocks/feature-banner/render.php', 'utf8');
+          for (const token of ['data-dpi-slick', 'btn btn-gold', 'btn btn-outline', "array_slice( get_field( 'slides' ) ?: array(), 0, 5 )"]) {
+            if (!markup.includes(token)) throw new Error('Featured slider output missing: ' + token);
+          }
+          for (const path of ['theme/style.css', 'theme/style-editor.css']) {
+            const css = readFileSync(path, 'utf8');
+            for (const token of ['748px', '.slick-prev', '.slick-next', '.slick-dots', '.slick-active']) {
+              if (!css.includes(token)) throw new Error('Featured slider Tailwind missing: ' + token + ' in ' + path);
+            }
+          }
+          NODE

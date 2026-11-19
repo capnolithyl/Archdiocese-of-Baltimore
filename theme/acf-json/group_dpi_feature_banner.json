@@ -1,61 +1,15 @@
 {
   "key": "group_dpi_feature_banner",
-  "title": "DPI Feature / CTA Banner Block",
+  "title": "Featured Content Slider",
   "fields": [
-    {
-      "key": "field_dpi_feature_banner_slides_tab",
-      "label": "Slides",
-      "name": "",
-      "type": "tab",
-      "instructions": "",
-      "required": 0,
-      "conditional_logic": 0,
-      "wrapper": {
-        "width": "",
-        "class": "",
-        "id": ""
-      },
-      "placement": "top",
-      "endpoint": 0
-    },
-    {
-      "key": "field_dpi_feature_banner_content_source",
-      "label": "Content Source",
-      "name": "content_source",
-      "type": "button_group",
-      "instructions": "Build slides manually or generate them from posts in one or more categories.",
-      "required": 1,
-      "conditional_logic": 0,
-      "wrapper": {
-        "width": "",
-        "class": "",
-        "id": ""
-      },
-      "choices": {
-        "manual": "Manual Slides",
-        "categories": "Post Categories"
-      },
-      "default_value": "manual",
-      "return_format": "value",
-      "allow_null": 0,
-      "layout": "horizontal"
-    },
     {
       "key": "field_dpi_feature_banner_slides",
       "label": "Slides",
       "name": "slides",
       "type": "repeater",
-      "instructions": "Add one or more feature slides. A single slide renders as a static banner; two or more slides become a Slick carousel.",
+      "instructions": "Add 1–5 featured slides. Each slide displays a background image, eyebrow, heading, subheading, and up to two buttons.",
       "required": 1,
-      "conditional_logic": [
-        [
-          {
-            "field": "field_dpi_feature_banner_content_source",
-            "operator": "==",
-            "value": "manual"
-          }
-        ]
-      ],
+      "conditional_logic": 0,
       "wrapper": {
         "width": "",
         "class": "",
@@ -64,17 +18,34 @@
       "layout": "block",
       "pagination": 0,
       "min": 1,
-      "max": 0,
+      "max": 5,
       "collapsed": "field_dpi_feature_banner_slide_headline",
       "button_label": "Add Slide",
       "rows_per_page": 20,
       "sub_fields": [
         {
+          "key": "field_dpi_feature_banner_slide_image",
+          "label": "Image",
+          "name": "image",
+          "type": "image",
+          "instructions": "Full-width background image. It will be cropped to fill the banner.",
+          "required": 1,
+          "conditional_logic": 0,
+          "wrapper": {
+            "width": "50",
+            "class": "",
+            "id": ""
+          },
+          "return_format": "id",
+          "preview_size": "medium",
+          "library": "all"
+        },
+        {
           "key": "field_dpi_feature_banner_slide_eyebrow",
           "label": "Eyebrow",
           "name": "eyebrow",
           "type": "text",
-          "instructions": "",
+          "instructions": "Small gold label above the heading.",
           "required": 0,
           "conditional_logic": 0,
           "wrapper": {
@@ -86,11 +57,11 @@
         },
         {
           "key": "field_dpi_feature_banner_slide_headline",
-          "label": "Headline",
+          "label": "Heading",
           "name": "headline",
           "type": "text",
           "instructions": "",
-          "required": 0,
+          "required": 1,
           "conditional_logic": 0,
           "wrapper": {
             "width": "50",
@@ -99,55 +70,11 @@
           }
         },
         {
-          "key": "field_dpi_feature_banner_slide_headline_element",
-          "label": "Headline Type",
-          "name": "headline_element",
-          "type": "button_group",
-          "instructions": "Use Quote when the prominent text is a quotation rather than a section heading.",
-          "required": 0,
-          "conditional_logic": 0,
-          "wrapper": {
-            "width": "50",
-            "class": "",
-            "id": ""
-          },
-          "choices": {
-            "heading": "Heading",
-            "quote": "Quote"
-          },
-          "default_value": "heading",
-          "return_format": "value",
-          "allow_null": 0,
-          "layout": "horizontal"
-        },
-        {
-          "key": "field_dpi_feature_banner_slide_visual_variant",
-          "label": "Visual Variant",
-          "name": "visual_variant",
-          "type": "button_group",
-          "instructions": "Provides a stable styling hook for the active theme.",
-          "required": 0,
-          "conditional_logic": 0,
-          "wrapper": {
-            "width": "50",
-            "class": "",
-            "id": ""
-          },
-          "choices": {
-            "dark": "Dark",
-            "light": "Light"
-          },
-          "default_value": "dark",
-          "return_format": "value",
-          "allow_null": 0,
-          "layout": "horizontal"
-        },
-        {
           "key": "field_dpi_feature_banner_slide_content",
-          "label": "Supporting Copy",
+          "label": "Subheading",
           "name": "content",
           "type": "textarea",
-          "instructions": "",
+          "instructions": "Supporting text beneath the heading.",
           "required": 0,
           "conditional_logic": 0,
           "wrapper": {
@@ -155,7 +82,7 @@
             "class": "",
             "id": ""
           },
-          "rows": 4,
+          "rows": 3,
           "new_lines": ""
         },
         {
@@ -163,7 +90,7 @@
           "label": "Buttons",
           "name": "buttons",
           "type": "repeater",
-          "instructions": "Optional calls to action for this slide.",
+          "instructions": "Optional calls to action: first gold, second outlined.",
           "required": 0,
           "conditional_logic": 0,
           "wrapper": {
@@ -195,390 +122,8 @@
               "return_format": "array"
             }
           ]
-        },
-        {
-          "key": "field_dpi_feature_banner_slide_image",
-          "label": "Image",
-          "name": "image",
-          "type": "image",
-          "instructions": "",
-          "required": 0,
-          "conditional_logic": 0,
-          "wrapper": {
-            "width": "50",
-            "class": "",
-            "id": ""
-          },
-          "return_format": "id",
-          "preview_size": "medium",
-          "library": "all"
-        },
-        {
-          "key": "field_dpi_feature_banner_slide_image_layout",
-          "label": "Image Layout",
-          "name": "image_layout",
-          "type": "button_group",
-          "instructions": "",
-          "required": 0,
-          "conditional_logic": 0,
-          "wrapper": {
-            "width": "50",
-            "class": "",
-            "id": ""
-          },
-          "choices": {
-            "background": "Background",
-            "left": "Left",
-            "right": "Right"
-          },
-          "default_value": "background",
-          "return_format": "value",
-          "allow_null": 0,
-          "layout": "horizontal"
         }
       ]
-    },
-    {
-      "key": "field_dpi_feature_banner_categories",
-      "label": "Post Categories",
-      "name": "categories",
-      "type": "taxonomy",
-      "instructions": "Posts matching any selected category are combined into one slider.",
-      "required": 1,
-      "conditional_logic": [
-        [
-          {
-            "field": "field_dpi_feature_banner_content_source",
-            "operator": "==",
-            "value": "categories"
-          }
-        ]
-      ],
-      "wrapper": {
-        "width": "",
-        "class": "",
-        "id": ""
-      },
-      "taxonomy": "category",
-      "field_type": "checkbox",
-      "allow_null": 0,
-      "add_term": 1,
-      "save_terms": 0,
-      "load_terms": 0,
-      "return_format": "id",
-      "multiple": 0
-    },
-    {
-      "key": "field_dpi_feature_banner_posts_per_page",
-      "label": "Posts to Show",
-      "name": "posts_per_page",
-      "type": "number",
-      "instructions": "Maximum number of posts used as slides.",
-      "required": 1,
-      "conditional_logic": [
-        [
-          {
-            "field": "field_dpi_feature_banner_content_source",
-            "operator": "==",
-            "value": "categories"
-          }
-        ]
-      ],
-      "wrapper": {
-        "width": "33",
-        "class": "",
-        "id": ""
-      },
-      "default_value": 5,
-      "min": 1,
-      "max": 20,
-      "step": 1,
-      "placeholder": "",
-      "prepend": "",
-      "append": ""
-    },
-    {
-      "key": "field_dpi_feature_banner_orderby",
-      "label": "Order By",
-      "name": "orderby",
-      "type": "select",
-      "instructions": "",
-      "required": 1,
-      "conditional_logic": [
-        [
-          {
-            "field": "field_dpi_feature_banner_content_source",
-            "operator": "==",
-            "value": "categories"
-          }
-        ]
-      ],
-      "wrapper": {
-        "width": "33",
-        "class": "",
-        "id": ""
-      },
-      "choices": {
-        "date": "Date",
-        "title": "Title",
-        "menu_order": "Menu Order",
-        "rand": "Random"
-      },
-      "default_value": "date",
-      "return_format": "value",
-      "multiple": 0,
-      "allow_null": 0,
-      "ui": 0,
-      "ajax": 0,
-      "placeholder": ""
-    },
-    {
-      "key": "field_dpi_feature_banner_order",
-      "label": "Order",
-      "name": "order",
-      "type": "select",
-      "instructions": "",
-      "required": 1,
-      "conditional_logic": [
-        [
-          {
-            "field": "field_dpi_feature_banner_content_source",
-            "operator": "==",
-            "value": "categories"
-          }
-        ]
-      ],
-      "wrapper": {
-        "width": "34",
-        "class": "",
-        "id": ""
-      },
-      "choices": {
-        "DESC": "Descending",
-        "ASC": "Ascending"
-      },
-      "default_value": "DESC",
-      "return_format": "value",
-      "multiple": 0,
-      "allow_null": 0,
-      "ui": 0,
-      "ajax": 0,
-      "placeholder": ""
-    },
-    {
-      "key": "field_dpi_feature_banner_post_show_excerpt",
-      "label": "Show Excerpt",
-      "name": "post_show_excerpt",
-      "type": "true_false",
-      "instructions": "Use the post excerpt as the slide's supporting copy.",
-      "required": 0,
-      "conditional_logic": [
-        [
-          {
-            "field": "field_dpi_feature_banner_content_source",
-            "operator": "==",
-            "value": "categories"
-          }
-        ]
-      ],
-      "wrapper": {
-        "width": "33",
-        "class": "",
-        "id": ""
-      },
-      "message": "",
-      "default_value": 1,
-      "ui": 1,
-      "ui_on_text": "",
-      "ui_off_text": ""
-    },
-    {
-      "key": "field_dpi_feature_banner_post_button_label",
-      "label": "Post Button Label",
-      "name": "post_button_label",
-      "type": "text",
-      "instructions": "Button linking to each post. Leave blank for no button.",
-      "required": 0,
-      "conditional_logic": [
-        [
-          {
-            "field": "field_dpi_feature_banner_content_source",
-            "operator": "==",
-            "value": "categories"
-          }
-        ]
-      ],
-      "wrapper": {
-        "width": "33",
-        "class": "",
-        "id": ""
-      },
-      "default_value": "Read More",
-      "maxlength": 40,
-      "placeholder": "Read More",
-      "prepend": "",
-      "append": ""
-    },
-    {
-      "key": "field_dpi_feature_banner_post_image_layout",
-      "label": "Post Image Layout",
-      "name": "post_image_layout",
-      "type": "button_group",
-      "instructions": "Image layout used for all post-generated slides.",
-      "required": 1,
-      "conditional_logic": [
-        [
-          {
-            "field": "field_dpi_feature_banner_content_source",
-            "operator": "==",
-            "value": "categories"
-          }
-        ]
-      ],
-      "wrapper": {
-        "width": "34",
-        "class": "",
-        "id": ""
-      },
-      "choices": {
-        "background": "Background",
-        "left": "Left",
-        "right": "Right"
-      },
-      "default_value": "background",
-      "return_format": "value",
-      "allow_null": 0,
-      "layout": "horizontal"
-    },
-    {
-      "key": "field_dpi_feature_banner_post_visual_variant",
-      "label": "Post Visual Variant",
-      "name": "post_visual_variant",
-      "type": "button_group",
-      "instructions": "Stable styling hook applied to all post-generated slides.",
-      "required": 1,
-      "conditional_logic": [
-        [
-          {
-            "field": "field_dpi_feature_banner_content_source",
-            "operator": "==",
-            "value": "categories"
-          }
-        ]
-      ],
-      "wrapper": {
-        "width": "",
-        "class": "",
-        "id": ""
-      },
-      "choices": {
-        "dark": "Dark",
-        "light": "Light"
-      },
-      "default_value": "dark",
-      "return_format": "value",
-      "allow_null": 0,
-      "layout": "horizontal"
-    },
-    {
-      "key": "field_dpi_feature_banner_slider_tab",
-      "label": "Slider",
-      "name": "",
-      "type": "tab",
-      "instructions": "",
-      "required": 0,
-      "conditional_logic": 0,
-      "wrapper": {
-        "width": "",
-        "class": "",
-        "id": ""
-      },
-      "placement": "top",
-      "endpoint": 0
-    },
-    {
-      "key": "field_dpi_feature_banner_show_arrows",
-      "label": "Show Arrows",
-      "name": "show_arrows",
-      "type": "true_false",
-      "instructions": "Show previous and next controls when there is more than one slide.",
-      "required": 0,
-      "conditional_logic": 0,
-      "wrapper": {
-        "width": "33",
-        "class": "",
-        "id": ""
-      },
-      "message": "",
-      "default_value": 1,
-      "ui": 1,
-      "ui_on_text": "",
-      "ui_off_text": ""
-    },
-    {
-      "key": "field_dpi_feature_banner_show_dots",
-      "label": "Show Navigation Dots",
-      "name": "show_dots",
-      "type": "true_false",
-      "instructions": "Show slide navigation dots when there is more than one slide.",
-      "required": 0,
-      "conditional_logic": 0,
-      "wrapper": {
-        "width": "33",
-        "class": "",
-        "id": ""
-      },
-      "message": "",
-      "default_value": 1,
-      "ui": 1,
-      "ui_on_text": "",
-      "ui_off_text": ""
-    },
-    {
-      "key": "field_dpi_feature_banner_autoplay",
-      "label": "Autoplay",
-      "name": "autoplay",
-      "type": "true_false",
-      "instructions": "Advance slides automatically.",
-      "required": 0,
-      "conditional_logic": 0,
-      "wrapper": {
-        "width": "34",
-        "class": "",
-        "id": ""
-      },
-      "message": "",
-      "default_value": 0,
-      "ui": 1,
-      "ui_on_text": "",
-      "ui_off_text": ""
-    },
-    {
-      "key": "field_dpi_feature_banner_autoplay_speed",
-      "label": "Autoplay Speed",
-      "name": "autoplay_speed",
-      "type": "number",
-      "instructions": "Milliseconds between automatic slide changes.",
-      "required": 1,
-      "conditional_logic": [
-        [
-          {
-            "field": "field_dpi_feature_banner_autoplay",
-            "operator": "==",
-            "value": "1"
-          }
-        ]
-      ],
-      "wrapper": {
-        "width": "50",
-        "class": "",
-        "id": ""
-      },
-      "default_value": 6000,
-      "min": 1000,
-      "max": 30000,
-      "step": 100,
-      "append": "ms"
     }
   ],
   "location": [
@@ -597,6 +142,6 @@
   "instruction_placement": "label",
   "hide_on_screen": "",
   "active": true,
-  "description": "Manual or post-sourced slide content and carousel controls for the DPI Feature / CTA Banner block.",
+  "description": "Full-width featured image slider with up to five slides, headings and CTA buttons.",
   "show_in_rest": 0
 }
