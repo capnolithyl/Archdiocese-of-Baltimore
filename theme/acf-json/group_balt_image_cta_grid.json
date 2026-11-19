@@ -1,9 +1,9 @@
 {
-  "key": "group_balt_evangelization_grid",
-  "title": "Evangelization / Four-Card Grid",
+  "key": "group_balt_image_cta_grid",
+  "title": "Image CTA Grid",
   "fields": [
     {
-      "key": "field_balt_evangelization_eyebrow",
+      "key": "field_balt_image_cta_grid_eyebrow",
       "label": "Eyebrow",
       "name": "eyebrow",
       "type": "text",
@@ -15,10 +15,11 @@
         "class": "",
         "id": ""
       },
-      "default_value": "Evangelization"
+      "default_value": "",
+      "placeholder": "Section label"
     },
     {
-      "key": "field_balt_evangelization_heading",
+      "key": "field_balt_image_cta_grid_heading",
       "label": "Heading",
       "name": "heading",
       "type": "text",
@@ -30,10 +31,11 @@
         "class": "",
         "id": ""
       },
-      "default_value": "Share the Joy of the Gospel"
+      "default_value": "",
+      "placeholder": "Section heading"
     },
     {
-      "key": "field_balt_evangelization_description",
+      "key": "field_balt_image_cta_grid_description",
       "label": "Description",
       "name": "description",
       "type": "textarea",
@@ -45,12 +47,13 @@
         "class": "",
         "id": ""
       },
-      "default_value": "Lord Jesus, send us out in the power of Your Spirit. Open our hearts to welcome our neighbors, and give us courage to proclaim Your good news with joy.",
+      "default_value": "",
       "rows": 3,
-      "new_lines": ""
+      "new_lines": "",
+      "placeholder": "Optional supporting description"
     },
     {
-      "key": "field_balt_evangelization_cta",
+      "key": "field_balt_image_cta_grid_cta",
       "label": "CTA Link",
       "name": "cta",
       "type": "link",
@@ -65,11 +68,11 @@
       "return_format": "array"
     },
     {
-      "key": "field_balt_evangelization_items",
+      "key": "field_balt_image_cta_grid_items",
       "label": "Image Cards",
       "name": "items",
       "type": "repeater",
-      "instructions": "Exactly four cards are required for this design. Each row controls an image, centered label and linked destination. Card colors are assigned by position (red, gold, blue, slate).",
+      "instructions": "Exactly four image cards are required for the current layout. Each card has an image, label and destination. Label colors follow the card positions.",
       "required": 1,
       "conditional_logic": 0,
       "wrapper": {
@@ -81,12 +84,12 @@
       "pagination": 0,
       "min": 4,
       "max": 4,
-      "collapsed": "field_balt_evangelization_item_label",
+      "collapsed": "field_balt_image_cta_grid_item_label",
       "button_label": "Add Card",
       "rows_per_page": 4,
       "sub_fields": [
         {
-          "key": "field_balt_evangelization_item_image",
+          "key": "field_balt_image_cta_grid_item_image",
           "label": "Background Image",
           "name": "image",
           "type": "image",
@@ -103,11 +106,11 @@
           "library": "all"
         },
         {
-          "key": "field_balt_evangelization_item_label",
+          "key": "field_balt_image_cta_grid_item_label",
           "label": "Label",
           "name": "label",
           "type": "text",
-          "instructions": "Short uppercase label. Figma examples: Encounter Christ, Grow in Faith, Serve Others, Be Sent.",
+          "instructions": "Short label displayed on the image.",
           "required": 1,
           "conditional_logic": 0,
           "wrapper": {
@@ -117,7 +120,7 @@
           }
         },
         {
-          "key": "field_balt_evangelization_item_link",
+          "key": "field_balt_image_cta_grid_item_link",
           "label": "Destination",
           "name": "link",
           "type": "link",
@@ -139,7 +142,7 @@
       {
         "param": "block",
         "operator": "==",
-        "value": "balt/evangelization-grid"
+        "value": "balt/image-cta-grid"
       }
     ]
   ],
@@ -150,6 +153,6 @@
   "instruction_placement": "label",
   "hide_on_screen": "",
   "active": true,
-  "description": "Four image cards and a centered overlapping CTA panel.",
+  "description": "Four linked image cards with an overlapping, editable text and CTA panel.",
   "show_in_rest": 0
 }

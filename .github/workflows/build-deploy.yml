@@ -119,32 +119,32 @@ jobs:
           }
           NODE
 
-      - name: Verify Evangelization grid ACF and styling
+      - name: Verify Image CTA Grid ACF and styling
         run: |
           node --input-type=module <<'NODE'
           import { readFileSync } from 'node:fs';
 
-          const fields = JSON.parse(readFileSync('theme/acf-json/group_balt_evangelization_grid.json', 'utf8'));
-          const block = JSON.parse(readFileSync('theme/blocks/evangelization-grid/block.json', 'utf8'));
-          const renderer = readFileSync('theme/blocks/evangelization-grid/render.php', 'utf8');
-          if (block.name !== 'balt/evangelization-grid' || block.acf.renderCallback !== 'balt_render_evangelization_grid_block') {
-            throw new Error('Evangelization grid registration is incorrect');
+          const fields = JSON.parse(readFileSync('theme/acf-json/group_balt_image_cta_grid.json', 'utf8'));
+          const block = JSON.parse(readFileSync('theme/blocks/image-cta-grid/block.json', 'utf8'));
+          const renderer = readFileSync('theme/blocks/image-cta-grid/render.php', 'utf8');
+          if (block.name !== 'balt/image-cta-grid' || block.acf.renderCallback !== 'balt_render_image_cta_grid_block') {
+            throw new Error('Image CTA Grid registration is incorrect');
           }
           const repeater = fields.fields.find(field => field.name === 'items');
           if (repeater?.type !== 'repeater' || repeater.min !== 4 || repeater.max !== 4) {
-            throw new Error('Evangelization grid requires exactly four cards');
+            throw new Error('Image CTA Grid requires exactly four cards');
           }
           const fieldsByName = new Map(repeater.sub_fields.map(field => [field.name, field.type]));
           for (const [name, type] of [['image', 'image'], ['label', 'text'], ['link', 'link']]) {
-            if (fieldsByName.get(name) !== type) throw new Error('Evangelization card field missing: ' + name);
+            if (fieldsByName.get(name) !== type) throw new Error('Image CTA Grid card field missing: ' + name);
           }
           for (const name of ['eyebrow', 'heading', 'description', 'cta']) {
             if (!fields.fields.some(field => field.name === name)) {
-              throw new Error('Evangelization panel field missing: ' + name);
+              throw new Error('Image CTA Grid panel field missing: ' + name);
             }
           }
           for (const token of ['4 !== count( $items )', 'xl:grid-cols-4', 'xl:-mt-20', 'bg-[#BE2026]', 'bg-[#B8892B]', 'bg-[#4A90B8]', 'bg-[#4B5563]']) {
-            if (!renderer.includes(token)) throw new Error('Evangelization layout missing: ' + token);
+            if (!renderer.includes(token)) throw new Error('Image CTA Grid layout missing: ' + token);
           }
           for (const css of ['theme/style.css', 'theme/style-editor.css']) {
             if (!readFileSync(css, 'utf8').includes('460px')) {

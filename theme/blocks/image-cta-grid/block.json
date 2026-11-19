@@ -1,23 +1,23 @@
 {
   "$schema": "https://schemas.wp.org/trunk/block.json",
   "apiVersion": 3,
-  "name": "balt/evangelization-grid",
+  "name": "balt/image-cta-grid",
   "version": "1.0.0",
-  "title": "Evangelization / Four-Card Grid",
+  "title": "Image CTA Grid",
   "category": "baltimore",
   "icon": "images-alt2",
-  "description": "Four photo links behind an overlapping Evangelization message panel.",
+  "description": "Four linked image cards with an overlapping, editable content panel.",
   "keywords": [
-    "evangelization",
-    "four cards",
+    "image cards",
     "image grid",
-    "mission",
-    "cta"
+    "cta",
+    "overlapping panel",
+    "links"
   ],
   "textdomain": "baltimore",
   "acf": {
     "mode": "preview",
-    "renderCallback": "balt_render_evangelization_grid_block",
+    "renderCallback": "balt_render_image_cta_grid_block",
     "blockVersion": 3
   },
   "supports": {

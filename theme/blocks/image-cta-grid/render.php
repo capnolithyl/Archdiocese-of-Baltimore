@@ -19,7 +19,7 @@ $description = trim( (string) get_field( 'description' ) );
 $cta         = get_field( 'cta' );
 $cta         = is_array( $cta ) && ! empty( $cta['url'] ) ? $cta : null;
 $badge_colors = array( 'bg-[#BE2026]', 'bg-[#B8892B]', 'bg-[#4A90B8]', 'bg-[#4B5563]' );
-$heading_id   = wp_unique_id( 'balt-evangelization-' );
+$heading_id   = wp_unique_id( 'balt-image-cta-grid-' );
 ?>
 <section <?php echo get_block_wrapper_attributes( array( 'class' => 'not-prose relative left-1/2 mt-0! w-screen max-w-none -translate-x-1/2 bg-surface py-section' ) ); ?><?php if ( $heading ) : ?> aria-labelledby="<?php echo esc_attr( $heading_id ); ?>"<?php endif; ?>>
 	<div class="mx-auto w-full max-w-wide px-gutter">
@@ -65,7 +65,7 @@ $heading_id   = wp_unique_id( 'balt-evangelization-' );
 				$cta_tag = empty( $is_preview ) ? 'a' : 'span';
 				?>
 				<<?php echo $cta_tag; ?> class="mt-6 inline-flex items-center justify-center gap-2 font-body text-[13px] font-bold leading-[19.5px] tracking-[0.15em] text-tertiary uppercase no-underline transition-colors hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-secondary"<?php if ( 'a' === $cta_tag ) : ?> href="<?php echo esc_url( $cta['url'] ); ?>"<?php if ( '_blank' === ( $cta['target'] ?? '' ) ) : ?> target="_blank" rel="noopener noreferrer"<?php endif; ?><?php endif; ?>>
-					<?php echo esc_html( $cta['title'] ?: __( 'Explore Evangelization', 'baltimore' ) ); ?>
+					<?php echo esc_html( $cta['title'] ?: __( 'Learn More', 'baltimore' ) ); ?>
 					<svg aria-hidden="true" width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.166667" stroke-linecap="round" stroke-linejoin="round">
 						<path d="M2.9167 7H11.0833M7 2.9167L11.0833 7 7 11.0833"/>
 					</svg>
