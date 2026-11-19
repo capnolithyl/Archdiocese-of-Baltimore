@@ -63,7 +63,7 @@ $slick = array(
 				<div class="absolute inset-y-0 left-0 w-full bg-linear-to-r from-darkest via-darkest/90 to-transparent md:w-[52%]" aria-hidden="true"></div>
 				<div class="absolute inset-x-0 bottom-0 h-36 bg-linear-to-t from-darkest/65 to-transparent" aria-hidden="true"></div>
 
-				<div class="relative z-10 mx-auto flex h-full max-w-wide items-center px-gutter">
+				<div class="relative z-10 mx-auto flex h-full max-w-wide items-center px-gutter md:pl-[clamp(40px,calc(848px_-_50vw),96px)]">
 					<div class="max-w-[620px]">
 						<?php if ( $eyebrow ) : ?>
 							<p class="font-body text-lg font-semibold leading-[27px] tracking-[0.22em] text-secondary uppercase"><?php echo esc_html( $eyebrow ); ?></p>
