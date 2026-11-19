@@ -30,7 +30,7 @@ $badge_colors = array( 'bg-[#BE2026]', 'bg-[#B8892B]', 'bg-[#4A90B8]', 'bg-[#4B5
 $heading_id   = wp_unique_id( 'balt-image-cta-grid-' );
 ?>
 <section <?php echo get_block_wrapper_attributes( array( 'class' => 'not-prose relative left-1/2 mt-0! w-screen max-w-none -translate-x-1/2 bg-surface py-section' ) ); ?><?php if ( $heading ) : ?> aria-labelledby="<?php echo esc_attr( $heading_id ); ?>"<?php endif; ?>>
-	<div class="mx-auto w-full max-w-wide px-gutter">
+	<div class="mx-auto flex w-full max-w-wide flex-col-reverse px-gutter xl:flex-col">
 		<div class="mx-auto grid grid-cols-1 gap-2 sm:grid-cols-2 <?php echo esc_attr( $grid_classes ); ?>">
 			<?php foreach ( $items as $index => $item ) : ?>
 				<?php
@@ -40,7 +40,7 @@ $heading_id   = wp_unique_id( 'balt-image-cta-grid-' );
 				$has_link = is_array( $link ) && ! empty( $link['url'] );
 				$tag      = $has_link && empty( $is_preview ) ? 'a' : 'div';
 				?>
-				<<?php echo $tag; ?> class="group relative flex h-80 items-center justify-center overflow-hidden rounded-card bg-darkest text-white no-underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-secondary xl:h-[460px]"<?php if ( 'a' === $tag ) : ?> href="<?php echo esc_url( $link['url'] ); ?>"<?php if ( '_blank' === ( $link['target'] ?? '' ) ) : ?> target="_blank" rel="noopener noreferrer"<?php endif; ?><?php endif; ?>>
+				<<?php echo $tag; ?> class="group relative flex aspect-[3/4] items-center justify-center overflow-hidden rounded-card bg-darkest text-white no-underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-secondary xl:aspect-auto xl:h-[460px]"<?php if ( 'a' === $tag ) : ?> href="<?php echo esc_url( $link['url'] ); ?>"<?php if ( '_blank' === ( $link['target'] ?? '' ) ) : ?> target="_blank" rel="noopener noreferrer"<?php endif; ?><?php endif; ?>>
 					<?php if ( $image_id ) : ?>
 						<?php echo wp_get_attachment_image( $image_id, 'full', false, array( 'class' => 'absolute inset-0 size-full object-cover transition-transform duration-500 group-hover:scale-105 group-focus-visible:scale-105 motion-reduce:transition-none', 'alt' => '' ) ); ?>
 					<?php endif; ?>
@@ -55,7 +55,7 @@ $heading_id   = wp_unique_id( 'balt-image-cta-grid-' );
 			<?php endforeach; ?>
 		</div>
 
-		<div class="relative z-10 mx-auto mt-6 w-full max-w-[760px] rounded-card border-2 border-secondary bg-white px-5 py-10 text-center shadow-xl sm:px-10 xl:-mt-20 xl:px-14">
+		<div class="relative z-10 mx-auto mb-8 w-full max-w-[760px] rounded-card border-2 border-secondary bg-white px-5 py-10 text-center shadow-xl sm:px-10 xl:-mt-20 xl:mb-0 xl:px-14">
 			<?php if ( $eyebrow ) : ?>
 				<p class="font-body text-xl font-semibold leading-[30px] tracking-[0.2em] text-secondary uppercase"><?php echo esc_html( $eyebrow ); ?></p>
 			<?php endif; ?>
