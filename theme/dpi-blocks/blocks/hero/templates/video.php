@@ -12,8 +12,8 @@ $subheading  = $subheadings[0]['video_subheading'] ?? '';
 $buttons     = array_slice( get_field( 'video_buttons' ) ?: array(), 0, 2 );
 $heading_tag = is_front_page() ? 'h1' : 'h2';
 ?>
-<div class="dpi-hero__slides min-h-svh! [&_.slick-list]:min-h-svh [&_.slick-track]:min-h-svh [&_.slick-slide]:min-h-svh">
-	<article class="dpi-hero__slide relative min-h-svh! bg-black text-white">
+<div class="dpi-hero__slides">
+	<article class="dpi-hero__slide relative bg-black text-white">
 		<div class="dpi-hero__media absolute inset-0">
 			<?php if ( ! empty( $video['url'] ) ) : ?>
 				<video
