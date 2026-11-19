@@ -15,7 +15,7 @@ Custom PHP WordPress theme based on **_tw**, using Tailwind CSS 4, `theme.json` 
 | Search | Standard search form and search results page implemented; **live typeahead search is not implemented** |
 | Comments | Disabled by `theme/inc/comments.php`: discussion support, admin links/screens, API routes and feeds |
 | Homepage | **Approved homepage composition is not built yet** |
-| Custom Gutenberg/ACF blocks | **Theme-owned:** `dpi/hero`, `dpi/five-pillars`, `dpi/feature-banner`, `dpi/community-slider`, `dpi/stats`, plus `balt/feature-grid` (Navigate), `balt/image-cta-grid` (Image CTA Grid), and `balt/media-center` (Media Center). Other `dpi/*` blocks remain in the plugin. |
+| Custom Gutenberg/ACF blocks | **Theme-owned:** `dpi/hero`, `dpi/five-pillars`, `dpi/feature-banner`, `dpi/community-slider`, `dpi/stats`, plus `balt/feature-grid` (Navigate), `balt/image-cta-grid` (Image CTA Grid), `balt/media-center` (Media Center), and `balt/image-text-banner` (Image & Text Banner). Other `dpi/*` blocks remain in the plugin. |
 | Media Center | New tabbed ACF block and seven media CPTs with separate hierarchical category taxonomies; visual QA and content entry pending |
 | GIS | External existing plugin; integration and configuration later |
 | Staff / ministries | No theme CPT implementation; planned as reusable plugin modules |
@@ -55,6 +55,12 @@ Registered in \`theme/inc/media-post-types.php\`:
 | \`balt_homily\` | \`/homilies/\` | \`balt_homily_category\` |
 
 These start with WordPress standard title, editor, excerpt, featured image, and revisions. Each taxonomy is a separate hierarchical category system, enabled in the block editor. Event dates, episode information, video URLs, audio fields, and other specialized metadata are **not** assumed yet. On an existing WordPress site, visit **Settings → Permalinks → Save Changes** after deployment so the new archive URLs work.
+
+### Image & Text Banner
+
+The reusable \`balt/image-text-banner\` block follows the Figma split-banner layout (\`320:278\`) without any Archbishop-specific hardcoded content. ACF fields: eyebrow, heading, subheading, optional quote, required image, and a 0–2 button repeater containing ACF links. The first CTA uses shared \`btn-red\`, and the second uses shared \`btn-outline-subtle\` (both combined with \`btn\`).
+
+At 1024px and above the content sits on the left and the photo fills the right half of a 1504px-wide container, with an image-side fade and bottom fade. Below 1024px the image moves above the dark text panel and fades into it. Below 640px the CTA links stack. The image is selected through WordPress's Media Library, not copied from the Figma screenshot.
 
 ## Sprint 1: homepage by December 4, 2026
 

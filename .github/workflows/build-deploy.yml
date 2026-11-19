@@ -209,3 +209,43 @@ jobs:
             }
           }
           NODE
+
+      - name: Verify Image and Text Banner fields and styling
+        run: |
+          node --input-type=module <<'NODE'
+          import { readFileSync } from 'node:fs';
+
+          const block = JSON.parse(readFileSync('theme/blocks/image-text-banner/block.json', 'utf8'));
+          const group = JSON.parse(readFileSync('theme/acf-json/group_balt_image_text_banner.json', 'utf8'));
+          const php = readFileSync('theme/blocks/image-text-banner/render.php', 'utf8');
+          const util = readFileSync('tailwind/custom/utilities.css', 'utf8');
+          const source = readFileSync('tailwind.css', 'utf8');
+
+          if (block.name !== 'balt/image-text-banner' || block.acf.renderCallback !== 'balt_render_image_text_banner_block') {
+            throw new Error('Image & Text Banner registration is incorrect');
+          }
+          for (const [name, type] of [['eyebrow', 'text'], ['heading', 'text'], ['subheading', 'text'], ['quote', 'textarea'], ['image', 'image'], ['buttons', 'repeater']]) {
+            if (group.fields.find(field => field.name === name)?.type !== type) {
+              throw new Error('Image & Text Banner missing ACF field: ' + name);
+            }
+          }
+          const buttons = group.fields.find(field => field.name === 'buttons');
+          if (buttons.min !== 0 || buttons.max !== 2 || buttons.sub_fields.length !== 1 || buttons.sub_fields[0].type !== 'link') {
+            throw new Error('Banner buttons must be 0–2 links');
+          }
+          if (group.fields.find(field => field.name === 'image').return_format !== 'id') {
+            throw new Error('Banner image must be returned as an attachment ID');
+          }
+          for (const token of ["get_field( 'quote' )", "get_field( 'image' )", 'lg:grid-cols-2', 'lg:order-1', 'lg:order-2', 'bg-linear-to-r', 'bg-linear-to-t', 'lg:min-h-[632px]', 'btn btn-red', 'btn btn-outline-subtle']) {
+            if (!php.includes(token)) throw new Error('Image & Text Banner markup missing: ' + token);
+          }
+          if (!source.includes('@source "./theme/blocks/image-text-banner";') || !util.includes('@utility btn-red') || !util.includes('@utility btn-outline-subtle')) {
+            throw new Error('Reusable button utilities or Tailwind source missing');
+          }
+          for (const stylesheet of ['theme/style.css', 'theme/style-editor.css']) {
+            const css = readFileSync(stylesheet, 'utf8');
+            for (const token of ['.btn-red', '.btn-outline-subtle', '632px', '390px']) {
+              if (!css.includes(token)) throw new Error('Missing compiled Image & Text Banner utility: ' + token + ' in ' + stylesheet);
+            }
+          }
+          NODE

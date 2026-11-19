@@ -19,3 +19,12 @@
 	@apply bg-primary text-white hover:bg-primary-light;
 }
 
+/** Reusable variants for darker banners. */
+@utility btn-red {
+	@apply bg-tertiary text-white hover:bg-tertiary/85;
+}
+
+@utility btn-outline-subtle {
+	@apply border-2 border-white/30 bg-transparent text-white hover:border-white hover:bg-white/10;
+}
+

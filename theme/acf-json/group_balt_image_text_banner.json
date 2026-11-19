@@ -1,0 +1,145 @@
+{
+  "key": "group_balt_image_text_banner",
+  "title": "Image & Text Banner",
+  "fields": [
+    {
+      "key": "field_balt_image_text_banner_eyebrow",
+      "label": "Eyebrow",
+      "name": "eyebrow",
+      "type": "text",
+      "instructions": "",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "default_value": "",
+      "placeholder": "Optional short section label"
+    },
+    {
+      "key": "field_balt_image_text_banner_heading",
+      "label": "Heading",
+      "name": "heading",
+      "type": "text",
+      "instructions": "",
+      "required": 1,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "default_value": "",
+      "placeholder": "Main banner heading"
+    },
+    {
+      "key": "field_balt_image_text_banner_subheading",
+      "label": "Subheading",
+      "name": "subheading",
+      "type": "text",
+      "instructions": "",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "default_value": "",
+      "placeholder": "Optional short text below the heading"
+    },
+    {
+      "key": "field_balt_image_text_banner_quote",
+      "label": "Quote",
+      "name": "quote",
+      "type": "textarea",
+      "instructions": "",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "default_value": "",
+      "rows": 4,
+      "new_lines": "",
+      "placeholder": "Optional highlighted quotation"
+    },
+    {
+      "key": "field_balt_image_text_banner_image",
+      "label": "Image",
+      "name": "image",
+      "type": "image",
+      "instructions": "Background photo, cropped to fill the right side on desktop and the top of the section on smaller screens.",
+      "required": 1,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "return_format": "id",
+      "preview_size": "large",
+      "library": "all"
+    },
+    {
+      "key": "field_balt_image_text_banner_buttons",
+      "label": "Buttons",
+      "name": "buttons",
+      "type": "repeater",
+      "instructions": "Add up to two links. The first is red, the second is outlined.",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "layout": "row",
+      "pagination": 0,
+      "min": 0,
+      "max": 2,
+      "collapsed": "field_balt_image_text_banner_button_link",
+      "button_label": "Add Button",
+      "rows_per_page": 2,
+      "sub_fields": [
+        {
+          "key": "field_balt_image_text_banner_button_link",
+          "label": "Button Link",
+          "name": "link",
+          "type": "link",
+          "instructions": "",
+          "required": 1,
+          "conditional_logic": 0,
+          "wrapper": {
+            "width": "",
+            "class": "",
+            "id": ""
+          },
+          "return_format": "array"
+        }
+      ]
+    }
+  ],
+  "location": [
+    [
+      {
+        "param": "block",
+        "operator": "==",
+        "value": "balt/image-text-banner"
+      }
+    ]
+  ],
+  "menu_order": 0,
+  "position": "normal",
+  "style": "default",
+  "label_placement": "top",
+  "instruction_placement": "label",
+  "hide_on_screen": "",
+  "active": true,
+  "description": "Reusable navy image and text banner with an optional quote and 0–2 CTAs.",
+  "show_in_rest": 0
+}

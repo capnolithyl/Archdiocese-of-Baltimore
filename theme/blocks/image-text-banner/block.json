@@ -1,0 +1,36 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "balt/image-text-banner",
+  "version": "1.0.0",
+  "title": "Image & Text Banner",
+  "category": "baltimore",
+  "icon": "align-pull-right",
+  "description": "Full-width split image and text banner with optional quote and two links.",
+  "keywords": [
+    "banner",
+    "image",
+    "quote",
+    "content",
+    "call to action"
+  ],
+  "textdomain": "baltimore",
+  "acf": {
+    "mode": "preview",
+    "renderCallback": "balt_render_image_text_banner_block",
+    "blockVersion": 3
+  },
+  "supports": {
+    "anchor": true,
+    "align": [
+      "full"
+    ],
+    "html": false
+  },
+  "attributes": {
+    "align": {
+      "type": "string",
+      "default": "full"
+    }
+  }
+}
