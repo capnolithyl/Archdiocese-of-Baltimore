@@ -15,7 +15,8 @@ Custom PHP WordPress theme based on **_tw**, using Tailwind CSS 4, `theme.json` 
 | Search | Standard search form and search results page implemented; **live typeahead search is not implemented** |
 | Comments | Disabled by `theme/inc/comments.php`: discussion support, admin links/screens, API routes and feeds |
 | Homepage | **Approved homepage composition is not built yet** |
-| Custom Gutenberg/ACF blocks | **Theme-owned:** `dpi/hero`, `dpi/five-pillars`, `dpi/feature-banner`, `dpi/community-slider`, `dpi/stats`, plus `balt/feature-grid` (Navigate) and `balt/image-cta-grid` (Image CTA Grid). Other `dpi/*` blocks remain in the plugin. |
+| Custom Gutenberg/ACF blocks | **Theme-owned:** `dpi/hero`, `dpi/five-pillars`, `dpi/feature-banner`, `dpi/community-slider`, `dpi/stats`, plus `balt/feature-grid` (Navigate), `balt/image-cta-grid` (Image CTA Grid), and `balt/media-center` (Media Center). Other `dpi/*` blocks remain in the plugin. |
+| Media Center | New tabbed ACF block and seven media CPTs with separate hierarchical category taxonomies; visual QA and content entry pending |
 | GIS | External existing plugin; integration and configuration later |
 | Staff / ministries | No theme CPT implementation; planned as reusable plugin modules |
 
@@ -36,6 +37,24 @@ The `balt/image-cta-grid` block can be used for any set of four linked image car
 The layout uses Tailwind only: four 460px cards in one row at wide breakpoints, responsive two- and one-column layouts below that, and an 80px overlap of the central panel at desktop widths. ACF currently enforces exactly four items; the renderer already accommodates different counts (one, two or three cards remain centered, and five or more wrap across additional rows). Future requests to change the number of cards only require adjusting the repeater limits. Badge colors repeat after the fourth card. No baked-in Figma stock imagery is shipped: the editor supplies the four images.
 
 
+
+### Media Center
+
+The **Media Center** block (\`balt/media-center\`) uses the latest **three published entries** in each tab. The tabs are Campaigns, Events, Podcasts, Videos, Press, Letters and Homilies, with a View All link to each post type's archive. Editors can change the block's eyebrow and heading. Posts supply their own featured images, titles and publication dates; no hardcoded Figma imagery or Archbishop message is included.
+
+Registered in \`theme/inc/media-post-types.php\`:
+
+| Post type | Archive | Separate category taxonomy |
+| --- | --- | --- |
+| \`balt_campaign\` | \`/campaigns/\` | \`balt_campaign_category\` |
+| \`balt_event\` | \`/events/\` | \`balt_event_category\` |
+| \`balt_podcast\` | \`/podcasts/\` | \`balt_podcast_category\` |
+| \`balt_video\` | \`/videos/\` | \`balt_video_category\` |
+| \`balt_press\` | \`/press/\` | \`balt_press_category\` |
+| \`balt_letter\` | \`/letters/\` | \`balt_letter_category\` |
+| \`balt_homily\` | \`/homilies/\` | \`balt_homily_category\` |
+
+These start with WordPress standard title, editor, excerpt, featured image, and revisions. Each taxonomy is a separate hierarchical category system, enabled in the block editor. Event dates, episode information, video URLs, audio fields, and other specialized metadata are **not** assumed yet. On an existing WordPress site, visit **Settings → Permalinks → Save Changes** after deployment so the new archive URLs work.
 
 ## Sprint 1: homepage by December 4, 2026
 

@@ -13,3 +13,9 @@
 @utility btn-gold {
 	@apply bg-secondary font-bold text-primary hover:bg-white;
 }
+
+/** Navy CTA used by the Media Center and other general-purpose sections. */
+@utility btn-primary {
+	@apply bg-primary text-white hover:bg-primary-light;
+}
+

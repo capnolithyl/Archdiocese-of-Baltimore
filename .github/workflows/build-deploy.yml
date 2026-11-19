@@ -152,3 +152,42 @@ jobs:
             }
           }
           NODE
+
+      - name: Verify Media Center post types and tabbed block
+        run: |
+          node --check theme/blocks/media-center/view.js
+          node --input-type=module <<'NODE'
+          import { readFileSync } from 'node:fs';
+
+          const types = ['campaign', 'event', 'podcast', 'video', 'press', 'letter', 'homily'];
+          const source = readFileSync('theme/inc/media-post-types.php', 'utf8');
+          for (const type of types) {
+            if (!source.includes("'balt_" + type + "'")) throw new Error('Missing media post type: ' + type);
+          }
+          for (const token of ["register_post_type(", "register_taxonomy(", "'show_in_rest'", "'has_archive'", "'thumbnail'"]) {
+            if (!source.includes(token)) throw new Error('Media post types missing: ' + token);
+          }
+
+          const block = JSON.parse(readFileSync('theme/blocks/media-center/block.json', 'utf8'));
+          const group = JSON.parse(readFileSync('theme/acf-json/group_balt_media_center.json', 'utf8'));
+          const render = readFileSync('theme/blocks/media-center/render.php', 'utf8');
+          const script = readFileSync('theme/blocks/media-center/view.js', 'utf8');
+          if (block.name !== 'balt/media-center' || block.viewScript !== 'file:./view.js') {
+            throw new Error('Media Center block registration is incorrect');
+          }
+          if (group.fields.map(f => f.name).join(',') !== 'eyebrow,heading') {
+            throw new Error('Media Center block field schema is incorrect');
+          }
+          for (const token of ["balt_media_types()", "get_posts(", "'numberposts'     => 3", 'get_post_type_archive_link(', 'get_the_post_thumbnail(', 'data-balt-media-panel', 'data-balt-media-tab']) {
+            if (!render.includes(token)) throw new Error('Media Center renderer missing: ' + token);
+          }
+          for (const token of ['aria-selected', 'ArrowRight', 'ArrowLeft', 'Home', 'End', 'panels[i].hidden']) {
+            if (!script.includes(token)) throw new Error('Media Center tab behavior missing: ' + token);
+          }
+          for (const css of ['theme/style.css', 'theme/style-editor.css']) {
+            const stylesheet = readFileSync(css, 'utf8');
+            for (const token of ['.btn-primary', '340px', 'aria-selected']) {
+              if (!stylesheet.includes(token)) throw new Error('Media Center Tailwind utility missing: ' + token + ' in ' + css);
+            }
+          }
+          NODE

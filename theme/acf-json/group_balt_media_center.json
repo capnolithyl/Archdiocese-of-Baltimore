@@ -1,0 +1,62 @@
+{
+  "key": "group_balt_media_center",
+  "title": "Media Center",
+  "fields": [
+    {
+      "key": "field_balt_media_center_eyebrow",
+      "label": "Eyebrow",
+      "name": "eyebrow",
+      "type": "text",
+      "instructions": "",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "default_value": "Latest From Media",
+      "placeholder": "",
+      "maxlength": "",
+      "prepend": "",
+      "append": ""
+    },
+    {
+      "key": "field_balt_media_center_heading",
+      "label": "Heading",
+      "name": "heading",
+      "type": "text",
+      "instructions": "",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "default_value": "Media Center",
+      "placeholder": "",
+      "maxlength": "",
+      "prepend": "",
+      "append": ""
+    }
+  ],
+  "location": [
+    [
+      {
+        "param": "block",
+        "operator": "==",
+        "value": "balt/media-center"
+      }
+    ]
+  ],
+  "menu_order": 0,
+  "position": "normal",
+  "style": "default",
+  "label_placement": "top",
+  "instruction_placement": "label",
+  "hide_on_screen": "",
+  "active": true,
+  "description": "Displays the latest three published items per Media Center tab.",
+  "show_in_rest": 0
+}

@@ -1,0 +1,37 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "balt/media-center",
+  "version": "1.0.0",
+  "title": "Media Center",
+  "category": "baltimore",
+  "icon": "format-gallery",
+  "description": "Tabbed latest posts from campaigns, events, podcasts, videos, press, letters and homilies.",
+  "keywords": [
+    "media",
+    "news",
+    "latest",
+    "tabs",
+    "campaigns"
+  ],
+  "textdomain": "baltimore",
+  "acf": {
+    "mode": "preview",
+    "renderCallback": "balt_render_media_center_block",
+    "blockVersion": 3
+  },
+  "viewScript": "file:./view.js",
+  "supports": {
+    "anchor": true,
+    "align": [
+      "full"
+    ],
+    "html": false
+  },
+  "attributes": {
+    "align": {
+      "type": "string",
+      "default": "full"
+    }
+  }
+}

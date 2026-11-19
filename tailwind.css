@@ -5,6 +5,7 @@
 @source "./theme/dpi-blocks/blocks/feature-banner";
 @source "./theme/blocks/feature-grid";
 @source "./theme/blocks/image-cta-grid";
+@source "./theme/blocks/media-center";
 
 @import "./tailwind/tailwind-theme.css";
 
