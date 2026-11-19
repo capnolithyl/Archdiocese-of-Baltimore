@@ -21,7 +21,7 @@ Custom PHP WordPress theme based on **_tw**, using Tailwind CSS 4, `theme.json` 
 
 This table is based on code in this repository, **not a live WordPress/site test**.
 
-The five theme-owned DPI blocks are styled primarily through **Tailwind utility classes in their PHP templates**. Copied block CSS files were removed; the Slick carousel vendor stylesheet remains. The separate `dpi-blocks` plugin may still enqueue its CSS when other plugin-owned blocks are used.
+The five theme-owned DPI blocks have **unstyled PHP templates** with their authored CSS classes removed, ready for a fresh styling pass. Their HTML content, accessibility attributes, and JavaScript `data-*` hooks remain. WordPress can still generate its own wrapper/image classes, and Slick retains its vendor CSS. Other plugin-owned DPI blocks may still use CSS from the separate `dpi-blocks` plugin.
 
 ## Sprint 1: homepage by December 4, 2026
 

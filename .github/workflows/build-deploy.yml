@@ -36,17 +36,28 @@ jobs:
       - name: Lint PHP templates
         run: find theme -type f -name '*.php' -print0 | xargs -0 -n 1 php -l
 
-      - name: Check generated Tailwind block utilities
+      - name: Check five block templates have no authored classes
         run: |
           node --input-type=module <<'NODE'
-          import { readFileSync } from 'node:fs';
+          import { readdirSync, readFileSync } from 'node:fs';
+          import { join } from 'node:path';
 
-          for (const path of ['theme/style.css', 'theme/style-editor.css']) {
-            const css = readFileSync(path, 'utf8');
-            for (const selector of ['slick-arrow', 'slick-dots', 'min-h-svh', 'grid-cols']) {
-              if (!css.includes(selector)) {
-                throw new Error(`Missing generated Tailwind utility: ${selector} in ${path}`);
+          const dir = 'theme/dpi-blocks/blocks';
+          let checked = 0;
+          const visit = (path) => {
+            for (const entry of readdirSync(path, { withFileTypes: true })) {
+              const filename = join(path, entry.name);
+              if (entry.isDirectory()) {
+                visit(filename);
+              } else if (filename.endsWith('.php')) {
+                const php = readFileSync(filename, 'utf8');
+                if (/\bclass\s*=\s*["']|["']class["']\s*=>/.test(php)) {
+                  throw new Error(`Unexpected authored class in ${filename}`);
+                }
+                checked++;
               }
             }
-          }
+          };
+          visit(dir);
+          if (checked < 8) throw new Error('Missing block templates');
           NODE

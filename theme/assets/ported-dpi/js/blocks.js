@@ -180,7 +180,7 @@
 			return;
 		}
 
-		const block = tablist.closest('.dpi-community-slider');
+		const block = tablist.closest('[data-dpi-community-slider]');
 		const tabs = Array.from(tablist.querySelectorAll('[data-dpi-tab]'));
 		const panels = block
 			? Array.from(block.querySelectorAll('[data-dpi-tab-panel]'))
@@ -248,7 +248,7 @@
 
 	/** Apply the visitor's reduced-motion preference to autoplaying media. */
 	const updateMotion = (scope) => {
-		findAll(scope || document, '.dpi-hero video[autoplay]').forEach(
+		findAll(scope || document, '[data-dpi-hero] video[autoplay]').forEach(
 			(video) => {
 				if (reducedMotion.matches) {
 					video.pause();
@@ -263,7 +263,7 @@
 
 		findAll(
 			scope || document,
-			'.dpi-hero iframe[data-dpi-youtube-player]'
+			'[data-dpi-hero] iframe[data-dpi-youtube-player]'
 		).forEach((iframe) => {
 			const control = () => {
 				const shouldPlay =

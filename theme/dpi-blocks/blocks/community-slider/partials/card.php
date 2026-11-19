@@ -17,15 +17,15 @@ $post_link = array(
 	'target' => '',
 );
 ?>
-<article class="dpi-community-slider__item flex h-full flex-col overflow-hidden rounded-xl border border-current/10 bg-surface shadow-sm">
+<article>
 	<?php if ( has_post_thumbnail( $community_post ) ) : ?>
 		<?php echo dpi_blocks_link_open( $post_link, 'dpi-community-slider__image block w-full', ! empty( $is_preview ) );?>
-			<?php echo get_the_post_thumbnail( $community_post, 'large', array( 'class' => 'aspect-[4/3] w-full object-cover' ) );?>
+			<?php echo get_the_post_thumbnail( $community_post, 'large' );?>
 		<?php echo dpi_blocks_link_close( ! empty( $is_preview ) );?>
 	<?php endif; ?>
-	<h3 class="m-0 px-5 pt-5 text-lg"><?php echo dpi_blocks_link_open( $post_link, 'dpi-community-slider__title-link font-semibold text-foreground no-underline hover:underline', ! empty( $is_preview ) );?><?php echo esc_html( get_the_title( $community_post ) ); ?><?php echo dpi_blocks_link_close( ! empty( $is_preview ) );?></h3>
+	<h3><?php echo dpi_blocks_link_open( $post_link, 'dpi-community-slider__title-link font-semibold text-foreground no-underline hover:underline', ! empty( $is_preview ) );?><?php echo esc_html( get_the_title( $community_post ) ); ?><?php echo dpi_blocks_link_close( ! empty( $is_preview ) );?></h3>
 	<?php if ( $show_date ) : ?>
-		<time class="dpi-community-slider__date mt-auto px-5 pb-5 pt-2 text-sm text-muted" datetime="<?php echo esc_attr( get_the_date( 'c', $community_post ) ); ?>">
+		<time datetime="<?php echo esc_attr( get_the_date( 'c', $community_post ) ); ?>">
 			<?php echo esc_html( get_the_date( 'M j', $community_post ) ); ?>
 		</time>
 	<?php endif; ?>

@@ -63,7 +63,7 @@ if ( empty( $categories ) ) {
 	if ( ! empty( $is_preview ) ) {
 		printf(
 			'<div %1$s><p>%2$s</p></div>',
-			get_block_wrapper_attributes( array( 'class' => 'dpi-block dpi-community-slider dpi-block--placeholder border border-dashed border-current p-6 text-center' ) ),
+			get_block_wrapper_attributes(),
 			esc_html__( 'Select at least one post category.', 'dpi-blocks' )
 		);
 	}
@@ -99,17 +99,6 @@ $slick       = array(
 	),
 );
 
-$wrapper_args = array(
-	'class' => 'dpi-block dpi-community-slider dpi-community-slider--' . $layout . ' relative min-w-0 bg-[image:var(--dpi-community-slider-background-image)] bg-cover bg-center py-12! md:py-20!',
-);
-
-if ( $background_url ) {
-	$wrapper_args['style'] = sprintf(
-		'--dpi-community-slider-background-image: url("%s");',
-		esc_url( $background_url )
-	);
-}
-
 $dpi_category_cta = static function ( WP_Term $category ) {
 	$url = get_category_link( $category->term_id );
 
@@ -133,9 +122,9 @@ $dpi_render_footer_cta = static function ( array $link ) use ( $is_preview ) {
 		return;
 	}
 	?>
-	<div class="dpi-community-slider__footer mt-8 flex justify-center">
+	<div>
 		<?php
-		echo dpi_blocks_link_open( $link, 'dpi-community-slider__cta inline-flex items-center justify-center rounded-full bg-primary px-6 py-3 font-semibold text-white no-underline hover:bg-secondary', ! empty( $is_preview ) );
+		echo dpi_blocks_link_open( $link, '', ! empty( $is_preview ) );
 		echo esc_html( $link['title'] );
 		echo dpi_blocks_link_close( ! empty( $is_preview ) );
 		?>
@@ -143,40 +132,39 @@ $dpi_render_footer_cta = static function ( array $link ) use ( $is_preview ) {
 	<?php
 };
 
-$items_classes = 'grid' === $layout
-	? 'grid! grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3'
-	: 'block! [&_.slick-track]:flex! [&_.slick-arrow]:absolute! [&_.slick-arrow]:top-1/2 [&_.slick-arrow]:z-20 [&_.slick-arrow]:grid! [&_.slick-arrow]:size-10 [&_.slick-arrow]:-translate-y-1/2 [&_.slick-arrow]:place-items-center [&_.slick-arrow]:rounded-full [&_.slick-arrow]:bg-white/90 [&_.slick-arrow]:text-primary [&_.slick-arrow]:shadow-md [&_.slick-arrow_svg]:size-5 [&_.slick-prev]:left-3 [&_.slick-next]:right-3 [&_.slick-dots]:flex! [&_.slick-dots]:justify-center [&_.slick-dots]:gap-2 [&_.slick-dots]:p-3 [&_.slick-dots]:list-none [&_.slick-dots_button]:size-3 [&_.slick-dots_button]:rounded-full [&_.slick-dots_button]:bg-current/40 [&_.slick-dots_button]:text-[0px] [&_.slick-active_button]:bg-current [&_.slick-slide]:h-auto [&_.slick-slide>div]:h-full';
-
-$wrapper_attributes = get_block_wrapper_attributes( $wrapper_args );
+$wrapper_attributes = get_block_wrapper_attributes();
 ?>
-<section <?php echo $wrapper_attributes;?>
+<section data-dpi-community-slider <?php echo $wrapper_attributes;?>
 <?php
 if ( $heading ) :
 	?>
 	aria-labelledby="<?php echo esc_attr( $instance_id . '-heading' ); ?>"<?php endif; ?>>
+	<?php if ( $background_url ) : ?>
+		<img src="<?php echo esc_url( $background_url ); ?>" alt="">
+	<?php endif; ?>
 	<?php if ( $heading || $text ) : ?>
-		<header class="dpi-community-slider__header mb-8 grid gap-4">
+		<header>
 			<?php if ( $heading ) : ?>
-				<h2 id="<?php echo esc_attr( $instance_id . '-heading' ); ?>" class="font-heading text-[clamp(1.8rem,3vw,2.5rem)] font-semibold"><?php echo esc_html( $heading ); ?></h2>
+				<h2 id="<?php echo esc_attr( $instance_id . '-heading' ); ?>"><?php echo esc_html( $heading ); ?></h2>
 			<?php endif; ?>
 			<?php if ( $text ) : ?>
-				<div class="dpi-community-slider__intro max-w-3xl"><?php echo wp_kses_post( wpautop( $text ) ); ?></div>
+				<div><?php echo wp_kses_post( wpautop( $text ) ); ?></div>
 			<?php endif; ?>
 		</header>
 	<?php endif; ?>
 
 	<?php if ( 'tabs' === $category_display && count( $categories ) > 1 ) : ?>
-		<div class="dpi-tabs__list my-6 flex flex-wrap gap-2" role="tablist" aria-label="<?php esc_attr_e( 'Post categories', 'dpi-blocks' ); ?>" data-dpi-tabs>
+		<div role="tablist" aria-label="<?php esc_attr_e( 'Post categories', 'dpi-blocks' ); ?>" data-dpi-tabs>
 			<?php foreach ( array_values( $categories ) as $index => $category ) : ?>
 				<?php $tab_id = $instance_id . '-tab-' . $category->term_id; ?>
-				<button id="<?php echo esc_attr( $tab_id ); ?>" type="button" role="tab" aria-selected="<?php echo 0 === $index ? 'true' : 'false'; ?>" aria-controls="<?php echo esc_attr( $instance_id . '-panel-' . $category->term_id ); ?>" tabindex="<?php echo 0 === $index ? '0' : '-1'; ?>" class="rounded-full border border-current/20 px-4 py-2 font-semibold transition hover:bg-primary/10 aria-selected:bg-primary aria-selected:text-white focus-visible:outline-2" data-dpi-tab>
+				<button id="<?php echo esc_attr( $tab_id ); ?>" type="button" role="tab" aria-selected="<?php echo 0 === $index ? 'true' : 'false'; ?>" aria-controls="<?php echo esc_attr( $instance_id . '-panel-' . $category->term_id ); ?>" tabindex="<?php echo 0 === $index ? '0' : '-1'; ?>" data-dpi-tab>
 					<?php echo esc_html( $category->name ); ?>
 				</button>
 			<?php endforeach; ?>
 		</div>
 	<?php endif; ?>
 
-	<div class="dpi-community-slider__panels min-w-0">
+	<div>
 		<?php if ( 'combined' === $category_display || 1 === count( $categories ) ) : ?>
 			<?php
 			$community_posts = get_posts(
@@ -192,10 +180,9 @@ if ( $heading ) :
 				)
 			);
 			?>
-			<div class="dpi-community-slider__panel min-w-0 [&[hidden]]:hidden!">
+			<div>
 				<?php if ( $community_posts ) : ?>
 					<div
-						class="dpi-community-slider__items <?php echo esc_attr( $items_classes ); ?>"
 						<?php if ( 'carousel' === $layout && count( $community_posts ) > 1 ) : ?>
 							data-dpi-slick="<?php echo esc_attr( wp_json_encode( $slick ) ); ?>"
 						<?php endif; ?>
@@ -237,7 +224,6 @@ if ( $heading ) :
 				?>
 				<div
 					id="<?php echo esc_attr( $panel_id ); ?>"
-					class="dpi-community-slider__panel min-w-0 [&[hidden]]:hidden!"
 					role="tabpanel"
 					aria-labelledby="<?php echo esc_attr( $tab_id ); ?>"
 					<?php if ( 0 !== $index ) : ?>
@@ -247,7 +233,6 @@ if ( $heading ) :
 				>
 					<?php if ( $community_posts ) : ?>
 						<div
-							class="dpi-community-slider__items <?php echo esc_attr( $items_classes ); ?>"
 							<?php if ( 'carousel' === $layout && count( $community_posts ) > 1 ) : ?>
 								data-dpi-slick="<?php echo esc_attr( wp_json_encode( $slick ) ); ?>"
 							<?php endif; ?>

@@ -9,15 +9,15 @@ function balt_ported_dpi_block_slugs(): array {
 }
 
 function balt_register_ported_dpi_assets(): void {
-	if ( defined( 'DPI_BLOCKS_VERSION' ) ) {
-		return;
-	}
-
 	$root = get_template_directory_uri() . '/assets/ported-dpi';
 
-	wp_register_style( 'balt-ported-dpi-slick', $root . '/vendor/slick/slick.css', array(), '1.8.1' );
-	wp_register_script( 'balt-ported-dpi-slick', $root . '/vendor/slick/slick.min.js', array( 'jquery' ), '1.8.1', true );
-	wp_register_script( 'balt-ported-dpi-interactions', $root . '/js/blocks.js', array( 'jquery', 'balt-ported-dpi-slick' ), BALT_VERSION, true );
+	if ( ! defined( 'DPI_BLOCKS_VERSION' ) ) {
+		wp_register_style( 'balt-ported-dpi-slick', $root . '/vendor/slick/slick.css', array(), '1.8.1' );
+		wp_register_script( 'balt-ported-dpi-slick', $root . '/vendor/slick/slick.min.js', array( 'jquery' ), '1.8.1', true );
+	}
+
+	$slick_handle = defined( 'DPI_BLOCKS_VERSION' ) ? 'dpi-blocks-slick' : 'balt-ported-dpi-slick';
+	wp_register_script( 'balt-ported-dpi-interactions', $root . '/js/blocks.js', array( 'jquery', $slick_handle ), BALT_VERSION, true );
 	wp_localize_script(
 		'balt-ported-dpi-interactions',
 		'DPIBlocksConfig',
@@ -75,10 +75,7 @@ function balt_render_ported_dpi_block( $block, $content = '', $is_preview = fals
 }
 
 function balt_ported_dpi_editor_assets(): void {
-	if ( defined( 'DPI_BLOCKS_VERSION' ) ) {
-		return;
-	}
-	wp_enqueue_style( 'balt-ported-dpi-slick' );
+	wp_enqueue_style( defined( 'DPI_BLOCKS_VERSION' ) ? 'dpi-blocks-slick' : 'balt-ported-dpi-slick' );
 	wp_enqueue_script( 'balt-ported-dpi-interactions' );
 }
 add_action( 'enqueue_block_editor_assets', 'balt_ported_dpi_editor_assets' );
@@ -113,7 +110,7 @@ if ( ! function_exists( 'dpi_blocks_link_open' ) ) {
 			return '';
 		}
 
-		$classes = trim( $class_name . ( $is_preview ? ' dpi-editor-link' : '' ) );
+		$classes = trim( $class_name );
 		$output  = '<' . ( $is_preview ? 'span' : 'a' );
 
 		if ( '' !== $classes ) {
@@ -236,12 +233,33 @@ function balt_ported_dpi_style_handles( array $args, string $block_name ): array
 }
 add_filter( 'register_block_type_args', 'balt_ported_dpi_style_handles', 100, 2 );
 
-/** Avoid loading the shared DPI CSS merely because a theme-owned block exists. */
+/** Theme-owned blocks do not need the old plugin CSS or its initializer. */
 function balt_ported_dpi_asset_requirements( array $requirements, array $context ): array {
-	if ( in_array( $context['block_name'] ?? '', array( 'dpi/hero', 'dpi/five-pillars', 'dpi/feature-banner', 'dpi/community-slider', 'dpi/stats' ), true ) ) {
+	$name = $context['block_name'] ?? '';
+	if ( in_array( $name, array( 'dpi/hero', 'dpi/five-pillars', 'dpi/feature-banner', 'dpi/community-slider', 'dpi/stats' ), true ) ) {
 		$requirements['styles'] = false;
+		if ( in_array( $name, array( 'dpi/hero', 'dpi/feature-banner', 'dpi/community-slider' ), true ) ) {
+			$requirements['script'] = false;
+			$requirements['slick']  = false;
+		}
 	}
 	return $requirements;
 }
 add_filter( 'dpi_blocks/block_asset_requirements', 'balt_ported_dpi_asset_requirements', 100, 2 );
+
+/**
+ * The plugin can still own block registration while this theme owns the
+ * class-free markup and JavaScript selectors for these three carousels.
+ */
+function balt_enqueue_ported_dpi_interactions( string $html, array $block ): string {
+	if (
+		defined( 'DPI_BLOCKS_VERSION' )
+		&& in_array( $block['blockName'] ?? '', array( 'dpi/hero', 'dpi/feature-banner', 'dpi/community-slider' ), true )
+	) {
+		wp_enqueue_script( 'balt-ported-dpi-interactions' );
+	}
+
+	return $html;
+}
+add_filter( 'render_block', 'balt_enqueue_ported_dpi_interactions', 30, 2 );
 
