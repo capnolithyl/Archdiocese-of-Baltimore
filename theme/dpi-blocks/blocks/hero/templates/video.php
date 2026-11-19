@@ -17,8 +17,8 @@ $heading_tag = is_front_page() ? 'h1' : 'h2';
         <div>
             <?php if (! empty($video['url'])) : ?>
                 <video src="<?php echo esc_url($video['url']); ?>"
-                    <?php if (! empty($poster['url'])) : ?>poster="<?php echo esc_url($poster['url']); ?>"
-                    <?php endif; ?> autoplay muted loop playsinline preload="metadata" aria-hidden="true"></video>
+                    <?php if (! empty($poster['url'])) : ?>poster="<?php echo esc_url($poster['url']); ?>" <?php endif; ?>
+                    autoplay muted loop playsinline preload="metadata" aria-hidden="true"></video>
             <?php elseif (! empty($poster['ID'])) : ?>
                 <?php echo wp_get_attachment_image($poster['ID'], 'full', false, array('alt' => '')); ?>
             <?php elseif (! empty($is_preview)) : ?>
@@ -35,7 +35,8 @@ $heading_tag = is_front_page() ? 'h1' : 'h2';
 
             <?php if ($subheading) : ?>
                 <p>
-                    <?php echo esc_html($subheading); ?></p>
+                    <?php echo esc_html($subheading); ?>
+                </p>
             <?php endif; ?>
 
             <?php if ($buttons) : ?>
@@ -44,7 +45,7 @@ $heading_tag = is_front_page() ? 'h1' : 'h2';
                         <?php
                         $link = $row['link'] ?? null;
                         if (! empty($link['url'])) {
-                            echo wp_kses_post(dpi_blocks_render_link( $link, '', ! empty($is_preview)));
+                            echo wp_kses_post(dpi_blocks_render_link($link, '', ! empty($is_preview)));
                         }
                         ?>
                     <?php endforeach; ?>
