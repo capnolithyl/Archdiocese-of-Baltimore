@@ -15,13 +15,20 @@ Custom PHP WordPress theme based on **_tw**, using Tailwind CSS 4, `theme.json` 
 | Search | Standard search form and search results page implemented; **live typeahead search is not implemented** |
 | Comments | Disabled by `theme/inc/comments.php`: discussion support, admin links/screens, API routes and feeds |
 | Homepage | **Approved homepage composition is not built yet** |
-| Custom Gutenberg/ACF blocks | **Theme-owned:** `dpi/hero`, `dpi/five-pillars`, `dpi/feature-banner`, `dpi/community-slider`, `dpi/stats`, preserving original block names and ACF field keys. Other `dpi/*` blocks remain in the plugin. |
+| Custom Gutenberg/ACF blocks | **Theme-owned:** `dpi/hero`, `dpi/five-pillars`, `dpi/feature-banner`, `dpi/community-slider`, `dpi/stats`, plus the new `balt/feature-grid` (Navigate). Other `dpi/*` blocks remain in the plugin. |
 | GIS | External existing plugin; integration and configuration later |
 | Staff / ministries | No theme CPT implementation; planned as reusable plugin modules |
 
 This table is based on code in this repository, **not a live WordPress/site test**.
 
 The **Hero** (`dpi/hero`) now follows the approved Figma homepage design using Tailwind utilities: a fixed 865px height, cover-cropped video or image slider, 45% media overlay and top gradient, centered white display copy, and reusable `btn btn-outline` / `btn btn-gold` utilities. The other four theme-owned blocks remain unstyled pending Figma implementation. Slick retains its vendor CSS; WordPress still generates its standard block/image classes.
+
+### Navigate / Feature Grid block
+
+The `balt/feature-grid` block is registered from `theme/blocks/feature-grid/`, with its ACF field group in `theme/acf-json/group_balt_feature_grid.json`. Fields: eyebrow, heading, subheading, and a 1–6 item repeater (Font Awesome icon, heading, description, link). The entire card links to the selected destination. Responsive columns adjust to the number of cards (1: centered single; 2: two; 3: three; 4: 2×2; 5: 3+2; 6: 3×2).
+
+**Dependency:** Install and activate the **Advanced Custom Fields: Font Awesome Field** extension alongside ACF Pro. Icon field type: `font-awesome` with `save_format: class`. The extension's `enqueue_fa` option is enabled in the field, so it supplies the icon assets on pages using the block. Without that extension, the icon picker is unavailable.
+
 
 ## Sprint 1: homepage by December 4, 2026
 

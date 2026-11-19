@@ -1,0 +1,180 @@
+{
+  "key": "group_balt_feature_grid",
+  "title": "Feature Grid",
+  "fields": [
+    {
+      "key": "field_balt_feature_grid_eyebrow",
+      "label": "Eyebrow",
+      "name": "eyebrow",
+      "type": "text",
+      "instructions": "",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "default_value": "Navigate",
+      "maxlength": "",
+      "placeholder": "",
+      "prepend": "",
+      "append": ""
+    },
+    {
+      "key": "field_balt_feature_grid_heading",
+      "label": "Heading",
+      "name": "heading",
+      "type": "text",
+      "instructions": "",
+      "required": 1,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "default_value": "Explore the Archdiocese",
+      "maxlength": "",
+      "placeholder": "",
+      "prepend": "",
+      "append": ""
+    },
+    {
+      "key": "field_balt_feature_grid_subheading",
+      "label": "Subheading",
+      "name": "subheading",
+      "type": "textarea",
+      "instructions": "",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "default_value": "Find parishes, schools, priests, events, and resources across the Archdiocese of Baltimore",
+      "maxlength": "",
+      "placeholder": "",
+      "prepend": "",
+      "append": "",
+      "rows": 2,
+      "new_lines": ""
+    },
+    {
+      "key": "field_balt_feature_grid_items",
+      "label": "Features",
+      "name": "items",
+      "type": "repeater",
+      "instructions": "Add 1 to 6 linked features. The layout adjusts automatically to the number of items.",
+      "required": 1,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "layout": "block",
+      "pagination": 0,
+      "min": 1,
+      "max": 6,
+      "collapsed": "field_balt_feature_grid_item_heading",
+      "button_label": "Add Feature",
+      "rows_per_page": 20,
+      "sub_fields": [
+        {
+          "key": "field_balt_feature_grid_item_icon",
+          "label": "Icon",
+          "name": "icon",
+          "type": "font-awesome",
+          "instructions": "Select a Font Awesome icon. Requires the Advanced Custom Fields: Font Awesome Field extension.",
+          "required": 1,
+          "conditional_logic": 0,
+          "wrapper": {
+            "width": "50",
+            "class": "",
+            "id": ""
+          },
+          "icon_sets": [
+            "classic_solid",
+            "classic_regular"
+          ],
+          "save_format": "class",
+          "enqueue_fa": 1,
+          "allow_null": 0,
+          "show_preview": 1,
+          "default_value": ""
+        },
+        {
+          "key": "field_balt_feature_grid_item_heading",
+          "label": "Heading",
+          "name": "heading",
+          "type": "text",
+          "instructions": "",
+          "required": 1,
+          "conditional_logic": 0,
+          "wrapper": {
+            "width": "50",
+            "class": "",
+            "id": ""
+          },
+          "default_value": "",
+          "maxlength": "",
+          "placeholder": "",
+          "prepend": "",
+          "append": ""
+        },
+        {
+          "key": "field_balt_feature_grid_item_description",
+          "label": "Description",
+          "name": "description",
+          "type": "textarea",
+          "instructions": "A short description looks best (one to three lines).",
+          "required": 1,
+          "conditional_logic": 0,
+          "wrapper": {
+            "width": "",
+            "class": "",
+            "id": ""
+          },
+          "default_value": "",
+          "rows": 3,
+          "new_lines": ""
+        },
+        {
+          "key": "field_balt_feature_grid_item_link",
+          "label": "Link",
+          "name": "link",
+          "type": "link",
+          "instructions": "The whole card is clickable.",
+          "required": 1,
+          "conditional_logic": 0,
+          "wrapper": {
+            "width": "",
+            "class": "",
+            "id": ""
+          },
+          "return_format": "array"
+        }
+      ]
+    }
+  ],
+  "location": [
+    [
+      {
+        "param": "block",
+        "operator": "==",
+        "value": "balt/feature-grid"
+      }
+    ]
+  ],
+  "menu_order": 0,
+  "position": "normal",
+  "style": "default",
+  "label_placement": "top",
+  "instruction_placement": "label",
+  "hide_on_screen": "",
+  "active": true,
+  "description": "Editable heading and 1–6 feature cards for the Navigate section.",
+  "show_in_rest": 0
+}
