@@ -16,14 +16,14 @@ get_header();
 ?>
 
 <section id="primary">
-    <main id="main">
+	<main id="main">
 
-        <?php
+		<?php
 		/* Start the Loop */
 		while (have_posts()) :
 			the_post(); ?>
 
-        <?php
+			<?php
 
 			/**
 			 * Template part for displaying pages
@@ -35,10 +35,10 @@ get_header();
 
 			?>
 
-        <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+			<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 
-            <div <?php balt_content_class('entry-content'); ?>>
-                <?php
+				<div <?php balt_content_class('entry-content'); ?>>
+					<?php
 					the_content();
 
 					wp_link_pages(
@@ -48,35 +48,15 @@ get_header();
 						)
 					);
 					?>
-            </div><!-- .entry-content -->
+				</div><!-- .entry-content -->
 
-            <?php if (get_edit_post_link()) : ?>
-            <footer class="entry-footer">
-                <?php
-						edit_post_link(
-							sprintf(
-								wp_kses(
-									/* translators: %s: Name of current post. Only visible to screen readers. */
-									__('Edit <span class="sr-only">%s</span>', 'baltimore'),
-									array(
-										'span' => array(
-											'class' => array(),
-										),
-									)
-								),
-								get_the_title()
-							)
-						);
-						?>
-            </footer><!-- .entry-footer -->
-            <?php endif; ?>
 
-        </article><!-- #post-<?php the_ID(); ?> -->
+			</article><!-- #post-<?php the_ID(); ?> -->
 
-        <?php endwhile; // End of the loop.
+		<?php endwhile; // End of the loop.
 		?>
 
-    </main><!-- #main -->
+	</main><!-- #main -->
 </section><!-- #primary -->
 
 <?php
