@@ -1,8 +1,15 @@
 /**
- * Custom styles to immediately follow Tailwind’s `utilities` layer
- *
- * Add your own utility classes to this theme. Complex utility classes should
- * be added using Tailwind’s plugin system:
- *
- * https://tailwindcss.com/docs/adding-custom-styles#adding-custom-utilities
+ * Reusable buttons from the Baltimore homepage Figma design.
+ * Use "btn btn-outline" or "btn btn-gold" on any link or button.
  */
+@utility btn {
+	@apply inline-flex items-center justify-center rounded-full px-8 py-3.5 font-body text-sm font-semibold leading-5 tracking-[0.1em] uppercase no-underline transition-colors;
+}
+
+@utility btn-outline {
+	@apply border-2 border-white bg-transparent text-white hover:bg-white hover:text-primary;
+}
+
+@utility btn-gold {
+	@apply bg-secondary font-bold text-primary hover:bg-white;
+}

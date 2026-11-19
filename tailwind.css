@@ -1,6 +1,8 @@
 @import "./tailwind/custom/file-header.css";
 @import "tailwindcss/theme";
 
+@source "./theme/dpi-blocks/blocks/hero";
+
 @import "./tailwind/tailwind-theme.css";
 
 @if $target != editor {
