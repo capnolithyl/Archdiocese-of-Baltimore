@@ -15,7 +15,7 @@ Custom PHP WordPress theme based on **_tw**, using Tailwind CSS 4, `theme.json` 
 | Search | Standard search form and search results page implemented; **live typeahead search is not implemented** |
 | Comments | Disabled by `theme/inc/comments.php`: discussion support, admin links/screens, API routes and feeds |
 | Homepage | **Approved homepage composition is not built yet** |
-| Custom Gutenberg/ACF blocks | **Theme-owned:** `dpi/hero`, `dpi/five-pillars`, `dpi/feature-banner`, `dpi/community-slider`, `dpi/stats`, plus the new `balt/feature-grid` (Navigate). Other `dpi/*` blocks remain in the plugin. |
+| Custom Gutenberg/ACF blocks | **Theme-owned:** `dpi/hero`, `dpi/five-pillars`, `dpi/feature-banner`, `dpi/community-slider`, `dpi/stats`, plus `balt/feature-grid` (Navigate) and `balt/evangelization-grid` (Evangelization CTA). Other `dpi/*` blocks remain in the plugin. |
 | GIS | External existing plugin; integration and configuration later |
 | Staff / ministries | No theme CPT implementation; planned as reusable plugin modules |
 
@@ -28,6 +28,13 @@ The **Hero** (`dpi/hero`) now follows the approved Figma homepage design using T
 The `balt/feature-grid` block is registered from `theme/blocks/feature-grid/`, with its ACF field group in `theme/acf-json/group_balt_feature_grid.json`. Fields: eyebrow, heading, subheading, and a 1–6 item repeater (Font Awesome icon, heading, description, link). The entire card links to the selected destination. Responsive columns adjust to the number of cards (1: centered single; 2: two; 3: three; 4: 2×2; 5: 3+2; 6: 3×2).
 
 **Dependency:** Install and activate the **Advanced Custom Fields: Font Awesome Field** extension alongside ACF Pro. Icon field type: `font-awesome` with `save_format: class`. The extension's `enqueue_fa` option is enabled in the field, so it supplies the icon assets on pages using the block. Without that extension, the icon picker is unavailable.
+
+### Evangelization / Four-Card Grid
+
+The `balt/evangelization-grid` block follows Figma node `320:140`. Its ACF group `group_balt_evangelization_grid` provides an eyebrow, heading, description and CTA link for the centered white/gold panel, plus an image-card repeater with **min 4 / max 4**. Each card stores its background image (Media Library), a short label and a link. The badge colors follow the four design positions (red, gold, blue, slate).
+
+The layout uses Tailwind only: four 460px cards in one row at wide breakpoints, responsive two- and one-column layouts below that, and an 80px overlap of the central panel at desktop widths. ACF enforces exactly four items; to add or remove cards in a future redesign, change the repeater limits and accompanying grid and badge treatment. No baked-in Figma stock imagery is shipped: the editor supplies the four images.
+
 
 
 ## Sprint 1: homepage by December 4, 2026

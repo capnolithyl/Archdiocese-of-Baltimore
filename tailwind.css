@@ -4,6 +4,7 @@
 @source "./theme/dpi-blocks/blocks/hero";
 @source "./theme/dpi-blocks/blocks/feature-banner";
 @source "./theme/blocks/feature-grid";
+@source "./theme/blocks/evangelization-grid";
 
 @import "./tailwind/tailwind-theme.css";
 

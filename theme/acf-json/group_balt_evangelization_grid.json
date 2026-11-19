@@ -1,0 +1,155 @@
+{
+  "key": "group_balt_evangelization_grid",
+  "title": "Evangelization / Four-Card Grid",
+  "fields": [
+    {
+      "key": "field_balt_evangelization_eyebrow",
+      "label": "Eyebrow",
+      "name": "eyebrow",
+      "type": "text",
+      "instructions": "",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "default_value": "Evangelization"
+    },
+    {
+      "key": "field_balt_evangelization_heading",
+      "label": "Heading",
+      "name": "heading",
+      "type": "text",
+      "instructions": "",
+      "required": 1,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "default_value": "Share the Joy of the Gospel"
+    },
+    {
+      "key": "field_balt_evangelization_description",
+      "label": "Description",
+      "name": "description",
+      "type": "textarea",
+      "instructions": "",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "default_value": "Lord Jesus, send us out in the power of Your Spirit. Open our hearts to welcome our neighbors, and give us courage to proclaim Your good news with joy.",
+      "rows": 3,
+      "new_lines": ""
+    },
+    {
+      "key": "field_balt_evangelization_cta",
+      "label": "CTA Link",
+      "name": "cta",
+      "type": "link",
+      "instructions": "Link beneath the description, displayed as red uppercase text with an arrow.",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "return_format": "array"
+    },
+    {
+      "key": "field_balt_evangelization_items",
+      "label": "Image Cards",
+      "name": "items",
+      "type": "repeater",
+      "instructions": "Exactly four cards are required for this design. Each row controls an image, centered label and linked destination. Card colors are assigned by position (red, gold, blue, slate).",
+      "required": 1,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "layout": "block",
+      "pagination": 0,
+      "min": 4,
+      "max": 4,
+      "collapsed": "field_balt_evangelization_item_label",
+      "button_label": "Add Card",
+      "rows_per_page": 4,
+      "sub_fields": [
+        {
+          "key": "field_balt_evangelization_item_image",
+          "label": "Background Image",
+          "name": "image",
+          "type": "image",
+          "instructions": "Vertical photo, cropped to cover the card.",
+          "required": 1,
+          "conditional_logic": 0,
+          "wrapper": {
+            "width": "",
+            "class": "",
+            "id": ""
+          },
+          "return_format": "id",
+          "preview_size": "medium",
+          "library": "all"
+        },
+        {
+          "key": "field_balt_evangelization_item_label",
+          "label": "Label",
+          "name": "label",
+          "type": "text",
+          "instructions": "Short uppercase label. Figma examples: Encounter Christ, Grow in Faith, Serve Others, Be Sent.",
+          "required": 1,
+          "conditional_logic": 0,
+          "wrapper": {
+            "width": "50",
+            "class": "",
+            "id": ""
+          }
+        },
+        {
+          "key": "field_balt_evangelization_item_link",
+          "label": "Destination",
+          "name": "link",
+          "type": "link",
+          "instructions": "Whole card links to this destination.",
+          "required": 1,
+          "conditional_logic": 0,
+          "wrapper": {
+            "width": "50",
+            "class": "",
+            "id": ""
+          },
+          "return_format": "array"
+        }
+      ]
+    }
+  ],
+  "location": [
+    [
+      {
+        "param": "block",
+        "operator": "==",
+        "value": "balt/evangelization-grid"
+      }
+    ]
+  ],
+  "menu_order": 0,
+  "position": "normal",
+  "style": "default",
+  "label_placement": "top",
+  "instruction_placement": "label",
+  "hide_on_screen": "",
+  "active": true,
+  "description": "Four image cards and a centered overlapping CTA panel.",
+  "show_in_rest": 0
+}

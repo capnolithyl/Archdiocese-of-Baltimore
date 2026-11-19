@@ -1,0 +1,36 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "balt/evangelization-grid",
+  "version": "1.0.0",
+  "title": "Evangelization / Four-Card Grid",
+  "category": "baltimore",
+  "icon": "images-alt2",
+  "description": "Four photo links behind an overlapping Evangelization message panel.",
+  "keywords": [
+    "evangelization",
+    "four cards",
+    "image grid",
+    "mission",
+    "cta"
+  ],
+  "textdomain": "baltimore",
+  "acf": {
+    "mode": "preview",
+    "renderCallback": "balt_render_evangelization_grid_block",
+    "blockVersion": 3
+  },
+  "supports": {
+    "anchor": true,
+    "align": [
+      "full"
+    ],
+    "html": false
+  },
+  "attributes": {
+    "align": {
+      "type": "string",
+      "default": "full"
+    }
+  }
+}
