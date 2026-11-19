@@ -196,7 +196,7 @@ jobs:
               tabs.sub_fields[0].type !== 'select' || tabs.sub_fields[0].ui !== 1) {
             throw new Error('Media Center tab source picker is incorrect');
           }
-          for (const token of ["balt_media_types()", "get_posts(", "'numberposts'     => 3", 'get_post_type_archive_link(', 'get_the_post_thumbnail(', 'data-balt-media-panel', 'data-balt-media-tab']) {
+          for (const token of ["balt_media_types()", "get_posts(", "'numberposts'     => 3", 'balt_media_center_resolve_source(', 'get_the_post_thumbnail(', 'data-balt-media-panel', 'data-balt-media-tab']) {
             if (!render.includes(token)) throw new Error('Media Center renderer missing: ' + token);
           }
           for (const token of ['aria-selected', 'ArrowRight', 'ArrowLeft', 'Home', 'End', 'panels[i].hidden']) {
