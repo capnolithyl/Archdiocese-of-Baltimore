@@ -15,10 +15,10 @@ if ( ! $items ) {
 
 /* Four cards match the current design. Smaller counts stay centered if limits change. */
 $grid_classes = match ( count( $items ) ) {
-	1       => 'sm:grid-cols-1 sm:max-w-[350px]',
-	2       => 'sm:grid-cols-2 sm:max-w-[708px]',
-	3       => 'sm:grid-cols-3 sm:max-w-[1066px]',
-	default => 'sm:grid-cols-4',
+	1       => 'grid-cols-1 max-w-[350px]',
+	2       => 'max-w-[708px]',
+	3       => 'min-[992px]:grid-cols-3 min-[992px]:max-w-[1066px]',
+	default => 'min-[992px]:grid-cols-4',
 };
 
 $eyebrow     = trim( (string) get_field( 'eyebrow' ) );
