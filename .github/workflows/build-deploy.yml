@@ -143,7 +143,7 @@ jobs:
               throw new Error('Image CTA Grid panel field missing: ' + name);
             }
           }
-          for (const token of ['flex-col-reverse', 'xl:flex-col', 'aspect-[3/4]', 'xl:aspect-auto', 'mb-8', 'xl:mb-0', 'match ( count( $items ) )', 'xl:grid-cols-1', 'xl:grid-cols-2', 'xl:grid-cols-3', 'xl:grid-cols-4', 'xl:-mt-20', '$index % count( $badge_colors )', 'bg-[#BE2026]', 'bg-[#B8892B]', 'bg-[#4A90B8]', 'bg-[#4B5563]']) {
+          for (const token of ['flex-col-reverse', 'sm:flex-col', 'mx-auto grid w-full grid-cols-2', 'aspect-[3/4]', 'sm:aspect-auto', 'mb-8', 'sm:mb-0', 'match ( count( $items ) )', 'sm:grid-cols-1', 'sm:grid-cols-2', 'sm:grid-cols-3', 'sm:grid-cols-4', 'sm:-mt-20', '$index % count( $badge_colors )', 'bg-[#BE2026]', 'bg-[#B8892B]', 'bg-[#4A90B8]', 'bg-[#4B5563]']) {
             if (!renderer.includes(token)) throw new Error('Image CTA Grid layout missing: ' + token);
           }
           for (const css of ['theme/style.css', 'theme/style-editor.css']) {
