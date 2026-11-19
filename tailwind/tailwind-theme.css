@@ -18,15 +18,20 @@
 	 * values instead of the `var()` functions below.
      */
 	--color-primary: var(--wp--preset--color--primary);
+	--color-primary-light: var(--wp--preset--color--primary-light);
 	--color-secondary: var(--wp--preset--color--secondary);
 	--color-tertiary: var(--wp--preset--color--tertiary);
 
 	--color-foreground: var(--wp--preset--color--foreground);
 	--color-body: var(--wp--preset--color--body);
 	--color-muted: var(--wp--preset--color--muted);
+	--color-light-muted: var(--wp--preset--color--light-muted);
 
 	--color-background: var(--wp--preset--color--background);
 	--color-surface: var(--wp--preset--color--surface);
+	--color-border: var(--wp--preset--color--border);
+	--color-dark: var(--wp--preset--color--dark);
+	--color-darkest: var(--wp--preset--color--darkest);
 
 	--container-compact: var(--wp--style--global--compact-size);
 	--container-narrow: var(--wp--style--global--narrow-size);
@@ -54,9 +59,14 @@
 
 	--font-body: var(--wp--preset--font-family--body);
 	--font-heading: var(--wp--preset--font-family--heading);
-	--font-hero: "Hoefler Text", "EB Garamond", Georgia, serif;
-	/**
-	 * Add your theme below:
-	 */
+	--font-hero: var(--wp--preset--font-family--heading);
+	/* Figma desktop: 80px sections, 40px container gutters. Mobile is fluid. */
+	--spacing-section: clamp(3rem, 5vw, 5rem);
+	--spacing-gutter: clamp(1.25rem, 3vw, 2.5rem);
+
+	/* The recurring card/control corner treatments. Buttons use rounded-full. */
+	--radius-card: 1rem;
+	--radius-control: 0.625rem;
+
 	--spacing-admin-bar: var(--wp-admin-bar-height);
 }

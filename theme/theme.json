@@ -36,13 +36,38 @@
 				},
 				{
 				"slug": "background",
-				"color": "#F5F3EE",
+				"color": "#FFFFFF",
 				"name": "Background"
 				},
 				{
 				"slug": "surface",
-				"color": "#F0EDE8",
+				"color": "#F7F4F3",
 				"name": "Surface"
+				},
+				{
+				"slug": "primary-light",
+				"color": "#003A7A",
+				"name": "Bright Navy"
+				},
+				{
+				"slug": "dark",
+				"color": "#101828",
+				"name": "Dark Navy"
+				},
+				{
+				"slug": "darkest",
+				"color": "#0B1325",
+				"name": "Deep Navy"
+				},
+				{
+				"slug": "light-muted",
+				"color": "#D1D5DC",
+				"name": "Light Muted"
+				},
+				{
+				"slug": "border",
+				"color": "#E8E3D8",
+				"name": "Border"
 				},
 				{
 				"slug": "white",
