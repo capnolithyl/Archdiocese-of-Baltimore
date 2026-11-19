@@ -64,6 +64,9 @@
 	--spacing-section: clamp(3rem, 5vw, 5rem);
 	--spacing-gutter: clamp(1.25rem, 3vw, 2.5rem);
 
+	/* 992px desktop transition for the Image CTA Grid. Use rem for Tailwind breakpoint ordering. */
+	--breakpoint-desktop: 62rem;
+
 	/* The recurring card/control corner treatments. Buttons use rounded-full. */
 	--radius-card: 1rem;
 	--radius-control: 0.625rem;
