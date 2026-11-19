@@ -31,7 +31,7 @@ $heading_id   = wp_unique_id( 'balt-image-cta-grid-' );
 ?>
 <section <?php echo get_block_wrapper_attributes( array( 'class' => 'not-prose relative left-1/2 mt-0! w-screen max-w-none -translate-x-1/2 bg-surface py-section' ) ); ?><?php if ( $heading ) : ?> aria-labelledby="<?php echo esc_attr( $heading_id ); ?>"<?php endif; ?>>
 	<div class="mx-auto flex w-full max-w-wide flex-col-reverse px-gutter min-[992px]:flex-col">
-		<div class="mx-auto grid w-full grid-cols-2 gap-2 <?php echo esc_attr( $grid_classes ); ?>">
+		<div class="mx-auto grid w-full grid-cols-1 gap-2 sm:grid-cols-2 <?php echo esc_attr( $grid_classes ); ?>">
 			<?php foreach ( $items as $index => $item ) : ?>
 				<?php
 				$image_id = absint( is_array( $item['image'] ?? null ) ? ( $item['image']['ID'] ?? 0 ) : ( $item['image'] ?? 0 ) );
