@@ -33,7 +33,7 @@ The `balt/feature-grid` block is registered from `theme/blocks/feature-grid/`, w
 
 The `balt/image-cta-grid` block can be used for any set of four linked image cards. Its current visual layout follows Figma node `320:140`. Its ACF group `group_balt_image_cta_grid` provides an eyebrow, heading, description and CTA link for the centered white/gold panel, plus an image-card repeater with **min 4 / max 4**. Each card stores its background image (Media Library), a short label and a link. The badge colors follow the four design positions (red, gold, blue, slate).
 
-The layout uses Tailwind only: four 460px cards in one row at wide breakpoints, responsive two- and one-column layouts below that, and an 80px overlap of the central panel at desktop widths. ACF enforces exactly four items; to add or remove cards in a future redesign, change the repeater limits and accompanying grid and badge treatment. No baked-in Figma stock imagery is shipped: the editor supplies the four images.
+The layout uses Tailwind only: four 460px cards in one row at wide breakpoints, responsive two- and one-column layouts below that, and an 80px overlap of the central panel at desktop widths. ACF currently enforces exactly four items; the renderer already accommodates different counts (one, two or three cards remain centered, and five or more wrap across additional rows). Future requests to change the number of cards only require adjusting the repeater limits. Badge colors repeat after the fourth card. No baked-in Figma stock imagery is shipped: the editor supplies the four images.
 
 
 

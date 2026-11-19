@@ -143,12 +143,12 @@ jobs:
               throw new Error('Image CTA Grid panel field missing: ' + name);
             }
           }
-          for (const token of ['4 !== count( $items )', 'xl:grid-cols-4', 'xl:-mt-20', 'bg-[#BE2026]', 'bg-[#B8892B]', 'bg-[#4A90B8]', 'bg-[#4B5563]']) {
+          for (const token of ['match ( count( $items ) )', 'xl:grid-cols-1', 'xl:grid-cols-2', 'xl:grid-cols-3', 'xl:grid-cols-4', 'xl:-mt-20', '$index % count( $badge_colors )', 'bg-[#BE2026]', 'bg-[#B8892B]', 'bg-[#4A90B8]', 'bg-[#4B5563]']) {
             if (!renderer.includes(token)) throw new Error('Image CTA Grid layout missing: ' + token);
           }
           for (const css of ['theme/style.css', 'theme/style-editor.css']) {
             if (!readFileSync(css, 'utf8').includes('460px')) {
-              throw new Error('Evangelization 460px card utility missing: ' + css);
+              throw new Error('Image CTA Grid 460px card utility missing: ' + css);
             }
           }
           NODE

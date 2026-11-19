@@ -6,12 +6,20 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 $items = get_field( 'items' ) ?: array();
 
-if ( 4 !== count( $items ) ) {
+if ( ! $items ) {
 	if ( ! empty( $is_preview ) ) {
-		echo '<p ' . get_block_wrapper_attributes() . '>' . esc_html__( 'Add exactly four image cards to complete this section.', 'baltimore' ) . '</p>';
+		echo '<p ' . get_block_wrapper_attributes() . '>' . esc_html__( 'Add four image cards to complete this section.', 'baltimore' ) . '</p>';
 	}
 	return;
 }
+
+/* Four cards match the current design. Smaller counts stay centered if limits change. */
+$grid_classes = match ( count( $items ) ) {
+	1       => 'xl:grid-cols-1 xl:max-w-[350px]',
+	2       => 'xl:grid-cols-2 xl:max-w-[708px]',
+	3       => 'xl:grid-cols-3 xl:max-w-[1066px]',
+	default => 'xl:grid-cols-4',
+};
 
 $eyebrow     = trim( (string) get_field( 'eyebrow' ) );
 $heading     = trim( (string) get_field( 'heading' ) );
@@ -23,7 +31,7 @@ $heading_id   = wp_unique_id( 'balt-image-cta-grid-' );
 ?>
 <section <?php echo get_block_wrapper_attributes( array( 'class' => 'not-prose relative left-1/2 mt-0! w-screen max-w-none -translate-x-1/2 bg-surface py-section' ) ); ?><?php if ( $heading ) : ?> aria-labelledby="<?php echo esc_attr( $heading_id ); ?>"<?php endif; ?>>
 	<div class="mx-auto w-full max-w-wide px-gutter">
-		<div class="grid grid-cols-1 gap-2 sm:grid-cols-2 xl:grid-cols-4">
+		<div class="mx-auto grid grid-cols-1 gap-2 sm:grid-cols-2 <?php echo esc_attr( $grid_classes ); ?>">
 			<?php foreach ( $items as $index => $item ) : ?>
 				<?php
 				$image_id = absint( is_array( $item['image'] ?? null ) ? ( $item['image']['ID'] ?? 0 ) : ( $item['image'] ?? 0 ) );
@@ -39,7 +47,7 @@ $heading_id   = wp_unique_id( 'balt-image-cta-grid-' );
 
 					<span class="absolute inset-0 bg-black/10" aria-hidden="true"></span>
 					<?php if ( $label ) : ?>
-						<span class="relative z-10 max-w-[calc(100%-2rem)] rounded-[6px] px-5 py-2.5 text-center font-body text-[13px] font-bold leading-[19.5px] tracking-[0.15em] text-white uppercase shadow-md <?php echo esc_attr( $badge_colors[ $index ] ); ?>">
+						<span class="relative z-10 max-w-[calc(100%-2rem)] rounded-[6px] px-5 py-2.5 text-center font-body text-[13px] font-bold leading-[19.5px] tracking-[0.15em] text-white uppercase shadow-md <?php echo esc_attr( $badge_colors[ $index % count( $badge_colors ) ] ); ?>">
 							<?php echo esc_html( $label ); ?>
 						</span>
 					<?php endif; ?>
