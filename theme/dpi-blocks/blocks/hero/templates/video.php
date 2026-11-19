@@ -26,7 +26,7 @@ $heading_tag = is_front_page() ? 'h1' : 'h2';
 
 	<div class="relative z-10 flex h-full flex-col items-center justify-end px-6 pb-[60px] text-center">
 		<?php if ( $heading ) : ?>
-			<<?php echo $heading_tag; ?> class="max-w-[900px] font-heading text-[clamp(3.5rem,6.55vw,7rem)] font-extrabold leading-none tracking-[-0.025em] text-white text-balance"><?php echo esc_html( $heading ); ?></<?php echo $heading_tag; ?>>
+			<<?php echo $heading_tag; ?> class="max-w-[900px] font-hero text-[clamp(3.5rem,6.55vw,7rem)] font-black leading-none tracking-[-0.025em] text-white text-balance"><?php echo esc_html( $heading ); ?></<?php echo $heading_tag; ?>>
 		<?php endif; ?>
 
 		<?php if ( $subheading ) : ?>

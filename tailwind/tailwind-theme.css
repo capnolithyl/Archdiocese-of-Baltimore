@@ -54,6 +54,7 @@
 
 	--font-body: var(--wp--preset--font-family--body);
 	--font-heading: var(--wp--preset--font-family--heading);
+	--font-hero: "Hoefler Text", "EB Garamond", Georgia, serif;
 	/**
 	 * Add your theme below:
 	 */
