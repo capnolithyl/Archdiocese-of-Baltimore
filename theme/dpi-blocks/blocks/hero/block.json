@@ -27,7 +27,6 @@
     "html": false
   },
   "style": [
-    "balt-ported-dpi-defaults",
     "balt-ported-dpi-slick"
   ],
   "script": "balt-ported-dpi-interactions",

@@ -21,6 +21,8 @@ Custom PHP WordPress theme based on **_tw**, using Tailwind CSS 4, `theme.json` 
 
 This table is based on code in this repository, **not a live WordPress/site test**.
 
+The five theme-owned DPI blocks are styled primarily through **Tailwind utility classes in their PHP templates**. Copied block CSS files were removed; the Slick carousel vendor stylesheet remains. The separate `dpi-blocks` plugin may still enqueue its CSS when other plugin-owned blocks are used.
+
 ## Sprint 1: homepage by December 4, 2026
 
 Complete the design-aligned header/footer and theme shell, reusable homepage blocks, Gutenberg page assembly, functional live search suggestions, and desktop/mobile QA. Sample data is sufficient for component testing. The content team owns real copy and data; migration, GIS, archives for new CPTs and production launch are outside this sprint.

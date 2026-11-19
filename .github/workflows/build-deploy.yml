@@ -35,3 +35,18 @@ jobs:
 
       - name: Lint PHP templates
         run: find theme -type f -name '*.php' -print0 | xargs -0 -n 1 php -l
+
+      - name: Check generated Tailwind block utilities
+        run: |
+          node --input-type=module <<'NODE'
+          import { readFileSync } from 'node:fs';
+
+          for (const path of ['theme/style.css', 'theme/style-editor.css']) {
+            const css = readFileSync(path, 'utf8');
+            for (const selector of ['slick-arrow', 'slick-dots', 'min-h-svh', 'grid-cols']) {
+              if (!css.includes(selector)) {
+                throw new Error(`Missing generated Tailwind utility: ${selector} in ${path}`);
+              }
+            }
+          }
+          NODE

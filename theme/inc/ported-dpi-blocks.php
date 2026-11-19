@@ -15,10 +15,6 @@ function balt_register_ported_dpi_assets(): void {
 
 	$root = get_template_directory_uri() . '/assets/ported-dpi';
 
-	wp_register_style( 'balt-ported-dpi-layer', false, array(), BALT_VERSION );
-	wp_add_inline_style( 'balt-ported-dpi-layer', '@layer dpi-blocks; @layer dpi-blocks.structure, dpi-blocks.defaults;' );
-	wp_register_style( 'balt-ported-dpi-structure', $root . '/css/blocks.css', array( 'balt-ported-dpi-layer' ), BALT_VERSION );
-	wp_register_style( 'balt-ported-dpi-defaults', $root . '/css/block-defaults.css', array( 'balt-ported-dpi-structure' ), BALT_VERSION );
 	wp_register_style( 'balt-ported-dpi-slick', $root . '/vendor/slick/slick.css', array(), '1.8.1' );
 	wp_register_script( 'balt-ported-dpi-slick', $root . '/vendor/slick/slick.min.js', array( 'jquery' ), '1.8.1', true );
 	wp_register_script( 'balt-ported-dpi-interactions', $root . '/js/blocks.js', array( 'jquery', 'balt-ported-dpi-slick' ), BALT_VERSION, true );
@@ -82,7 +78,6 @@ function balt_ported_dpi_editor_assets(): void {
 	if ( defined( 'DPI_BLOCKS_VERSION' ) ) {
 		return;
 	}
-	wp_enqueue_style( 'balt-ported-dpi-defaults' );
 	wp_enqueue_style( 'balt-ported-dpi-slick' );
 	wp_enqueue_script( 'balt-ported-dpi-interactions' );
 }
@@ -221,4 +216,32 @@ function balt_hero_block_metadata( array $metadata ): array {
 	return $metadata;
 }
 add_filter( 'dpi_blocks/block_metadata/hero', 'balt_hero_block_metadata' );
+
+/**
+ * These five blocks use Tailwind from the Baltimore theme. Other DPI plugin
+ * blocks continue to load their own styles, scripts and dependencies.
+ */
+function balt_ported_dpi_style_handles( array $args, string $block_name ): array {
+	if ( ! in_array( $block_name, array_map( static fn( $slug ) => 'dpi/' . $slug, balt_ported_dpi_block_slugs() ), true ) ) {
+		return $args;
+	}
+
+	$needs_slick = in_array( $block_name, array( 'dpi/hero', 'dpi/feature-banner', 'dpi/community-slider' ), true );
+	$args['style_handles'] = $needs_slick
+		? array( defined( 'DPI_BLOCKS_VERSION' ) ? 'dpi-blocks-slick' : 'balt-ported-dpi-slick' )
+		: array();
+	$args['editor_style_handles'] = array();
+
+	return $args;
+}
+add_filter( 'register_block_type_args', 'balt_ported_dpi_style_handles', 100, 2 );
+
+/** Avoid loading the shared DPI CSS merely because a theme-owned block exists. */
+function balt_ported_dpi_asset_requirements( array $requirements, array $context ): array {
+	if ( in_array( $context['block_name'] ?? '', array( 'dpi/hero', 'dpi/five-pillars', 'dpi/feature-banner', 'dpi/community-slider', 'dpi/stats' ), true ) ) {
+		$requirements['styles'] = false;
+	}
+	return $requirements;
+}
+add_filter( 'dpi_blocks/block_asset_requirements', 'balt_ported_dpi_asset_requirements', 100, 2 );
 

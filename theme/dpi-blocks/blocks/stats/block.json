@@ -43,8 +43,5 @@
       "minHeight": true
     },
     "html": false
-  },
-  "style": [
-    "balt-ported-dpi-defaults"
-  ]
+  }
 }

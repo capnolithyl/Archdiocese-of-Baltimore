@@ -36,9 +36,5 @@
     },
     "html": false
   },
-  "style": [
-    "balt-ported-dpi-defaults",
-    "file:./style.css"
-  ],
   "script": "file:./view.js"
 }

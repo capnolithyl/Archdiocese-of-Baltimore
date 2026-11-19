@@ -195,7 +195,7 @@ if ( empty( $slides ) ) {
 	if ( ! empty( $is_preview ) ) {
 		printf(
 			'<div %1$s><p>%2$s</p></div>',
-			get_block_wrapper_attributes( array( 'class' => 'dpi-block dpi-feature-banner dpi-block--placeholder' ) ),
+			get_block_wrapper_attributes( array( 'class' => 'dpi-block dpi-feature-banner dpi-block--placeholder border border-dashed border-current p-6 text-center' ) ),
 			esc_html__( 'Add at least one feature slide.', 'dpi-blocks' )
 		);
 	}
@@ -221,13 +221,13 @@ $slick       = array(
 
 $wrapper_attributes = get_block_wrapper_attributes(
 	array(
-		'class' => 'dpi-block dpi-feature-banner ' . ( $has_slider ? 'dpi-feature-banner--slider' : 'dpi-feature-banner--single' ),
+		'class' => 'dpi-block dpi-feature-banner relative min-w-0 overflow-hidden p-0! ' . ( $has_slider ? 'dpi-feature-banner--slider' : 'dpi-feature-banner--single' ),
 	)
 );
 ?>
 <section <?php echo $wrapper_attributes;?>>
 	<div
-		class="dpi-feature-banner__slides"
+		class="dpi-feature-banner__slides relative [&_.slick-track]:flex! [&_.slick-arrow]:absolute! [&_.slick-arrow]:top-1/2 [&_.slick-arrow]:z-20 [&_.slick-arrow]:grid! [&_.slick-arrow]:size-10 [&_.slick-arrow]:-translate-y-1/2 [&_.slick-arrow]:place-items-center [&_.slick-arrow]:rounded-full [&_.slick-arrow]:bg-white/90 [&_.slick-arrow]:text-primary [&_.slick-arrow]:shadow-md [&_.slick-arrow_svg]:size-5 [&_.slick-prev]:left-3 [&_.slick-next]:right-3 [&_.slick-dots]:flex! [&_.slick-dots]:justify-center [&_.slick-dots]:gap-2 [&_.slick-dots]:p-3 [&_.slick-dots]:list-none [&_.slick-dots_button]:size-3 [&_.slick-dots_button]:rounded-full [&_.slick-dots_button]:bg-current/40 [&_.slick-dots_button]:text-[0px] [&_.slick-active_button]:bg-current [&_.slick-slide]:h-auto [&_.slick-slide>div]:h-full [&_.slick-slide_.dpi-feature-banner__slide]:h-full"
 		<?php if ( $has_slider ) : ?>
 			data-dpi-slick="<?php echo esc_attr( wp_json_encode( $slick ) ); ?>"
 		<?php endif; ?>
@@ -239,43 +239,43 @@ $wrapper_attributes = get_block_wrapper_attributes(
 				: '';
 			?>
 			<article
-				class="dpi-feature-banner__slide dpi-feature-banner__slide--<?php echo esc_attr( $slide['image_layout'] ); ?> dpi-feature-banner__slide--<?php echo esc_attr( $slide['visual_variant'] ); ?>"
+				class="dpi-feature-banner__slide dpi-feature-banner__slide--<?php echo esc_attr( $slide['image_layout'] ); ?> dpi-feature-banner__slide--<?php echo esc_attr( $slide['visual_variant'] ); ?> relative isolate grid min-h-80 overflow-hidden <?php echo in_array( $slide['image_layout'], array( 'left', 'right' ), true ) ? 'md:grid-cols-2' : ''; ?> <?php echo 'dark' === $slide['visual_variant'] ? 'bg-foreground text-white' : 'bg-background text-foreground'; ?>"
 				<?php echo $heading_id ? 'aria-labelledby="' . esc_attr( $heading_id ) . '"' : '';?>
 			>
 				<?php if ( $slide['image_id'] ) : ?>
-					<figure class="dpi-feature-banner__media">
-						<?php echo wp_get_attachment_image( $slide['image_id'], 'full' );?>
+					<figure class="dpi-feature-banner__media min-w-0 <?php echo 'background' === $slide['image_layout'] ? 'absolute inset-0 -z-20' : 'min-h-60'; ?> <?php echo 'right' === $slide['image_layout'] ? 'md:order-2' : ''; ?>">
+						<?php echo wp_get_attachment_image( $slide['image_id'], 'full', false, array( 'class' => 'size-full object-cover' ) );?>
 					</figure>
 
 					<?php if ( 'background' === $slide['image_layout'] ) : ?>
-						<div class="dpi-feature-banner__overlay" aria-hidden="true"></div>
+						<div class="dpi-feature-banner__overlay absolute inset-0 -z-10 <?php echo 'dark' === $slide['visual_variant'] ? 'bg-black/70' : 'bg-white/90'; ?>" aria-hidden="true"></div>
 					<?php endif; ?>
 				<?php endif; ?>
 
-				<div class="dpi-feature-banner__content">
+				<div class="dpi-feature-banner__content relative z-10 grid min-w-0 content-center gap-4 p-[clamp(2rem,6vw,5rem)] <?php echo 'background' === $slide['image_layout'] ? 'max-w-[42rem]' : ''; ?>">
 					<?php if ( $slide['eyebrow'] ) : ?>
-						<p class="dpi-feature-banner__eyebrow"><?php echo esc_html( $slide['eyebrow'] ); ?></p>
+						<p class="dpi-feature-banner__eyebrow text-sm font-bold uppercase tracking-[0.18em]"><?php echo esc_html( $slide['eyebrow'] ); ?></p>
 					<?php endif; ?>
 
 					<?php if ( $slide['headline'] ) : ?>
 						<?php if ( 'quote' === $slide['headline_element'] ) : ?>
-							<blockquote class="dpi-feature-banner__quote">
+							<blockquote class="dpi-feature-banner__quote m-0 border-l-4 border-current/30 pl-4 font-heading text-[clamp(2rem,4vw,3.5rem)] leading-tight [&>p]:m-0">
 								<p><?php echo esc_html( $slide['headline'] ); ?></p>
 							</blockquote>
 						<?php else : ?>
-							<h2 id="<?php echo esc_attr( $heading_id ); ?>" class="dpi-feature-banner__heading"><?php echo esc_html( $slide['headline'] ); ?></h2>
+							<h2 id="<?php echo esc_attr( $heading_id ); ?>" class="dpi-feature-banner__heading font-heading text-[clamp(2rem,3vw,3.5rem)] font-semibold leading-tight text-inherit"><?php echo esc_html( $slide['headline'] ); ?></h2>
 						<?php endif; ?>
 					<?php endif; ?>
 
 					<?php if ( trim( wp_strip_all_tags( $slide['content'] ) ) ) : ?>
-						<div class="dpi-feature-banner__text"><?php echo wp_kses_post( wpautop( $slide['content'] ) ); ?></div>
+						<div class="dpi-feature-banner__text [&>p:first-child]:mt-0 [&>p:last-child]:mb-0"><?php echo wp_kses_post( wpautop( $slide['content'] ) ); ?></div>
 					<?php endif; ?>
 
 					<?php if ( $slide['buttons'] ) : ?>
-						<div class="dpi-feature-banner__actions">
+						<div class="dpi-feature-banner__actions flex flex-wrap items-center gap-4">
 							<?php foreach ( $slide['buttons'] as $button ) : ?>
 								<?php
-								echo dpi_blocks_link_open( $button, 'dpi-feature-banner__cta', ! empty( $is_preview ) );
+								echo dpi_blocks_link_open( $button, 'dpi-feature-banner__cta inline-flex items-center justify-center rounded-full border border-current/30 px-6 py-3 font-semibold text-inherit no-underline transition hover:bg-primary hover:text-white', ! empty( $is_preview ) );
 								echo esc_html( $button['title'] );
 								echo dpi_blocks_link_close( ! empty( $is_preview ) );
 								?>
