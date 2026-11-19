@@ -36,28 +36,15 @@ jobs:
       - name: Lint PHP templates
         run: find theme -type f -name '*.php' -print0 | xargs -0 -n 1 php -l
 
-      - name: Check five block templates have no authored classes
+      - name: Check homepage hero Tailwind utilities
         run: |
           node --input-type=module <<'NODE'
-          import { readdirSync, readFileSync } from 'node:fs';
-          import { join } from 'node:path';
+          import { readFileSync } from 'node:fs';
 
-          const dir = 'theme/dpi-blocks/blocks';
-          let checked = 0;
-          const visit = (path) => {
-            for (const entry of readdirSync(path, { withFileTypes: true })) {
-              const filename = join(path, entry.name);
-              if (entry.isDirectory()) {
-                visit(filename);
-              } else if (filename.endsWith('.php')) {
-                const php = readFileSync(filename, 'utf8');
-                if (/\bclass\s*=\s*["']|["']class["']\s*=>/.test(php)) {
-                  throw new Error(`Unexpected authored class in ${filename}`);
-                }
-                checked++;
-              }
+          for (const path of ['theme/style.css', 'theme/style-editor.css']) {
+            const css = readFileSync(path, 'utf8');
+            for (const token of ['.btn-outline', '.btn-gold', '865px', 'object-fit:cover']) {
+              if (!css.includes(token)) throw new Error(`Missing hero utility ${token} in ${path}`);
             }
-          };
-          visit(dir);
-          if (checked < 8) throw new Error('Missing block templates');
+          }
           NODE

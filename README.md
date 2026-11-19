@@ -21,7 +21,7 @@ Custom PHP WordPress theme based on **_tw**, using Tailwind CSS 4, `theme.json` 
 
 This table is based on code in this repository, **not a live WordPress/site test**.
 
-The five theme-owned DPI blocks have **unstyled PHP templates** with their authored CSS classes removed, ready for a fresh styling pass. Their HTML content, accessibility attributes, and JavaScript `data-*` hooks remain. WordPress can still generate its own wrapper/image classes, and Slick retains its vendor CSS. Other plugin-owned DPI blocks may still use CSS from the separate `dpi-blocks` plugin.
+The **Hero** (`dpi/hero`) now follows the approved Figma homepage design using Tailwind utilities: a fixed 865px height, cover-cropped video or image slider, 45% media overlay and top gradient, centered white display copy, and reusable `btn btn-outline` / `btn btn-gold` utilities. The other four theme-owned blocks remain unstyled pending Figma implementation. Slick retains its vendor CSS; WordPress still generates its standard block/image classes.
 
 ## Sprint 1: homepage by December 4, 2026
 
