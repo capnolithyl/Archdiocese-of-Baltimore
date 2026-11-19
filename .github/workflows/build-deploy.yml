@@ -99,12 +99,21 @@ jobs:
           if (buttons.max !== 2) throw new Error('Expected at most two buttons');
 
           const markup = readFileSync('theme/dpi-blocks/blocks/feature-banner/render.php', 'utf8');
+          const interactions = readFileSync('theme/assets/ported-dpi/js/blocks.js', 'utf8');
+          for (const attribute of ['data-dpi-feature-banner', 'data-dpi-feature-prev', 'data-dpi-feature-next']) {
+            if (!markup.includes(attribute) || !interactions.includes(attribute)) {
+              throw new Error('Feature Banner navigation missing: ' + attribute);
+            }
+          }
+          if (!markup.includes("'arrows'         => false") || !markup.includes('slick-dots_li.slick-active_button')) {
+            throw new Error('Feature Banner controls or active pagination styling incorrect');
+          }
           for (const token of ['data-dpi-slick', 'btn btn-gold', 'btn btn-outline', "array_slice( get_field( 'slides' ) ?: array(), 0, 5 )"]) {
             if (!markup.includes(token)) throw new Error('Featured slider output missing: ' + token);
           }
           for (const path of ['theme/style.css', 'theme/style-editor.css']) {
             const css = readFileSync(path, 'utf8');
-            for (const token of ['748px', '.slick-prev', '.slick-next', '.slick-dots', '.slick-active']) {
+            for (const token of ['748px', '.slick-dots', '.slick-active', 'bg-secondary']) {
               if (!css.includes(token)) throw new Error('Featured slider Tailwind missing: ' + token + ' in ' + path);
             }
           }

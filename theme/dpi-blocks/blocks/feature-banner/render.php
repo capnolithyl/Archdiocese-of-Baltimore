@@ -14,7 +14,7 @@ if ( ! $slides ) {
 }
 
 $slick = array(
-	'arrows'         => true,
+	'arrows'         => false,
 	'dots'           => true,
 	'infinite'       => true,
 	'autoplay'       => false,
@@ -25,17 +25,8 @@ $slick = array(
 	'slidesToScroll' => 1,
 );
 ?>
-<section <?php echo get_block_wrapper_attributes( array( 'class' => 'relative left-1/2 w-screen max-w-none -translate-x-1/2 overflow-hidden bg-darkest' ) ); ?>>
-	<div class="relative
-		[&_.slick-arrow]:absolute [&_.slick-arrow]:bottom-4 [&_.slick-arrow]:z-20 md:[&_.slick-arrow]:bottom-auto md:[&_.slick-arrow]:top-1/2
-		[&_.slick-arrow]:flex [&_.slick-arrow]:size-12 md:[&_.slick-arrow]:-translate-y-1/2
-		[&_.slick-arrow]:items-center [&_.slick-arrow]:justify-center
-		[&_.slick-arrow]:rounded-full [&_.slick-arrow]:border [&_.slick-arrow]:border-white/20
-		[&_.slick-arrow]:bg-white/10 [&_.slick-arrow]:text-white [&_.slick-arrow]:transition-colors
-		[&_.slick-arrow:hover]:bg-white/25 [&_.slick-arrow:focus-visible]:outline-2
-		[&_.slick-arrow:focus-visible]:outline-offset-2 [&_.slick-arrow:focus-visible]:outline-secondary
-		[&_.slick-arrow_svg]:size-5 [&_.slick-prev]:left-4 [&_.slick-next]:right-4
-		lg:[&_.slick-prev]:left-10 lg:[&_.slick-next]:right-10
+<section data-dpi-feature-banner <?php echo get_block_wrapper_attributes( array( 'class' => 'not-prose relative left-1/2 mt-0! w-screen max-w-none -translate-x-1/2 overflow-hidden bg-darkest' ) ); ?>>
+	<div class="relative [&_.slick-list]:mt-0! [&_.slick-track]:mt-0! [&_.slick-slide]:mt-0!
 		[&_.slick-dots]:absolute [&_.slick-dots]:bottom-10 [&_.slick-dots]:left-1/2
 		[&_.slick-dots]:z-20 [&_.slick-dots]:m-0 [&_.slick-dots]:flex
 		[&_.slick-dots]:-translate-x-1/2 [&_.slick-dots]:items-center
@@ -46,7 +37,7 @@ $slick = array(
 		[&_.slick-dots_button]:border-0 [&_.slick-dots_button]:bg-white/50
 		[&_.slick-dots_button]:p-0 [&_.slick-dots_button]:text-[0px]
 		[&_.slick-dots_button]:transition-all
-		[&_.slick-active_button]:size-2.5 [&_.slick-active_button]:bg-secondary
+		[&_.slick-dots_li.slick-active_button]:size-2.5! [&_.slick-dots_li.slick-active_button]:bg-secondary!
 		[&_.slick-dots_button:focus-visible]:outline-2
 		[&_.slick-dots_button:focus-visible]:outline-offset-2
 		[&_.slick-dots_button:focus-visible]:outline-secondary"
@@ -63,7 +54,7 @@ $slick = array(
 			$subheading = trim( (string) ( $slide['content'] ?? '' ) );
 			$buttons    = array_slice( (array) ( $slide['buttons'] ?? array() ), 0, 2 );
 			?>
-			<article class="relative h-[748px] overflow-hidden bg-darkest text-white">
+			<article class="relative m-0! h-[748px] overflow-hidden bg-darkest text-white">
 				<?php if ( $image_id ) : ?>
 					<?php echo wp_get_attachment_image( $image_id, 'full', false, array( 'class' => 'absolute inset-0 size-full object-cover', 'alt' => '' ) ); ?>
 				<?php endif; ?>
@@ -103,4 +94,13 @@ $slick = array(
 			</article>
 		<?php endforeach; ?>
 	</div>
+
+	<?php if ( count( $slides ) > 1 ) : ?>
+		<button type="button" data-dpi-feature-prev aria-label="<?php esc_attr_e( 'Previous slide', 'baltimore' ); ?>" class="absolute bottom-4 left-4 z-30 flex size-12 cursor-pointer items-center justify-center rounded-full border border-white/20 bg-white/10 text-white transition-colors hover:bg-white/25 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-secondary md:top-1/2 md:bottom-auto md:-translate-y-1/2 lg:left-10">
+			<svg aria-hidden="true" viewBox="0 0 24 24" class="size-5" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>
+		</button>
+		<button type="button" data-dpi-feature-next aria-label="<?php esc_attr_e( 'Next slide', 'baltimore' ); ?>" class="absolute right-4 bottom-4 z-30 flex size-12 cursor-pointer items-center justify-center rounded-full border border-white/20 bg-white/10 text-white transition-colors hover:bg-white/25 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-secondary md:top-1/2 md:bottom-auto md:-translate-y-1/2 lg:right-10">
+			<svg aria-hidden="true" viewBox="0 0 24 24" class="size-5" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+		</button>
+	<?php endif; ?>
 </section>

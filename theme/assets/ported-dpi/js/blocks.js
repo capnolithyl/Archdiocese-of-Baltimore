@@ -329,6 +329,26 @@
 
 	/** Progressive enhancement for native staff biography dialogs. */
 	document.addEventListener('click', (event) => {
+		const featureArrow = event.target.closest?.(
+			'[data-dpi-feature-prev], [data-dpi-feature-next]'
+		);
+
+		if (featureArrow) {
+			const slider = featureArrow
+				.closest('[data-dpi-feature-banner]')
+				?.querySelector('[data-dpi-slick]');
+
+			if (slider && $ && $.fn?.slick && $(slider).hasClass('slick-initialized')) {
+				event.preventDefault();
+				$(slider).slick(
+					featureArrow.hasAttribute('data-dpi-feature-prev')
+						? 'slickPrev'
+						: 'slickNext'
+				);
+			}
+			return;
+		}
+
 		const opener = event.target.closest
 			? event.target.closest('[data-dpi-dialog-open]')
 			: null;
