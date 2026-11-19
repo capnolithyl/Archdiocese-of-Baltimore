@@ -29,7 +29,7 @@ $excerpt    = has_excerpt()
 					'class'   => 'template-card__image',
 					'loading' => 'lazy',
 				)
-			); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			);
 			?>
 		</a>
 	<?php endif; ?>

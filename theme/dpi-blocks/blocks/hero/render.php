@@ -60,7 +60,7 @@ $dpi_wrapper_attributes = get_block_wrapper_attributes(
 	)
 );
 
-printf( '<section %s>', $dpi_wrapper_attributes ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+printf( '<section %s>', $dpi_wrapper_attributes );
 
 if ( 'video' === $dpi_media_type ) {
 	require __DIR__ . '/partials/video.php';

@@ -28,7 +28,7 @@ if ( ! function_exists( 'balt_posted_on' ) ) :
 		printf(
 			'<a href="%1$s" rel="bookmark">%2$s</a>',
 			esc_url( get_permalink() ),
-			$time_string // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			$time_string
 		);
 	}
 endif;
@@ -70,7 +70,7 @@ if ( ! function_exists( 'balt_entry_footer' ) ) :
 				/* translators: 1: posted in label, only visible to screen readers. 2: list of categories. */
 					'<span><span class="sr-only">%1$s</span>%2$s</span>',
 					esc_html__( 'Posted in', 'baltimore' ),
-					$categories_list // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+					$categories_list
 				);
 			}
 
@@ -81,7 +81,7 @@ if ( ! function_exists( 'balt_entry_footer' ) ) :
 				/* translators: 1: tags label, only visible to screen readers. 2: list of tags. */
 					'<span><span class="sr-only">%1$s</span>%2$s</span>',
 					esc_html__( 'Tags:', 'baltimore' ),
-					$tags_list // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+					$tags_list
 				);
 			}
 		}

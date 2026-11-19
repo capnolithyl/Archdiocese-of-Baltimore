@@ -93,7 +93,7 @@ if ( ! $dpi_video_subheadings ) {
 		<video
 			class="dpi-hero__video"
 			playsinline
-			preload="metadata"<?php echo $dpi_video_autoplay ? ' autoplay' : ''; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><?php echo $dpi_video_muted ? ' muted' : ''; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><?php echo $dpi_video_loop ? ' loop' : ''; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><?php echo $dpi_video_controls ? ' controls' : ''; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><?php echo $dpi_poster_url ? ' poster="' . esc_url( $dpi_poster_url ) . '"' : ''; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+			preload="metadata"<?php echo $dpi_video_autoplay ? ' autoplay' : '';?><?php echo $dpi_video_muted ? ' muted' : '';?><?php echo $dpi_video_loop ? ' loop' : '';?><?php echo $dpi_video_controls ? ' controls' : '';?><?php echo $dpi_poster_url ? ' poster="' . esc_url( $dpi_poster_url ) . '"' : '';?>
 		>
 			<source src="<?php echo esc_url( $dpi_video_url ); ?>" type="<?php echo esc_attr( $dpi_video_mime ); ?>">
 		</video>

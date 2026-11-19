@@ -107,7 +107,7 @@ $dpi_render_links = static function ( $rows, $class_name = '' ) use ( $dpi_is_pr
 			esc_attr( $class_name ),
 			esc_url( $link['url'] ),
 			esc_attr( $target ),
-			$rel ? ' rel="' . esc_attr( $rel ) . '"' : '', // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			$rel ? ' rel="' . esc_attr( $rel ) . '"' : '',
 			esc_html( $link['title'] )
 		);
 	}

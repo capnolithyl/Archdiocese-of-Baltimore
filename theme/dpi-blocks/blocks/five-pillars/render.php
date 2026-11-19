@@ -49,7 +49,7 @@ if ( ! $eyebrow && ! $heading && ! $items ) {
 	if ( ! empty( $is_preview ) ) {
 		printf(
 			'<div %1$s><p>%2$s</p></div>',
-			get_block_wrapper_attributes( array( 'class' => 'dpi-block dpi-five-pillars dpi-block--placeholder' ) ), // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			get_block_wrapper_attributes( array( 'class' => 'dpi-block dpi-five-pillars dpi-block--placeholder' ) ),
 			esc_html__( 'Add at least one pillar.', 'dpi-blocks' )
 		);
 	}
@@ -60,7 +60,7 @@ $instance_id        = wp_unique_id( 'dpi-five-pillars-' );
 $heading_id         = $heading ? $instance_id . '-heading' : '';
 $wrapper_attributes = get_block_wrapper_attributes( array( 'class' => 'dpi-block dpi-five-pillars' ) );
 ?>
-<section <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><?php echo $heading_id ? ' aria-labelledby="' . esc_attr( $heading_id ) . '"' : ''; ?> data-dpi-five-pillars>
+<section <?php echo $wrapper_attributes;?><?php echo $heading_id ? ' aria-labelledby="' . esc_attr( $heading_id ) . '"' : ''; ?> data-dpi-five-pillars>
 	<?php if ( $eyebrow || $heading ) : ?>
 		<header class="dpi-five-pillars__header">
 			<?php if ( $eyebrow ) : ?><p class="dpi-five-pillars__eyebrow"><?php echo esc_html( $eyebrow ); ?></p><?php endif; ?>
@@ -75,7 +75,7 @@ $wrapper_attributes = get_block_wrapper_attributes( array( 'class' => 'dpi-block
 					<div class="dpi-five-pillars__media" data-dpi-pillar-media data-dpi-pillar-index="<?php echo esc_attr( (string) $index ); ?>">
 						<?php foreach ( $item['images'] as $image_index => $image_id ) : ?>
 							<figure class="dpi-five-pillars__image dpi-five-pillars__image--<?php echo esc_attr( (string) ( $image_index + 1 ) ); ?>">
-								<?php echo wp_get_attachment_image( $image_id, 'large' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+								<?php echo wp_get_attachment_image( $image_id, 'large' );?>
 							</figure>
 						<?php endforeach; ?>
 					</div>
@@ -108,7 +108,7 @@ $wrapper_attributes = get_block_wrapper_attributes( array( 'class' => 'dpi-block
 									$target = ! empty( $link['target'] ) ? (string) $link['target'] : '_self';
 									$rel    = '_blank' === $target ? 'noopener noreferrer' : '';
 									?>
-									<?php echo dpi_blocks_link_open( $link, 'dpi-five-pillars__link', ! empty( $is_preview ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><?php echo esc_html( $link['title'] ); ?><?php echo dpi_blocks_link_close( ! empty( $is_preview ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+									<?php echo dpi_blocks_link_open( $link, 'dpi-five-pillars__link', ! empty( $is_preview ) );?><?php echo esc_html( $link['title'] ); ?><?php echo dpi_blocks_link_close( ! empty( $is_preview ) );?>
 								<?php endif; ?>
 							</div>
 						</div>

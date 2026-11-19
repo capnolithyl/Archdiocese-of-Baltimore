@@ -195,7 +195,7 @@ if ( empty( $slides ) ) {
 	if ( ! empty( $is_preview ) ) {
 		printf(
 			'<div %1$s><p>%2$s</p></div>',
-			get_block_wrapper_attributes( array( 'class' => 'dpi-block dpi-feature-banner dpi-block--placeholder' ) ), // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			get_block_wrapper_attributes( array( 'class' => 'dpi-block dpi-feature-banner dpi-block--placeholder' ) ),
 			esc_html__( 'Add at least one feature slide.', 'dpi-blocks' )
 		);
 	}
@@ -225,7 +225,7 @@ $wrapper_attributes = get_block_wrapper_attributes(
 	)
 );
 ?>
-<section <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
+<section <?php echo $wrapper_attributes;?>>
 	<div
 		class="dpi-feature-banner__slides"
 		<?php if ( $has_slider ) : ?>
@@ -240,11 +240,11 @@ $wrapper_attributes = get_block_wrapper_attributes(
 			?>
 			<article
 				class="dpi-feature-banner__slide dpi-feature-banner__slide--<?php echo esc_attr( $slide['image_layout'] ); ?> dpi-feature-banner__slide--<?php echo esc_attr( $slide['visual_variant'] ); ?>"
-				<?php echo $heading_id ? 'aria-labelledby="' . esc_attr( $heading_id ) . '"' : ''; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+				<?php echo $heading_id ? 'aria-labelledby="' . esc_attr( $heading_id ) . '"' : '';?>
 			>
 				<?php if ( $slide['image_id'] ) : ?>
 					<figure class="dpi-feature-banner__media">
-						<?php echo wp_get_attachment_image( $slide['image_id'], 'full' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+						<?php echo wp_get_attachment_image( $slide['image_id'], 'full' );?>
 					</figure>
 
 					<?php if ( 'background' === $slide['image_layout'] ) : ?>
@@ -275,9 +275,9 @@ $wrapper_attributes = get_block_wrapper_attributes(
 						<div class="dpi-feature-banner__actions">
 							<?php foreach ( $slide['buttons'] as $button ) : ?>
 								<?php
-								echo dpi_blocks_link_open( $button, 'dpi-feature-banner__cta', ! empty( $is_preview ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+								echo dpi_blocks_link_open( $button, 'dpi-feature-banner__cta', ! empty( $is_preview ) );
 								echo esc_html( $button['title'] );
-								echo dpi_blocks_link_close( ! empty( $is_preview ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+								echo dpi_blocks_link_close( ! empty( $is_preview ) );
 								?>
 							<?php endforeach; ?>
 						</div>
