@@ -22,7 +22,7 @@ Custom PHP WordPress theme based on **_tw**, using Tailwind CSS 4, `theme.json` 
 
 This table is based on code in this repository, **not a live WordPress/site test**.
 
-The **Hero** (`dpi/hero`) now follows the approved Figma homepage design using Tailwind utilities: a fixed 865px height, cover-cropped video or image slider, 45% media overlay and top gradient, centered white display copy, and reusable `btn btn-outline` / `btn btn-gold` utilities. The other four theme-owned blocks remain unstyled pending Figma implementation. Slick retains its vendor CSS; WordPress still generates its standard block/image classes.
+The **Hero** (`dpi/hero`) follows the approved Figma homepage design using Tailwind utilities: a fixed 865px height, cover-cropped video or image slider, 45% media overlay and top gradient, centered white display copy, and reusable `btn btn-outline` / `btn btn-gold` utilities. Styling is being implemented section by section. Slick retains its vendor CSS; WordPress still generates its standard block/image classes.
 
 ### Navigate / Feature Grid block
 
@@ -55,6 +55,14 @@ Registered in \`theme/inc/media-post-types.php\`:
 | \`balt_homily\` | \`/homilies/\` | \`balt_homily_category\` |
 
 These start with WordPress standard title, editor, excerpt, featured image, and revisions. Each taxonomy is a separate hierarchical category system, enabled in the block editor. Event dates, episode information, video URLs, audio fields, and other specialized metadata are **not** assumed yet. On an existing WordPress site, visit **Settings → Permalinks → Save Changes** after deployment so the new archive URLs work.
+
+### Stats / Impact
+
+The existing \`dpi/stats\` block is now styled for Figma node \`320:662\`. Its original **1–6 item Stats repeater**, including the existing Value/Label field keys, is retained. Editors can additionally set an eyebrow, heading, description, optional background image, and a **0–2 button repeater** of ACF links. The first button uses \`btn btn-outline\` and the second \`btn btn-gold\`. A color gradient remains visible even if no image is selected.
+
+The full-width section uses a red top rule, navy overlay, gold-free neutral heading typography and a bordered statistics grid that rearranges according to item count and screen width. The background photo is editor-provided; the source Figma picture is not hardcoded. The older Row/Cards display toggle was removed to keep this design consistent. When DPI Blocks is active, the theme also overrides the plugin's Stats field group, preserving the block name and existing stat values.
+
+**Archdiocese News/RSS is not part of this change.** The source feed, fields, publication rules and presentation still need clarification.
 
 ### Image & Text Banner
 

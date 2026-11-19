@@ -2,14 +2,15 @@
   "$schema": "https://schemas.wp.org/trunk/block.json",
   "apiVersion": 3,
   "name": "dpi/stats",
-  "version": "1.4.0",
-  "title": "Stats",
+  "version": "1.5.0",
+  "title": "Stats / Impact",
   "category": "baltimore",
   "icon": "chart-pie",
-  "description": "Displays a concise collection of statistics in a row or cards.",
+  "description": "Full-width statistics with heading, background photo and optional CTA links.",
   "keywords": [
     "statistics",
     "numbers",
+    "impact",
     "facts"
   ],
   "textdomain": "baltimore",
@@ -21,27 +22,14 @@
   "supports": {
     "anchor": true,
     "align": [
-      "wide",
       "full"
     ],
-    "color": {
-      "background": true,
-      "text": true,
-      "link": true,
-      "gradients": true
-    },
-    "spacing": {
-      "margin": true,
-      "padding": true,
-      "blockGap": true
-    },
-    "typography": {
-      "fontSize": true,
-      "lineHeight": true
-    },
-    "dimensions": {
-      "minHeight": true
-    },
     "html": false
+  },
+  "attributes": {
+    "align": {
+      "type": "string",
+      "default": "full"
+    }
   }
 }

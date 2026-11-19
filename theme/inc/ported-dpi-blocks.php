@@ -208,6 +208,16 @@ function balt_feature_banner_acf_field_group( array $group ): array {
 }
 add_filter( 'dpi_blocks/acf_field_group/key=group_dpi_feature_banner', 'balt_feature_banner_acf_field_group' );
 
+/** Use the theme's fields for the ported Stats block even when DPI Blocks is active. */
+function balt_stats_acf_field_group( array $group ): array {
+	$path   = get_template_directory() . '/acf-json/group_dpi_stats.json';
+	$fields = wp_json_file_decode( $path, array( 'associative' => true ) );
+
+	return is_array( $fields ) ? $fields : $group;
+}
+add_filter( 'dpi_blocks/acf_field_group/key=group_dpi_stats', 'balt_stats_acf_field_group' );
+
+
 
 function balt_hero_block_metadata( array $metadata ): array {
 	$metadata['supports'] = array(

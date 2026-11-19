@@ -1,16 +1,87 @@
 {
   "key": "group_dpi_stats",
-  "title": "DPI Stats Block",
+  "title": "Stats / Impact",
   "fields": [
+    {
+      "key": "field_dpi_stats_eyebrow",
+      "label": "Eyebrow",
+      "name": "eyebrow",
+      "type": "text",
+      "instructions": "",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "default_value": "",
+      "placeholder": "Impact"
+    },
+    {
+      "key": "field_dpi_stats_heading",
+      "label": "Heading",
+      "name": "heading",
+      "type": "text",
+      "instructions": "",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "default_value": "",
+      "placeholder": "Our Faith in Action"
+    },
+    {
+      "key": "field_dpi_stats_description",
+      "label": "Description",
+      "name": "description",
+      "type": "textarea",
+      "instructions": "",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "default_value": "",
+      "rows": 3,
+      "new_lines": "",
+      "placeholder": "Optional supporting text"
+    },
+    {
+      "key": "field_dpi_stats_background_image",
+      "label": "Background Image",
+      "name": "background_image",
+      "type": "image",
+      "instructions": "Optional full-width background photo. A navy gradient is always applied over the image for legibility.",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "return_format": "id",
+      "preview_size": "large",
+      "library": "all"
+    },
     {
       "key": "field_6a303e267a25c",
       "label": "Stats",
       "name": "stats",
       "type": "repeater",
-      "instructions": "",
+      "instructions": "Add 1–6 statistics. Each needs a value and a short label.",
       "required": 1,
       "conditional_logic": 0,
-      "wrapper": { "width": "", "class": "", "id": "" },
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
       "layout": "table",
       "pagination": 0,
       "min": 1,
@@ -27,7 +98,11 @@
           "instructions": "",
           "required": 1,
           "conditional_logic": 0,
-          "wrapper": { "width": "35", "class": "", "id": "" },
+          "wrapper": {
+            "width": "35",
+            "class": "",
+            "id": ""
+          },
           "default_value": "",
           "maxlength": "",
           "placeholder": "",
@@ -42,7 +117,11 @@
           "instructions": "",
           "required": 1,
           "conditional_logic": 0,
-          "wrapper": { "width": "65", "class": "", "id": "" },
+          "wrapper": {
+            "width": "65",
+            "class": "",
+            "id": ""
+          },
           "default_value": "",
           "maxlength": "",
           "placeholder": "",
@@ -52,34 +131,53 @@
       ]
     },
     {
-      "key": "field_dpi_stats_display_tab",
-      "label": "Display",
-      "name": "",
-      "type": "tab",
-      "instructions": "",
+      "key": "field_dpi_stats_buttons",
+      "label": "Buttons",
+      "name": "buttons",
+      "type": "repeater",
+      "instructions": "Optional calls to action. First outlined, second gold. Maximum two.",
       "required": 0,
       "conditional_logic": 0,
-      "wrapper": { "width": "", "class": "", "id": "" },
-      "placement": "top",
-      "endpoint": 0
-    },
-    {
-      "key": "field_dpi_stats_layout",
-      "label": "Layout",
-      "name": "layout",
-      "type": "button_group",
-      "instructions": "",
-      "required": 1,
-      "conditional_logic": 0,
-      "wrapper": { "width": "", "class": "", "id": "" },
-      "choices": { "row": "Row", "cards": "Cards" },
-      "default_value": "row",
-      "return_format": "value",
-      "allow_null": 0,
-      "layout": "horizontal"
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "layout": "table",
+      "pagination": 0,
+      "min": 0,
+      "max": 2,
+      "collapsed": "field_dpi_stats_button_link",
+      "button_label": "Add Button",
+      "rows_per_page": 2,
+      "sub_fields": [
+        {
+          "key": "field_dpi_stats_button_link",
+          "label": "Link",
+          "name": "link",
+          "type": "link",
+          "instructions": "",
+          "required": 1,
+          "conditional_logic": 0,
+          "wrapper": {
+            "width": "",
+            "class": "",
+            "id": ""
+          },
+          "return_format": "array"
+        }
+      ]
     }
   ],
-  "location": [[{ "param": "block", "operator": "==", "value": "dpi/stats" }]],
+  "location": [
+    [
+      {
+        "param": "block",
+        "operator": "==",
+        "value": "dpi/stats"
+      }
+    ]
+  ],
   "menu_order": 0,
   "position": "normal",
   "style": "default",
@@ -87,6 +185,6 @@
   "instruction_placement": "label",
   "hide_on_screen": "",
   "active": true,
-  "description": "Content and layout controls for the DPI Stats block.",
+  "description": "Full-width impact statistics section with an optional background image, heading, description and two CTAs.",
   "show_in_rest": 0
 }

@@ -253,3 +253,58 @@ jobs:
             }
           }
           NODE
+
+      - name: Verify Stats / Impact fields and Tailwind layout
+        run: |
+          node --input-type=module <<'NODE'
+          import { readFileSync } from 'node:fs';
+
+          const block = JSON.parse(readFileSync('theme/dpi-blocks/blocks/stats/block.json', 'utf8'));
+          const group = JSON.parse(readFileSync('theme/acf-json/group_dpi_stats.json', 'utf8'));
+          const render = readFileSync('theme/dpi-blocks/blocks/stats/render.php', 'utf8');
+          const integration = readFileSync('theme/inc/ported-dpi-blocks.php', 'utf8');
+          const tailwind = readFileSync('tailwind.css', 'utf8');
+
+          if (block.name !== 'dpi/stats' || block.attributes?.align?.default !== 'full') {
+            throw new Error('Stats block name or full-width default changed');
+          }
+
+          const expected = [
+            ['eyebrow', 'text'], ['heading', 'text'], ['description', 'textarea'],
+            ['background_image', 'image'], ['stats', 'repeater'], ['buttons', 'repeater']
+          ];
+          if (group.fields.length !== expected.length) throw new Error('Unexpected Stats ACF field count');
+          for (const [name, type] of expected) {
+            if (group.fields.find(f => f.name === name)?.type !== type) {
+              throw new Error('Missing Stats ACF field: ' + name);
+            }
+          }
+
+          const stats = group.fields.find(f => f.name === 'stats');
+          const buttons = group.fields.find(f => f.name === 'buttons');
+          if (stats.min !== 1 || stats.max !== 6 || buttons.min !== 0 || buttons.max !== 2) {
+            throw new Error('Stats must have 1–6 figures and 0–2 buttons');
+          }
+          if (stats.key !== 'field_6a303e267a25c' ||
+              stats.sub_fields.map(f => f.name).join(',') !== 'value,label') {
+            throw new Error('Existing Stats repeater keys were not preserved');
+          }
+          if (buttons.sub_fields[0]?.type !== 'link' || group.fields.find(f => f.name === 'background_image').return_format !== 'id') {
+            throw new Error('Stats button or image field format incorrect');
+          }
+
+          for (const token of ["get_field( 'stats' )", "get_field( 'background_image' )", "get_field( 'buttons' )", 'bg-linear-[158deg]', 'xl:grid-cols-6', 'btn btn-outline', 'btn btn-gold']) {
+            if (!render.includes(token)) throw new Error('Stats markup missing: ' + token);
+          }
+          if (!integration.includes('dpi_blocks/acf_field_group/key=group_dpi_stats') ||
+              !tailwind.includes('@source "./theme/dpi-blocks/blocks/stats";')) {
+            throw new Error('Stats fields or Tailwind not loaded by theme');
+          }
+
+          for (const path of ['theme/style.css', 'theme/style-editor.css']) {
+            const css = readFileSync(path, 'utf8');
+            if (!css.includes('160px') || !css.includes('158deg')) {
+              throw new Error('Stats grid or overlay missing from compiled CSS: ' + path);
+            }
+          }
+          NODE
