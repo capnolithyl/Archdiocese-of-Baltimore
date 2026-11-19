@@ -1,0 +1,30 @@
+.dpi-hero.alignfull {
+	width: 100vw;
+	max-width: none;
+	min-height: 100svh;
+	margin-inline: calc(50% - 50vw);
+}
+
+.dpi-hero .dpi-hero__slide,
+.dpi-hero .dpi-hero__slides {
+	min-height: 100svh;
+}
+
+.dpi-hero .dpi-hero__title {
+	color: #fff;
+}
+
+.dpi-hero .dpi-hero__subheading {
+	max-width: 48rem;
+	color: #fff;
+	font-size: clamp(1.125rem, 2vw, 1.5rem);
+}
+
+.dpi-hero .dpi-hero__actions {
+	justify-content: center;
+}
+
+.editor-styles-wrapper .dpi-hero.alignfull {
+	width: 100%;
+	margin-inline: 0;
+}

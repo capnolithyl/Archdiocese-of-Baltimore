@@ -1,75 +1,102 @@
 <?php
 
-/**
- * Hero block renderer.
- *
- * Coordinates the Hero's data and delegates presentation to focused partials.
- *
- * @package DPI_Blocks
- */
-
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$dpi_helpers = require __DIR__ . '/includes/helpers.php';
+$is_video = (bool) get_field( 'media_type' );
 
-$dpi_get_field      = $dpi_helpers['get_field'];
-$dpi_get_bool       = $dpi_helpers['get_bool'];
-$dpi_get_youtube_id = $dpi_helpers['get_youtube_id'];
-$dpi_render_links   = $dpi_helpers['render_links'];
-
-// The parameters become local variables for the required content partial.
-// phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed
-$dpi_render_content = static function ( $dpi_heading, $dpi_subheadings, $dpi_buttons ) use ( $dpi_render_links ): void {
-	require __DIR__ . '/partials/content.php';
-};
-// phpcs:enable Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed
-
-$dpi_media_type     = $dpi_get_bool( 'media_type', false ) ? 'video' : 'slider';
-$dpi_layout         = (string) $dpi_get_field( 'layout', 'overlay' );
-$dpi_layout         = in_array( $dpi_layout, array( 'overlay', 'split' ), true ) ? $dpi_layout : 'overlay';
-$dpi_section_height = (string) $dpi_get_field( 'section_height', 'medium' );
-$dpi_section_height = in_array( $dpi_section_height, array( 'auto', 'small', 'medium', 'large', 'viewport' ), true ) ? $dpi_section_height : 'medium';
-$dpi_opacity        = min( 100, max( 0, (float) $dpi_get_field( 'overlay_opacity', 50 ) ) );
-$dpi_slick          = array(
-	'arrows'         => $dpi_get_bool( 'show_arrows', true ),
-	'dots'           => $dpi_get_bool( 'show_dots', true ),
-	'infinite'       => $dpi_get_bool( 'infinite', true ),
-	'autoplay'       => $dpi_get_bool( 'autoplay', true ),
-	'autoplaySpeed'  => max( 1000, absint( $dpi_get_field( 'autoplay_delay', 6000 ) ) ),
-	'speed'          => max( 0, absint( $dpi_get_field( 'transition_speed', 600 ) ) ),
-	'pauseOnHover'   => $dpi_get_bool( 'pause_on_hover', true ),
-	'pauseOnFocus'   => $dpi_get_bool( 'pause_on_focus', true ),
-	'slidesToShow'   => 1,
-	'slidesToScroll' => 1,
-	'rows'           => 0,
-);
-
-$dpi_featured_link         = $dpi_get_field( 'featured_link', null );
-$dpi_featured_link_heading = trim( (string) $dpi_get_field( 'featured_link_heading', '' ) );
-$dpi_show_featured_link    = $dpi_get_bool( 'show_featured_link', true )
-	&& is_array( $dpi_featured_link )
-	&& ! empty( $dpi_featured_link['url'] )
-	&& ! empty( $dpi_featured_link['title'] );
-
-$dpi_wrapper_attributes = get_block_wrapper_attributes(
-	array(
-		'class' => sprintf( 'dpi-block dpi-hero dpi-hero--%s dpi-hero--height-%s', $dpi_layout, $dpi_section_height ),
-		'style' => '--dpi-hero-overlay-opacity:' . ( $dpi_opacity / 100 ) . ';',
+$slides = $is_video
+	? array(
+		array(
+			'heading'     => get_field( 'video_heading' ),
+			'subheadings' => get_field( 'subheadings' ),
+			'buttons'     => get_field( 'video_buttons' ),
+		),
 	)
+	: (array) get_field( 'slides' );
+
+$video = $is_video ? get_field( 'video_file' ) : null;
+$video_url = is_array( $video )
+	? ( $video['url'] ?? '' )
+	: ( is_numeric( $video ) ? wp_get_attachment_url( absint( $video ) ) : $video );
+
+$poster = $is_video ? get_field( 'video_poster' ) : null;
+$poster_id = is_array( $poster ) ? absint( $poster['ID'] ?? 0 ) : absint( $poster );
+$poster_url = $poster_id ? wp_get_attachment_image_url( $poster_id, 'full' ) : '';
+
+if ( ! $slides && empty( $is_preview ) ) {
+	return;
+}
+
+$slick = array(
+	'arrows'        => true,
+	'dots'          => true,
+	'autoplay'      => true,
+	'autoplaySpeed' => 6000,
+	'pauseOnHover'  => true,
+	'pauseOnFocus'  => true,
 );
-
-printf( '<section %s>', $dpi_wrapper_attributes );
-
-if ( 'video' === $dpi_media_type ) {
-	require __DIR__ . '/partials/video.php';
-} else {
-	require __DIR__ . '/partials/slides.php';
-}
-
-if ( $dpi_show_featured_link ) {
-	require __DIR__ . '/partials/featured-link.php';
-}
 ?>
+<section <?php echo get_block_wrapper_attributes( array( 'class' => 'dpi-block dpi-hero dpi-hero--overlay alignfull' ) ); ?>>
+	<div class="dpi-hero__slides"<?php if ( ! $is_video && count( $slides ) > 1 ) : ?> data-dpi-slick="<?php echo esc_attr( wp_json_encode( $slick ) ); ?>"<?php endif; ?>>
+		<?php foreach ( $slides as $index => $slide ) : ?>
+			<?php
+			if ( ! is_array( $slide ) ) {
+				continue;
+			}
+
+			$image = $slide['image'] ?? null;
+			$image_id = is_array( $image ) ? absint( $image['ID'] ?? $image['id'] ?? 0 ) : absint( $image );
+			$heading = trim( (string) ( $slide['heading'] ?? '' ) );
+			$subheadings = is_array( $slide['subheadings'] ?? null ) ? $slide['subheadings'] : array();
+			$buttons = is_array( $slide['buttons'] ?? null ) ? array_slice( $slide['buttons'], 0, 2 ) : array();
+			$heading_tag = is_front_page() && 0 === $index ? 'h1' : 'h2';
+			?>
+			<article class="dpi-hero__slide">
+				<div class="dpi-hero__media">
+					<?php if ( $is_video && $video_url ) : ?>
+						<video class="dpi-hero__video" src="<?php echo esc_url( $video_url ); ?>"<?php if ( $poster_url ) : ?> poster="<?php echo esc_url( $poster_url ); ?>"<?php endif; ?> autoplay muted loop playsinline preload="metadata" aria-hidden="true"></video>
+					<?php elseif ( $is_video && $poster_id ) : ?>
+						<?php echo wp_get_attachment_image( $poster_id, 'full', false, array( 'alt' => '' ) ); ?>
+					<?php elseif ( $image_id ) : ?>
+						<?php echo wp_get_attachment_image( $image_id, 'full', false, array( 'alt' => '' ) ); ?>
+					<?php elseif ( ! empty( $is_preview ) ) : ?>
+						<p class="dpi-block--placeholder"><?php esc_html_e( 'Choose a video or an image.', 'baltimore' ); ?></p>
+					<?php endif; ?>
+					<span class="dpi-hero__overlay" aria-hidden="true"></span>
+				</div>
+
+				<div class="dpi-hero__content">
+					<?php if ( $heading ) : ?>
+						<<?php echo $heading_tag; ?> class="dpi-hero__title"><?php echo esc_html( $heading ); ?></<?php echo $heading_tag; ?>>
+					<?php endif; ?>
+
+					<?php foreach ( $subheadings as $row ) : ?>
+						<?php
+						$subheading = is_array( $row )
+							? ( $row['subheading'] ?? $row['video_subheading'] ?? '' )
+							: $row;
+						?>
+						<?php if ( trim( (string) $subheading ) ) : ?>
+							<p class="dpi-hero__subheading"><?php echo esc_html( $subheading ); ?></p>
+						<?php endif; ?>
+					<?php endforeach; ?>
+
+					<?php if ( $buttons ) : ?>
+						<div class="dpi-hero__actions">
+							<?php foreach ( $buttons as $row ) : ?>
+								<?php
+								$link = is_array( $row ) ? ( $row['link'] ?? null ) : null;
+								if ( is_array( $link ) && ! empty( $link['url'] ) ) {
+									echo wp_kses_post( dpi_blocks_render_link( $link, 'dpi-button', ! empty( $is_preview ) ) );
+								}
+								?>
+							<?php endforeach; ?>
+						</div>
+					<?php endif; ?>
+				</div>
+			</article>
+		<?php endforeach; ?>
+	</div>
 </section>

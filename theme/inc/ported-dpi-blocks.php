@@ -199,3 +199,26 @@ if ( ! function_exists( 'dpi_blocks_render_link' ) ) {
 	}
 }
 
+function balt_hero_acf_field_group( array $group ): array {
+	$path = get_template_directory() . '/acf-json/group_dpi_hero.json';
+	$fields = wp_json_file_decode( $path, array( 'associative' => true ) );
+
+	return is_array( $fields ) ? $fields : $group;
+}
+add_filter( 'dpi_blocks/acf_field_group/key=group_dpi_hero', 'balt_hero_acf_field_group' );
+
+function balt_hero_block_metadata( array $metadata ): array {
+	$metadata['supports'] = array(
+		'anchor' => true,
+		'align'  => array( 'full' ),
+		'html'   => false,
+	);
+	$metadata['attributes']['align'] = array(
+		'type'    => 'string',
+		'default' => 'full',
+	);
+
+	return $metadata;
+}
+add_filter( 'dpi_blocks/block_metadata/hero', 'balt_hero_block_metadata' );
+
