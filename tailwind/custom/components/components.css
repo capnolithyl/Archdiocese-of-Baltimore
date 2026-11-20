@@ -66,3 +66,14 @@
 .entry-content > .alignright {
 	@apply float-right ml-8;
 }
+
+/**
+ * Full-width ACF section blocks occupy the content wrapper's actual width.
+ * Unlike 100vw, this excludes the browser's vertical scrollbar and prevents
+ * the small horizontal overflow that viewport-sized blocks can introduce.
+ * Keep this more specific than the general .entry-content > * max-width rule.
+ */
+.entry-content > .balt-full-bleed {
+	width: 100%;
+	max-width: none;
+}

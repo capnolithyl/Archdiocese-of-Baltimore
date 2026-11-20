@@ -25,7 +25,7 @@ $slick = array(
 	'slidesToScroll' => 1,
 );
 ?>
-<section data-dpi-feature-banner <?php echo get_block_wrapper_attributes( array( 'class' => 'not-prose relative left-1/2 mt-0! w-screen max-w-none -translate-x-1/2 overflow-hidden bg-darkest' ) ); ?>>
+<section data-dpi-feature-banner <?php echo get_block_wrapper_attributes( array( 'class' => 'not-prose balt-full-bleed relative mt-0! w-full max-w-none overflow-hidden bg-darkest' ) ); ?>>
 	<div class="relative [&_.slick-list]:mt-0! [&_.slick-track]:mt-0! [&_.slick-slide]:mt-0!
 		[&_.slick-dots]:absolute [&_.slick-dots]:bottom-10 [&_.slick-dots]:left-1/2
 		[&_.slick-dots]:z-20 [&_.slick-dots]:m-0 [&_.slick-dots]:flex

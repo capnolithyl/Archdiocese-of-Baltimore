@@ -23,7 +23,7 @@ $columns = match ( $count ) {
 
 $heading_id = wp_unique_id( 'balt-feature-grid-' );
 ?>
-<section <?php echo get_block_wrapper_attributes( array( 'class' => 'relative left-1/2 w-screen max-w-none -translate-x-1/2 bg-surface py-section' ) ); ?><?php if ( $heading ) : ?> aria-labelledby="<?php echo esc_attr( $heading_id ); ?>"<?php endif; ?>>
+<section <?php echo get_block_wrapper_attributes( array( 'class' => 'balt-full-bleed relative w-full max-w-none bg-surface py-section' ) ); ?><?php if ( $heading ) : ?> aria-labelledby="<?php echo esc_attr( $heading_id ); ?>"<?php endif; ?>>
 	<div class="mx-auto w-full max-w-wide px-gutter">
 		<header class="text-center">
 			<?php if ( $eyebrow ) : ?>

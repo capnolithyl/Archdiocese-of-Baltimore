@@ -41,7 +41,7 @@ if ( ! $tabs ) {
 $instance   = wp_unique_id( 'balt-media-center-' );
 $heading_id = $instance . '-heading';
 ?>
-<section data-balt-media-center <?php echo get_block_wrapper_attributes( array( 'class' => 'not-prose relative left-1/2 mt-0! w-screen max-w-none -translate-x-1/2 bg-white py-section' ) ); ?><?php if ( $heading ) : ?> aria-labelledby="<?php echo esc_attr( $heading_id ); ?>"<?php endif; ?>>
+<section data-balt-media-center <?php echo get_block_wrapper_attributes( array( 'class' => 'not-prose balt-full-bleed relative mt-0! w-full max-w-none bg-white py-section' ) ); ?><?php if ( $heading ) : ?> aria-labelledby="<?php echo esc_attr( $heading_id ); ?>"<?php endif; ?>>
 	<div class="mx-auto w-full max-w-wide px-gutter">
 		<header>
 			<?php if ( $eyebrow ) : ?>

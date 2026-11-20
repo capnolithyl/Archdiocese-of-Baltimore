@@ -13,7 +13,7 @@ $image_id   = absint( is_array( $image ) ? ( $image['ID'] ?? 0 ) : $image );
 $buttons    = array_slice( (array) ( get_field( 'buttons' ) ?: array() ), 0, 2 );
 $heading_id = wp_unique_id( 'balt-image-text-banner-' );
 ?>
-<section <?php echo get_block_wrapper_attributes( array( 'class' => 'not-prose relative left-1/2 mt-0! w-screen max-w-none -translate-x-1/2 overflow-hidden bg-foreground text-white' ) ); ?><?php if ( $heading ) : ?> aria-labelledby="<?php echo esc_attr( $heading_id ); ?>"<?php endif; ?>>
+<section <?php echo get_block_wrapper_attributes( array( 'class' => 'not-prose balt-full-bleed relative mt-0! w-full max-w-none overflow-hidden bg-foreground text-white' ) ); ?><?php if ( $heading ) : ?> aria-labelledby="<?php echo esc_attr( $heading_id ); ?>"<?php endif; ?>>
 	<div class="mx-auto grid w-full max-w-wide grid-cols-1 lg:min-h-[632px] lg:grid-cols-2">
 		<?php if ( $image_id ) : ?>
 			<div class="relative order-1 h-[390px] overflow-hidden sm:h-[360px] lg:order-2 lg:h-auto">

@@ -43,7 +43,7 @@ $columns = match ( count( $items ) ) {
 	default => 'grid-cols-2 sm:grid-cols-3 xl:grid-cols-6',
 };
 ?>
-<section <?php echo get_block_wrapper_attributes( array( 'class' => 'not-prose relative left-1/2 mt-0! w-screen max-w-none -translate-x-1/2 overflow-hidden border-t-4 border-[#C5382D] bg-primary py-section text-white' ) ); ?><?php if ( $heading ) : ?> aria-labelledby="<?php echo esc_attr( $heading_id ); ?>"<?php endif; ?>>
+<section <?php echo get_block_wrapper_attributes( array( 'class' => 'not-prose balt-full-bleed relative mt-0! w-full max-w-none overflow-hidden border-t-4 border-[#C5382D] bg-primary py-section text-white' ) ); ?><?php if ( $heading ) : ?> aria-labelledby="<?php echo esc_attr( $heading_id ); ?>"<?php endif; ?>>
 	<?php if ( $image_id ) : ?>
 		<?php echo wp_get_attachment_image( $image_id, 'full', false, array( 'class' => 'absolute inset-0 size-full object-cover', 'alt' => '' ) ); ?>
 	<?php endif; ?>

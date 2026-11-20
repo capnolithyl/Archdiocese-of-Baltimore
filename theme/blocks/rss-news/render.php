@@ -26,7 +26,7 @@ $button_url = is_array( $view_all ) && ! empty( $view_all['url'] ) ? $view_all['
 $button_text = is_array( $view_all ) && ! empty( $view_all['title'] ) ? $view_all['title'] : __( 'View All Archdiocese News', 'baltimore' );
 $heading_id = wp_unique_id( 'balt-rss-news-' );
 ?>
-<section <?php echo get_block_wrapper_attributes( array( 'class' => 'not-prose relative left-1/2 mt-0! w-screen max-w-none -translate-x-1/2 bg-white py-section text-foreground' ) ); ?><?php if ( $heading ) : ?> aria-labelledby="<?php echo esc_attr( $heading_id ); ?>"<?php endif; ?>>
+<section <?php echo get_block_wrapper_attributes( array( 'class' => 'not-prose balt-full-bleed relative mt-0! w-full max-w-none bg-white py-section text-foreground' ) ); ?><?php if ( $heading ) : ?> aria-labelledby="<?php echo esc_attr( $heading_id ); ?>"<?php endif; ?>>
 	<div class="mx-auto w-full max-w-wide px-gutter">
 		<header class="text-center">
 			<?php if ( $eyebrow ) : ?>
