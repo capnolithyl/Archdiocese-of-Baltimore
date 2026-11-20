@@ -16,6 +16,13 @@ function balt_header_variant(): string {
 		}
 	}
 
+	// These interior templates explicitly render their own title hero. Match
+	// the Figma layout with the shared blue header above it by default.
+	// The existing per-page ACF override still permits a transparent header.
+	if ( function_exists( 'balt_is_interior_page_template' ) && balt_is_interior_page_template( $post_id ) ) {
+		return 'solid';
+	}
+
 	$blocks = parse_blocks( (string) get_post_field( 'post_content', $post_id ) );
 	foreach ( $blocks as $block ) {
 		$name = $block['blockName'] ?? '';

@@ -1,0 +1,182 @@
+/**
+ * Reusable interior hero (Figma 320:2180) and page-level section navigation
+ * (Figma 320:2184). Hero imagery is supplied by the page's WP featured image.
+ */
+.balt-interior-hero {
+	position: relative;
+	isolation: isolate;
+	display: flex;
+	min-height: 340px;
+	align-items: center;
+	justify-content: center;
+	overflow: hidden;
+	background: var(--wp--preset--color--primary, #002d62);
+	color: #fff;
+	text-align: center;
+}
+
+.balt-interior-hero--title {
+	min-height: 230px;
+}
+
+.balt-interior-hero__image {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	margin: 0 !important;
+	max-width: none;
+	object-fit: cover;
+	object-position: center;
+	z-index: -2;
+}
+
+.balt-interior-hero__shade {
+	position: absolute;
+	inset: 0;
+	z-index: -1;
+	background: rgb(15 26 46 / 65%);
+	pointer-events: none;
+}
+
+.balt-interior-hero--title .balt-interior-hero__shade {
+	background: linear-gradient(120deg, #002d62, #0f1a2e);
+}
+
+.balt-interior-hero__inner {
+	width: 100%;
+	max-width: 1504px;
+	padding: 42px clamp(20px, 3vw, 40px);
+}
+
+.balt-interior-hero__eyebrow {
+	margin: 0 0 12px;
+	color: var(--wp--preset--color--secondary, #c9a840);
+	font-family: var(--wp--preset--font-family--body, Lato, sans-serif);
+	font-size: 14px;
+	font-weight: 700;
+	letter-spacing: 3px;
+	line-height: 20px;
+	text-transform: uppercase;
+}
+
+.balt-interior-hero__title {
+	margin: 0;
+	max-width: none;
+	color: #fff;
+	font-family: var(--wp--preset--font-family--heading, Georgia, serif);
+	font-size: clamp(2.75rem, 6vw, 4.5rem);
+	font-weight: 800;
+	line-height: 1.25;
+	overflow-wrap: anywhere;
+	text-wrap: balance;
+}
+
+/* Keep navigation directly below hero and inside the normal page flow. */
+.balt-section-nav {
+	position: relative;
+	width: 100%;
+	max-width: none;
+	background: var(--wp--preset--color--secondary, #c9a840);
+	color: var(--wp--preset--color--primary, #002d62);
+}
+
+.balt-section-nav__scroll {
+	max-width: 1504px;
+	margin-inline: auto;
+	padding-inline: clamp(12px, 3vw, 40px);
+	overflow-x: auto;
+	overscroll-behavior-x: contain;
+	scrollbar-width: thin;
+}
+
+.balt-section-nav__items {
+	display: flex;
+	width: max-content;
+	min-height: 49px;
+	align-items: center;
+	justify-content: center;
+	margin: 0 auto;
+	padding: 0;
+	list-style: none;
+}
+
+.balt-section-nav__item {
+	display: flex;
+	flex: 0 0 auto;
+	align-items: center;
+}
+
+.balt-section-nav__item + .balt-section-nav__item::before {
+	content: '|';
+	display: inline-block;
+	padding-inline: 4px;
+	color: rgb(0 45 98 / 40%);
+	font-size: 18px;
+	line-height: 28px;
+}
+
+.balt-section-nav__link {
+	display: inline-flex;
+	min-height: 49px;
+	align-items: center;
+	padding: 12px 20px;
+	color: var(--wp--preset--color--primary, #002d62);
+	font-family: var(--wp--preset--font-family--body, Lato, sans-serif);
+	font-size: 11px;
+	font-weight: 700;
+	line-height: 16.5px;
+	letter-spacing: 2px;
+	text-decoration: none;
+	text-transform: uppercase;
+	white-space: nowrap;
+	transition: background-color 180ms ease;
+}
+
+.balt-section-nav__link:hover,
+.balt-section-nav__link:focus-visible {
+	color: var(--wp--preset--color--primary, #002d62);
+	background: rgb(0 45 98 / 8%);
+	text-decoration: underline;
+}
+
+.balt-section-nav__link:focus-visible {
+	outline: 2px solid var(--wp--preset--color--primary, #002d62);
+	outline-offset: -3px;
+}
+
+/* Gutenberg content begins immediately below the navigation. */
+.balt-interior-page__content {
+	margin-top: 0;
+}
+.balt-interior-page__content > :first-child {
+	margin-top: 0;
+}
+
+.balt-interior-page__content [id] {
+	scroll-margin-top: calc(124px + var(--wp-admin-bar-height, 0px));
+}
+
+@media (max-width: 767px) {
+	.balt-interior-hero {
+		min-height: 300px;
+	}
+	.balt-interior-hero--title {
+		min-height: 190px;
+	}
+	.balt-interior-hero__title {
+		font-size: clamp(2.5rem, 9vw, 3.5rem);
+	}
+	.balt-section-nav__link {
+		padding-inline: 14px;
+	}
+	.balt-interior-page__content [id] {
+		scroll-margin-top: calc(80px + var(--wp-admin-bar-height, 0px));
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.balt-section-nav__link {
+		transition: none;
+	}
+}

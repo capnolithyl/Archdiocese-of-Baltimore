@@ -1,0 +1,44 @@
+<?php
+/**
+ * Figma 320:2180: centered eyebrow/title over an optional featured image.
+ * WordPress's featured image remains the dynamic, responsive asset.
+ *
+ * @package Archdiocese_of_Baltimore
+ *
+ * @var array $args Template arguments.
+ */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
+$post_id  = get_the_ID();
+$eyebrow  = function_exists( 'get_field' ) ? trim( (string) get_field( 'balt_interior_eyebrow', $post_id ) ) : '';
+$image_id = 'featured' === ( $args['variant'] ?? '' ) ? (int) get_post_thumbnail_id( $post_id ) : 0;
+$variant  = $image_id > 0 ? 'image' : 'title';
+?>
+<header class="balt-interior-hero balt-interior-hero--<?php echo esc_attr( $variant ); ?>">
+	<?php if ( $image_id ) : ?>
+		<?php
+		echo wp_get_attachment_image(
+			$image_id,
+			'full',
+			false,
+			array(
+				'class'         => 'balt-interior-hero__image',
+				'alt'           => '',
+				'sizes'         => '100vw',
+				'loading'       => 'eager',
+				'fetchpriority' => 'high',
+			)
+		);
+		?>
+	<?php endif; ?>
+	<div class="balt-interior-hero__shade" aria-hidden="true"></div>
+	<div class="balt-interior-hero__inner">
+		<?php if ( '' !== $eyebrow ) : ?>
+			<p class="balt-interior-hero__eyebrow"><?php echo esc_html( $eyebrow ); ?></p>
+		<?php endif; ?>
+		<h1 class="balt-interior-hero__title"><?php echo esc_html( get_the_title( $post_id ) ); ?></h1>
+	</div>
+</header>

@@ -1,0 +1,92 @@
+{
+  "key": "group_balt_interior_page",
+  "title": "Interior Page Settings",
+  "fields": [
+    {
+      "key": "field_balt_interior_eyebrow",
+      "label": "Hero Eyebrow",
+      "name": "balt_interior_eyebrow",
+      "type": "text",
+      "instructions": "Optional small gold text above the page title (for example, Institute for). The large title always uses the WordPress page title.",
+      "required": 0,
+      "default_value": "",
+      "maxlength": 90
+    },
+    {
+      "key": "field_balt_section_nav_enabled",
+      "label": "Show Gold Section Navigation",
+      "name": "balt_section_nav_enabled",
+      "type": "true_false",
+      "instructions": "Show the optional navigation bar immediately below the page hero. It is hidden if there are no complete links.",
+      "required": 0,
+      "default_value": 0,
+      "ui": 1,
+      "message": "Display section links"
+    },
+    {
+      "key": "field_balt_section_nav_links",
+      "label": "Section Navigation Links",
+      "name": "balt_section_nav_links",
+      "type": "repeater",
+      "instructions": "Add up to eight links in display order. Use #mission, #offices, #contact, etc. to jump to a Gutenberg block's HTML Anchor; regular page links also work.",
+      "required": 0,
+      "conditional_logic": [
+        [
+          {
+            "field": "field_balt_section_nav_enabled",
+            "operator": "==",
+            "value": "1"
+          }
+        ]
+      ],
+      "layout": "table",
+      "min": 0,
+      "max": 8,
+      "button_label": "Add Section Link",
+      "sub_fields": [
+        {
+          "key": "field_balt_section_nav_link_label",
+          "label": "Label",
+          "name": "label",
+          "type": "text",
+          "required": 1,
+          "default_value": ""
+        },
+        {
+          "key": "field_balt_section_nav_link_url",
+          "label": "Destination",
+          "name": "link",
+          "type": "link",
+          "required": 1,
+          "return_format": "array",
+          "instructions": "Select a page or enter an anchor such as #resources."
+        }
+      ]
+    }
+  ],
+  "location": [
+    [
+      {
+        "param": "post_template",
+        "operator": "==",
+        "value": "page-templates/interior-featured.php"
+      }
+    ],
+    [
+      {
+        "param": "post_template",
+        "operator": "==",
+        "value": "page-templates/interior-title.php"
+      }
+    ]
+  ],
+  "menu_order": 0,
+  "position": "normal",
+  "style": "default",
+  "label_placement": "top",
+  "instruction_placement": "label",
+  "active": true,
+  "description": "Editor-managed hero eyebrow and optional per-page section links for the two shared interior templates.",
+  "show_in_rest": 0,
+  "modified": 1795207500
+}
