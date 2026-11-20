@@ -69,7 +69,7 @@ foreach (
 		'A welcome statement', 'for our visitors.',
 		'fa-brands fa-facebook', 'facebook.com/example', 'Quick Links', 'Our Services',
 		'menu-2', 'footer-services', '320 Cathedral Street', 'Baltimore, MD 21201',
-		'tel:+4105475437', 'Mon–Fri, 8am–6pm', 'mailto:info@example.org',
+		'tel:4105475437', 'Mon–Fri, 8am–6pm', 'mailto:info@example.org',
 		'/theme/assets/footer/location.svg', '/theme/assets/footer/phone.svg',
 		'/theme/assets/footer/email.svg', '/privacy/', 'https://example.org/terms',
 		'/accessibility/', '© 2026 Archdiocese of Baltimore',
