@@ -9,7 +9,7 @@ Custom PHP WordPress theme based on **_tw**, using Tailwind CSS 4, `theme.json` 
 | Theme/build | Present: PHP theme, Tailwind/PostCSS, esbuild, lint/format config, GitHub Actions |
 | Design system | Present: Baltimore palette, Lato + EB Garamond, base styles and archive/card styles |
 | ACF options | Present: header images, footer options, contact details, office hours and social links |
-| Menus | Primary, utility, footer and services locations registered; **final header/footer UI is unfinished** |
+| Menus | Primary and utility menu locations registered; footer and services menus implemented in the Figma footer. Header UI still pending |
 | WordPress templates | Present: page, single, home/posts index, archive, category/tag/taxonomy fallback, search, 404, index |
 | Archive display | Custom listing cards, archive headers, excerpts, pagination and empty states implemented; visual QA remains |
 | Search | Standard search form and search results page implemented; **live typeahead search is not implemented** |
@@ -23,6 +23,19 @@ Custom PHP WordPress theme based on **_tw**, using Tailwind CSS 4, `theme.json` 
 This table is based on code in this repository, **not a live WordPress/site test**.
 
 The **Hero** (`dpi/hero`) follows the approved Figma homepage design using Tailwind utilities: a fixed 865px height, cover-cropped video or image slider, 45% media overlay and top gradient, centered white display copy, and reusable `btn btn-outline` / `btn btn-gold` utilities. Styling is being implemented section by section. Slick retains its vendor CSS; WordPress still generates its standard block/image classes.
+
+### Global Footer
+
+The footer implements Figma node \`320:481\`. It is a **sitewide PHP template**, not a page block. The desktop footer contains four columns (branding, Quick Links, Our Services, contact), a blue background and a separate copyright/legal row; tablets use two columns and phones one.
+
+- **Theme Settings → Footer Settings**: editable footer logo and short organization blurb (also called an introduction or mission statement); three optional legal links (Privacy Policy, Terms of Service, Accessibility).
+- **Theme Settings → Contact**: address, primary telephone, phone availability and email shared with the whole site; an optional fax/hotline remain available for other site features.
+- **Theme Settings → Social Media**: any number of social media links with Font Awesome brand icons, available to other components too.
+- **Appearance → Menus**: assign the existing \`menu-2\` location for Quick Links and \`footer-services\` for Our Services. Menu entries are not hardcoded into the theme.
+
+The footer logo falls back first to the global primary header logo and then to the exact white logo image exported from the Figma footer if no attachment is configured. Location, telephone and email icons are also exported from Figma. Figma's placeholder blurb and menu links are **not** written into the WordPress database: editors must provide real copy and assign the actual menus. Contact items and legal/social links remain hidden when not configured. Copyright year and the WordPress site name are dynamic.
+
+The footer is styled with Tailwind 4 utilities, with no custom footer stylesheet. Regression checks live in \`tests/footer-smoke.php\`. Live visual QA is still needed after populating Theme Settings.
 
 ### Navigate / Feature Grid block
 

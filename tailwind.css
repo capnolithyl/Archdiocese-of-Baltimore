@@ -9,6 +9,7 @@
 @source "./theme/blocks/media-center";
 @source "./theme/blocks/rss-news";
 @source "./theme/blocks/image-text-banner";
+@source "./theme/template-parts/layout/footer-content.php";
 
 @import "./tailwind/tailwind-theme.css";
 

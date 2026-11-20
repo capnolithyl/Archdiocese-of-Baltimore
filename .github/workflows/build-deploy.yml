@@ -376,3 +376,46 @@ jobs:
           NODE
       - name: Verify built-in RSS block is hidden
         run: php tests/editor-blocks-smoke.php
+
+      - name: Verify Figma footer layout and sitewide settings
+        run: |
+          php tests/footer-smoke.php
+          node --input-type=module <<'NODE'
+          import { readFileSync, statSync } from 'node:fs';
+
+          const footer = readFileSync('theme/template-parts/layout/footer-content.php', 'utf8');
+          const footerGroup = JSON.parse(readFileSync('theme/acf-json/group_balt_footer_settings.json', 'utf8'));
+          const globalGroup = JSON.parse(readFileSync('theme/acf-json/group_balt_theme_settings.json', 'utf8'));
+          const options = readFileSync('theme/inc/acf-options.php', 'utf8');
+          const theme = readFileSync('theme/functions.php', 'utf8');
+          const tailwind = readFileSync('tailwind.css', 'utf8');
+
+          for (const name of ['balt_footer_logo', 'balt_footer_blurb', 'balt_privacy_policy_link', 'balt_terms_link', 'balt_accessibility_link']) {
+            if (!footerGroup.fields.some(field => field.name === name)) throw new Error('Missing footer field: ' + name);
+          }
+          for (const name of ['balt_social_media', 'balt_contact_address', 'balt_contact_phone', 'balt_contact_phone_availability', 'balt_contact_email']) {
+            if (!globalGroup.fields.some(field => field.name === name)) throw new Error('Missing global field: ' + name);
+            if (!footer.includes(name)) throw new Error('Global field not rendered in footer: ' + name);
+          }
+          if (!options.includes('theme-footer-settings') || !options.includes('theme-settings')) {
+            throw new Error('Footer and sitewide ACF settings pages must remain separate');
+          }
+          for (const name of ["'menu-2'", "'footer-services'"]) {
+            if (!theme.includes(name) || !footer.includes(name)) throw new Error('Footer menu location missing: ' + name);
+          }
+          for (const token of ['sm:grid-cols-2', 'lg:grid-cols-4', 'bg-primary', 'bg-primary-light', 'lg:px-[97px]', 'border-[#2D5180]', 'wp_nav_menu(', "'option'"]) {
+            if (!footer.includes(token)) throw new Error('Footer Figma layout or ACF option missing: ' + token);
+          }
+          if (!tailwind.includes('@source "./theme/template-parts/layout/footer-content.php";')) {
+            throw new Error('Tailwind is not scanning the footer template');
+          }
+          for (const name of ['logo.png', 'location.svg', 'phone.svg', 'email.svg']) {
+            if (statSync('theme/assets/footer/' + name).size < 100) throw new Error('Empty Figma footer asset: ' + name);
+          }
+          for (const css of ['theme/style.css', 'theme/style-editor.css']) {
+            const content = readFileSync(css, 'utf8');
+            if (!content.includes('97px') || !content.includes('.bg-primary-light')) {
+              throw new Error('Compiled footer Tailwind classes missing: ' + css);
+            }
+          }
+          NODE
