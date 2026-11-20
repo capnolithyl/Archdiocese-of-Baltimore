@@ -25,6 +25,7 @@ function get_field( string $field, $location = null ) {
 }
 function parse_blocks( string $content ): array { return $GLOBALS['blocks']; }
 function get_post_field( string $field, int $post_id ): string { return 'stub content'; }
+function get_page_template_slug( int $id ): string { return $GLOBALS['test_interior_template'] ?? ''; }
 function wp_strip_all_tags( string $html ): string { return strip_tags( $html ); }
 function __( string $text, string $domain ): string { return $text; }
 function absint( $value ): int { return abs( (int) $value ); }
@@ -47,11 +48,20 @@ function wp_get_attachment_image( int $id, string $size, bool $icon, array $attr
 }
 
 require dirname( __DIR__ ) . '/theme/inc/header-navigation.php';
+require dirname( __DIR__ ) . '/theme/inc/interior-pages.php';
 
 function check( bool $ok, string $why ): void {
 	if ( ! $ok ) throw new RuntimeException( $why );
 }
 
+$GLOBALS['test_interior_template'] = 'page-templates/interior-featured.php';
+check( balt_header_variant() === 'solid', 'Interior image template should start with solid header' );
+$GLOBALS['test_interior_template'] = 'page-templates/interior-title.php';
+check( balt_header_variant() === 'solid', 'Interior title template should start with solid header' );
+$override = 'transparent';
+check( balt_header_variant() === 'transparent', 'Manual override should still work' );
+$override = '';
+$GLOBALS['test_interior_template'] = '';
 $blocks = array( array( 'blockName' => 'dpi/hero', 'attrs' => array() ) );
 check( balt_header_variant() === 'transparent', 'First Hero block should be transparent' );
 
