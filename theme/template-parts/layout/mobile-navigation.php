@@ -77,7 +77,7 @@ if ( ! $donate_link && has_nav_menu( 'menu-1' ) ) {
 						</nav>
 					<?php endif; ?>
 				</div>
-				<div class="balt-mobile-drawer__detail" data-balt-mobile-detail inert aria-hidden="true">
+				<div id="balt-mobile-navigation-detail" class="balt-mobile-drawer__detail" data-balt-mobile-detail inert aria-hidden="true">
 					<div class="balt-mobile-drawer__detail-header">
 						<button type="button" class="balt-mobile-drawer__back" data-balt-mobile-back>
 							<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m14.5 5-7 7 7 7"/></svg>

@@ -34,6 +34,10 @@
 		detail.inert = true;
 		detail.setAttribute('aria-hidden', 'true');
 		detailItems.replaceChildren();
+		primary?.querySelectorAll(':scope > li.menu-item-has-children').forEach((item) => {
+			direct(item, 'a')?.setAttribute('aria-expanded', 'false');
+			direct(item, '.site-header__submenu-toggle')?.setAttribute('aria-expanded', 'false');
+		});
 		previousControl = null;
 	};
 
@@ -63,6 +67,8 @@
 		detailItems.replaceChildren(fragment);
 		title.textContent = label;
 		previousControl = control;
+		control?.setAttribute('aria-expanded', 'true');
+		link?.setAttribute('aria-expanded', 'true');
 		detail.inert = false;
 		detail.removeAttribute('aria-hidden');
 		drawer.dataset.view = 'detail';
@@ -79,6 +85,9 @@
 		toggle?.addEventListener('click', () => showDetail(item, toggle));
 		link?.setAttribute('role', 'button');
 		link?.setAttribute('aria-label', 'Explore ' + link.textContent.trim());
+		link?.setAttribute('aria-controls', 'balt-mobile-navigation-detail');
+		link?.setAttribute('aria-expanded', 'false');
+		toggle?.setAttribute('aria-controls', 'balt-mobile-navigation-detail');
 		link?.addEventListener('click', (event) => {
 			if (event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
 			event.preventDefault();
