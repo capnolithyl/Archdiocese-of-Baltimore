@@ -1,0 +1,66 @@
+<?php
+/**
+ * Select the global header appearance based on the first visible page block.
+ * Editors can override the automatic choice on individual pages/posts.
+ */
+function balt_header_variant(): string {
+	if ( ! is_singular() ) {
+		return 'solid';
+	}
+
+	$post_id = get_queried_object_id();
+	if ( function_exists( 'get_field' ) ) {
+		$override = get_field( 'balt_header_variant', $post_id );
+		if ( in_array( $override, array( 'solid', 'transparent' ), true ) ) {
+			return $override;
+		}
+	}
+
+	$blocks = parse_blocks( (string) get_post_field( 'post_content', $post_id ) );
+	foreach ( $blocks as $block ) {
+		$name = $block['blockName'] ?? '';
+		if ( ! $name && ! trim( wp_strip_all_tags( $block['innerHTML'] ?? '' ) ) ) {
+			continue;
+		}
+
+		if ( in_array( $name, array( 'dpi/hero', 'dpi/feature-banner', 'core/cover', 'balt/image-text-banner' ), true ) ) {
+			return 'transparent';
+		}
+
+		if ( 'core/image' === $name && 'full' === ( $block['attrs']['align'] ?? '' ) ) {
+			return 'transparent';
+		}
+
+		break;
+	}
+
+	return 'solid';
+}
+
+/**
+ * A separate submenu toggle allows the parent item to remain a real link.
+ * This applies only to the primary menu, not utility/footer navigation.
+ */
+function balt_header_submenu_button( $item_output, $item, $depth, $args ) {
+	if ( 'menu-1' !== ( $args->theme_location ?? '' ) || ! in_array( 'menu-item-has-children', (array) ( $item->classes ?? array() ), true ) ) {
+		return $item_output;
+	}
+
+	$src = get_template_directory_uri() . '/assets/header/chevron.svg';
+	return $item_output . '<button type="button" class="site-header__submenu-toggle" aria-expanded="false" aria-label="' .
+		esc_attr( sprintf( __( 'Toggle %s submenu', 'baltimore' ), $item->title ) ) . '">' .
+		'<img src="' . esc_url( $src ) . '" width="10" height="10" alt="" aria-hidden="true"></button>';
+}
+add_filter( 'walker_nav_menu_start_el', 'balt_header_submenu_button', 10, 4 );
+
+/** Light, dependency-free navigation interactions. */
+function balt_enqueue_header_script(): void {
+	wp_enqueue_script(
+		'balt-header-navigation',
+		get_template_directory_uri() . '/js/header-navigation.js',
+		array(),
+		BALT_VERSION,
+		true
+	);
+}
+add_action( 'wp_enqueue_scripts', 'balt_enqueue_header_script' );

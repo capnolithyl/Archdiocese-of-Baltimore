@@ -9,7 +9,7 @@ Custom PHP WordPress theme based on **_tw**, using Tailwind CSS 4, `theme.json` 
 | Theme/build | Present: PHP theme, Tailwind/PostCSS, esbuild, lint/format config, GitHub Actions |
 | Design system | Present: Baltimore palette, Lato + EB Garamond, base styles and archive/card styles |
 | ACF options | Present: header images, footer options, contact details, office hours and social links |
-| Menus | Primary and utility menu locations registered; footer and services menus implemented in the Figma footer. Header UI still pending |
+| Menus | Primary, utility, footer and services locations registered; desktop/mobile header and footer implemented from Figma |
 | WordPress templates | Present: page, single, home/posts index, archive, category/tag/taxonomy fallback, search, 404, index |
 | Archive display | Custom listing cards, archive headers, excerpts, pagination and empty states implemented; visual QA remains |
 | Search | Standard search form and search results page implemented; **live typeahead search is not implemented** |
@@ -23,6 +23,16 @@ Custom PHP WordPress theme based on **_tw**, using Tailwind CSS 4, `theme.json` 
 This table is based on code in this repository, **not a live WordPress/site test**.
 
 The **Hero** (`dpi/hero`) follows the approved Figma homepage design using Tailwind utilities: a fixed 865px height, cover-cropped video or image slider, 45% media overlay and top gradient, centered white display copy, and reusable `btn btn-outline` / `btn btn-gold` utilities. Styling is being implemented section by section. Slick retains its vendor CSS; WordPress still generates its standard block/image classes.
+
+### Global Navigation
+
+The header uses the two Figma variants: transparent \`320:717\` over a leading hero/photo and solid navy \`320:2123\` otherwise. Both have a 36px utility row and 88px main row at desktop, plus the exact 184×80px white Figma logo, dropdown chevrons and search icon exported into \`theme/assets/header/\`. The sitewide header logo can be replaced under **Theme Settings → Header Settings**, with the Figma artwork as fallback.
+
+**WordPress menus**: \`menu-1\` is the primary menu (desktop links, keyboard-accessible submenus and responsive mobile drawer); \`dpi-top-bar\` is the utility menu. Top links such as Report Misconduct, News and Sign In are managed in WordPress menus and are not hardcoded. The search icon opens WordPress's existing functional search form.
+
+**Appearance**: Automatic mode detects a hero, image-text banner, full-width core image or cover as the first content block on a singular page. Other pages (including archives) start solid navy with a layout spacer, so content doesn't hide behind the fixed header. Individual pages/posts can override this in the **Header Appearance** sidebar box: Automatic, Transparent, or Blue. A tiny \`theme/js/header-navigation.js\` script changes a transparent header to solid navy after 48px of scrolling; both variants shrink the logo from 80px to 56px and reduce the row height and gutter spacing. Returning to the top restores the original sizing. Mobile uses a menu button and collapsible submenus with no separate menu configuration required.
+
+\`tailwind/custom/components/header.css\` styles only WordPress-generated menu markup, dropdown states and scroll transitions. Other responsive layout styling lives in Tailwind utilities; no additional JS dependency is needed. Tests: \`tests/header-smoke.php\`, \`tests/header-interactions.mjs\`. The mobile layout and dropdowns still need in-browser visual testing with real menus.
 
 ### Global Footer
 

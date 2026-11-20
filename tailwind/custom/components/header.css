@@ -1,0 +1,99 @@
+/**
+ * WordPress menu markup contains dynamic <li> elements, so the header only
+ * needs a few scoped component selectors alongside the Tailwind layout classes.
+ */
+.site-header[data-header-variant="solid"],
+.site-header[data-compact="true"],
+.site-header[data-menu-open="true"] {
+	@apply bg-primary shadow-lg;
+}
+
+.site-header__utility {
+	height: 36px;
+	transition: height 200ms ease;
+}
+
+.site-header__main,
+.site-header__logo {
+	transition: height 200ms ease, padding 200ms ease, max-width 200ms ease;
+}
+
+.site-header[data-compact="true"] .site-header__utility {
+	height: 28px;
+}
+
+.site-header[data-compact="true"] .site-header__main {
+	@apply h-16 px-5 sm:px-6 xl:h-[68px];
+}
+
+.site-header[data-compact="true"] .site-header__logo {
+	@apply h-11 max-w-[120px] xl:h-14 xl:max-w-[140px];
+}
+
+.site-header__utility-menu {
+	@apply m-0 flex list-none items-center gap-6 p-0;
+}
+
+.site-header__utility-menu li:last-child:not(:first-child) {
+	@apply border-l border-white/20 pl-6;
+}
+
+.site-header__utility-menu a {
+	@apply text-[11px] font-medium leading-[16.5px] tracking-[0.136em] text-white/60 uppercase no-underline hover:text-white;
+}
+
+.site-header__menu {
+	@apply m-0 flex list-none flex-col p-0 xl:flex-row xl:items-center;
+}
+
+.site-header__menu li {
+	@apply relative min-w-0;
+}
+
+.site-header__menu > li > a {
+	@apply inline-flex min-h-11 items-center px-4 py-2 text-xs font-bold leading-[18px] tracking-[0.125em] text-white uppercase no-underline hover:text-white/75;
+}
+
+.site-header__menu li.menu-item-has-children {
+	@apply flex flex-wrap items-center xl:flex-nowrap;
+}
+
+.site-header__menu li.menu-item-has-children > a {
+	@apply pr-1;
+}
+
+.site-header__submenu-toggle {
+	@apply mr-2 inline-flex size-9 shrink-0 items-center justify-center rounded-sm text-white hover:bg-white/10 xl:mr-0 xl:size-6;
+}
+
+.site-header__menu .sub-menu {
+	@apply m-0 hidden w-full list-none bg-primary-light p-2 xl:absolute xl:top-full xl:left-0 xl:z-20 xl:w-[240px] xl:rounded-b-md xl:shadow-xl;
+}
+
+.site-header__menu .sub-menu .sub-menu {
+	@apply xl:top-0 xl:left-full;
+}
+
+.site-header__menu .sub-menu a {
+	@apply block rounded-sm px-4 py-3 text-sm leading-snug text-white no-underline hover:bg-white/10;
+}
+
+.site-header__menu .menu-item-has-children.is-open > .sub-menu {
+	@apply block;
+}
+
+@media (min-width: 80rem) {
+	.site-header__menu .menu-item-has-children:hover > .sub-menu,
+	.site-header__menu .menu-item-has-children:focus-within > .sub-menu {
+		display: block;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.site-header,
+	.site-header__utility,
+	.site-header__main,
+	.site-header__logo {
+		transition: none;
+	}
+}

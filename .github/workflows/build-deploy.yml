@@ -419,3 +419,44 @@ jobs:
             }
           }
           NODE
+
+      - name: Verify Figma navigation variants and interactions
+        run: |
+          php tests/header-smoke.php
+          node --check theme/js/header-navigation.js
+          node tests/header-interactions.mjs
+          node --input-type=module <<'NODE'
+          import { readFileSync, statSync } from 'node:fs';
+
+          const group = JSON.parse(readFileSync('theme/acf-json/group_balt_page_header_variant.json', 'utf8'));
+          const field = group.fields.find(f => f.name === 'balt_header_variant');
+          if (!field || field.default_value !== 'auto' || !field.choices.transparent || !field.choices.solid) {
+            throw new Error('Per-page navbar variant override not configured');
+          }
+          const css = readFileSync('tailwind/custom/components/header.css', 'utf8');
+          const nav = readFileSync('theme/template-parts/layout/header-content.php', 'utf8');
+          const helper = readFileSync('theme/inc/header-navigation.php', 'utf8');
+          const source = readFileSync('tailwind.css', 'utf8');
+
+          for (const token of ['data-compact="true"', 'data-header-variant="solid"', 'site-header__menu .sub-menu', 'site-header__main', 'site-header__logo']) {
+            if (!css.includes(token)) throw new Error('Navbar state missing: ' + token);
+          }
+          for (const token of ['wp_nav_menu(', "'menu-1'", "'dpi-top-bar'", 'site-header__mobile-toggle', 'site-header__search-toggle', "'solid' === $variant"]) {
+            if (!nav.includes(token)) throw new Error('Navbar markup missing: ' + token);
+          }
+          for (const token of ['balt_header_variant()', "'dpi/hero'", "'core/cover'", "get_field( 'balt_header_variant'", "'walker_nav_menu_start_el'", "'wp_enqueue_scripts'"]) {
+            if (!helper.includes(token)) throw new Error('Navbar integration missing: ' + token);
+          }
+          if (!source.includes('@source "./theme/template-parts/layout/header-content.php";')) {
+            throw new Error('Navbar utility classes excluded from Tailwind');
+          }
+          for (const name of ['logo.png', 'chevron.svg', 'search.svg']) {
+            if (statSync('theme/assets/header/' + name).size < 150) throw new Error('Figma navbar asset empty: ' + name);
+          }
+          for (const path of ['theme/style.css', 'theme/style-editor.css']) {
+            const css = readFileSync(path, 'utf8');
+            if (!css.includes('124px') || !css.includes('88px') || !css.includes('.site-header__menu') || !css.includes('184px')) {
+              throw new Error('Compiled navbar styles missing: ' + path);
+            }
+          }
+          NODE

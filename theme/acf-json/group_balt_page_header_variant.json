@@ -1,0 +1,55 @@
+{
+  "key": "group_balt_page_header_variant",
+  "title": "Header Appearance",
+  "fields": [
+    {
+      "key": "field_balt_page_header_variant",
+      "label": "Header Background",
+      "name": "balt_header_variant",
+      "type": "select",
+      "instructions": "Automatic: transparent only when a hero, full-width image or cover is the first content block. Choose Transparent for other edge-to-edge designs, or Blue for an always-readable navigation.",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "choices": {
+        "auto": "Automatic (recommended)",
+        "transparent": "Transparent over hero",
+        "solid": "Blue background"
+      },
+      "default_value": "auto",
+      "return_format": "value",
+      "ui": 1,
+      "allow_null": 0,
+      "multiple": 0
+    }
+  ],
+  "location": [
+    [
+      {
+        "param": "post_type",
+        "operator": "==",
+        "value": "page"
+      }
+    ],
+    [
+      {
+        "param": "post_type",
+        "operator": "==",
+        "value": "post"
+      }
+    ]
+  ],
+  "menu_order": 0,
+  "position": "side",
+  "style": "default",
+  "label_placement": "top",
+  "instruction_placement": "label",
+  "hide_on_screen": "",
+  "active": true,
+  "description": "Per-page header style override; default detects an edge-to-edge first block.",
+  "show_in_rest": 0
+}
