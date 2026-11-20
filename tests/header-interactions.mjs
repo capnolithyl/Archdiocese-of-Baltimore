@@ -52,14 +52,11 @@ const doc = {
 runInNewContext(code, { window: win, document: doc });
 
 assert.equal(header.dataset.compact, 'false');
-menuButton.events.click();
-assert.equal(header.dataset.menuOpen, 'true');
-assert.equal(menuButton.attributes['aria-expanded'], 'true');
-assert.equal(nav.classList.contains('hidden'), false);
+assert.equal(menuButton.events.click, undefined, 'Mobile toggle belongs to drawer script');
+assert.equal(nav.classList.contains('hidden'), true);
 
 searchButton.events.click();
-assert.equal(nav.classList.contains('hidden'), true, 'Search closes mobile navigation');
-assert.equal(header.dataset.menuOpen, 'false', 'Search trigger closes mobile menu');
+assert.equal(nav.classList.contains('hidden'), true, 'Search does not open desktop navigation');
 
 win.scrollY = 100;
 listeners.scroll();
@@ -72,7 +69,6 @@ let prevented = false;
 listeners['document-keydown']({ key: 'Escape', preventDefault() { prevented = true; } });
 assert.equal(header.dataset.menuOpen, 'false', 'Escape leaves menu closed');
 
-menuButton.events.click();
 mql.matches = true;
 mql.onChange();
 assert.equal(nav.classList.contains('hidden'), true, 'Resizing to desktop resets mobile state');

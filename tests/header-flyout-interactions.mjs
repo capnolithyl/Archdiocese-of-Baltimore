@@ -126,11 +126,9 @@ assert.equal(report.toggle.attributes['aria-expanded'], 'true');
 ministries.events.mouseenter();
 assert.equal(report.classList.contains('is-open'), false);
 
-// Mobile toggle behavior remains unchanged until the mobile design arrives.
+// The desktop script no longer controls mobile submenus.
 match.matches = false;
 match.onChange();
-ministries.toggle.events.click();
-assert.equal(ministries.classList.contains('is-open'), true);
 ministries.toggle.events.click();
 assert.equal(ministries.classList.contains('is-open'), false);
 

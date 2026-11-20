@@ -31,6 +31,9 @@ function absint( $value ): int { return abs( (int) $value ); }
 function esc_attr( string $value ): string { return htmlspecialchars( $value, ENT_QUOTES, 'UTF-8' ); }
 function esc_url( string $value ): string { return htmlspecialchars( $value, ENT_QUOTES, 'UTF-8' ); }
 function esc_attr_e( string $text, string $domain ): void { echo esc_attr( $text ); }
+function esc_html_e( string $text, string $domain ): void { echo esc_attr( $text ); }
+function get_nav_menu_locations(): array { return array( 'menu-1' => 10 ); }
+function wp_get_nav_menu_items( $menu_id ): array { return array(); }
 function get_template_directory_uri(): string { return '/theme'; }
 function get_bloginfo( string $key ): string { return 'Archdiocese of Baltimore'; }
 function home_url( string $path ): string { return 'https://example.org' . $path; }
@@ -109,5 +112,13 @@ check( str_contains( $solid, 'h-20 xl:h-[124px]" aria-hidden' ), 'Blue pages req
 
 $logo_id = 42;
 check( str_contains( render_header(), '/uploads/logo-42.png' ), 'Configured sitewide logo not used' );
+check( str_contains( render_header(), 'aria-controls="balt-mobile-navigation"' ), 'Mobile drawer button points to the dialog' );
+check( str_contains( render_header(), 'site-header__search-toggle hidden' ), 'Mobile search icon must be hidden beside hamburger' );
+ob_start();
+require dirname( __DIR__ ) . '/theme/template-parts/layout/mobile-navigation.php';
+$drawer = (string) ob_get_clean();
+check( str_contains( $drawer, 'id="balt-mobile-navigation"' ), 'Mobile navigation dialog missing' );
+check( str_contains( $drawer, 'balt-mobile-primary-menu' ) && str_contains( $drawer, 'balt-mobile-utility-menu' ), 'Both WP menus must be rendered in drawer' );
+check( str_contains( $drawer, 'data-balt-mobile-search' ) && str_contains( $drawer, 'data-balt-mobile-back' ), 'Search and drill-down Back controls missing' );
 
 echo "Header automatic and manual variants, navigation, Figma icons and spacers passed\n";
