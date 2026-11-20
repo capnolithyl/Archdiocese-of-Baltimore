@@ -64,6 +64,10 @@ jobs:
           for (const [name, type] of [['icon', 'font-awesome'], ['heading', 'text'], ['description', 'textarea'], ['link', 'link']]) {
             if (fields.get(name) !== type) throw new Error('Missing Feature Grid ACF field: ' + name);
           }
+          const iconAssets = readFileSync('theme/inc/feature-grid.php', 'utf8');
+          for (const token of ["enqueue_block_assets", "balt_feature_grid_editor_icons", "ACFFA_get_fa_url", "is_admin()", "wp_enqueue_style(", "wp_enqueue_script("]) {
+            if (!iconAssets.includes(token)) throw new Error('Feature Grid editor Font Awesome assets missing: ' + token);
+          }
           if (repeater.sub_fields.find(field => field.name === 'icon')?.save_format !== 'class') {
             throw new Error('Font Awesome field must return icon classes');
           }
@@ -75,6 +79,9 @@ jobs:
             }
           }
           NODE
+
+      - name: Test Feature Grid editor icon assets
+        run: php tests/feature-grid-editor-icons-smoke.php
 
       - name: Verify featured banner slider fields and Tailwind styling
         run: |

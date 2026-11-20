@@ -38,6 +38,8 @@ The layout uses Tailwind only: one column below 640px, a 2×2 grid from 640–99
 
 
 
+The Feature Grid block previews Font Awesome icons in the iframed Gutenberg editor by loading the configured Font Awesome stylesheet (or Kit script) through `enqueue_block_assets`. This only runs in the editor; the ACF Font Awesome extension continues managing frontend assets normally.
+
 ### Media Center
 
 The **Media Center** block (\`balt/media-center\`) displays the latest **three published entries per tab**. Editors can configure and reorder **1–7 tabs** using an ACF repeater. Each tab has a searchable **Content Source** dropdown with all available public post types (including standard Posts and other registered CPTs) and their hierarchical categories; an optional label overrides the automatic tab name. For an entire post type, its View All button leads to the post-type archive. For an individual category, it leads to that category archive. Tabs use the same Figma layout regardless of the selected source. Existing blocks with no tab configuration continue to display the original seven media types until editors choose their own tabs. Posts supply their own featured images, titles and publication dates; no hardcoded Figma imagery or Archbishop message is included.
