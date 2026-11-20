@@ -1,3 +1,4 @@
+<?php
 /**
  * The primary navigation has one dropdown level, never nested flyouts.
  * Return the nearest top-level ancestor without losing existing links.
