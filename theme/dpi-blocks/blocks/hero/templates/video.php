@@ -14,11 +14,11 @@ $heading_tag = is_front_page() ? 'h1' : 'h2';
 <article class="relative h-216 overflow-hidden bg-foreground">
     <div class="absolute inset-0">
         <?php if (! empty($video['url'])) : ?>
-            <video class="h-full w-full object-cover" src="<?php echo esc_url($video['url']); ?>"
+            <video class="m-0! h-full w-full object-cover" src="<?php echo esc_url($video['url']); ?>"
                 <?php if (! empty($poster['url'])) : ?> poster="<?php echo esc_url($poster['url']); ?>"
                 <?php endif; ?> autoplay muted loop playsinline preload="metadata" aria-hidden="true"></video>
         <?php elseif (! empty($poster['ID'])) : ?>
-            <?php echo wp_get_attachment_image($poster['ID'], 'full', false, array('alt' => '', 'class' => 'h-full w-full object-cover')); ?>
+            <?php echo wp_get_attachment_image($poster['ID'], 'full', false, array('alt' => '', 'class' => 'm-0! h-full w-full object-cover')); ?>
         <?php elseif (! empty($is_preview)) : ?>
             <p><?php esc_html_e('Choose a video.', 'baltimore'); ?></p>
         <?php endif; ?>

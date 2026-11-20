@@ -46,6 +46,17 @@ jobs:
             throw new Error('Hero should start flush against the top of the page under transparent nav');
           }
 
+          // Tailwind Typography adds 2em margin to .prose img/video. Without
+          // an explicit reset, the media begins ~32px below the hero gradient,
+          // leaving a uniform dark stripe across the top of the homepage.
+          const slider = readFileSync('theme/dpi-blocks/blocks/hero/templates/slider.php', 'utf8');
+          const video = readFileSync('theme/dpi-blocks/blocks/hero/templates/video.php', 'utf8');
+          if (!slider.includes("'class' => 'm-0! h-full w-full object-cover'") ||
+              !video.includes('class="m-0! h-full w-full object-cover"') ||
+              !video.includes("'class' => 'm-0! h-full w-full object-cover'")) {
+            throw new Error('Hero image/video margins must be reset to avoid the 32px top stripe');
+          }
+
           for (const path of ['theme/style.css', 'theme/style-editor.css']) {
             const css = readFileSync(path, 'utf8');
             for (const token of ['.btn-outline', '.btn-gold', '865px', 'object-fit:cover']) {

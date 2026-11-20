@@ -34,7 +34,7 @@ $slick = array(
 		<article class="relative h-[865px] overflow-hidden bg-foreground">
 			<div class="absolute inset-0">
 				<?php if ( $image_id ) : ?>
-					<?php echo wp_get_attachment_image( $image_id, 'full', false, array( 'alt' => '', 'class' => 'h-full w-full object-cover' ) ); ?>
+					<?php echo wp_get_attachment_image( $image_id, 'full', false, array( 'alt' => '', 'class' => 'm-0! h-full w-full object-cover' ) ); ?>
 				<?php elseif ( ! empty( $is_preview ) ) : ?>
 					<p><?php esc_html_e( 'Choose an image for this slide.', 'baltimore' ); ?></p>
 				<?php endif; ?>
