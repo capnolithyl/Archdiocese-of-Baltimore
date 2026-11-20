@@ -27,18 +27,19 @@
 	};
 
 	const showRoot = (focusBack = true) => {
-		drawer.dataset.view = 'root';
 		root.inert = false;
 		root.removeAttribute('aria-hidden');
-		if (focusBack) (previousControl && previousControl.isConnected ? previousControl : closeButton)?.focus();
 		detail.inert = true;
 		detail.setAttribute('aria-hidden', 'true');
-		detailItems.replaceChildren();
+		drawer.dataset.view = 'root';
 		primary?.querySelectorAll(':scope > li.menu-item-has-children').forEach((item) => {
 			direct(item, 'a')?.setAttribute('aria-expanded', 'false');
 			direct(item, '.site-header__submenu-toggle')?.setAttribute('aria-expanded', 'false');
 		});
+		if (focusBack) (previousControl?.isConnected ? previousControl : closeButton)?.focus();
 		previousControl = null;
+		// Keep links painted as the detail view slides out. Clear on close,
+		// rather than blanking the panel in the middle of the animation.
 	};
 
 	const showDetail = (item, control) => {
@@ -47,10 +48,18 @@
 
 		const link = direct(item, 'a');
 		const label = (link?.textContent || '').trim();
-		const clone = submenu.cloneNode(true);
-		clone.removeAttribute('id');
-		clone.className = 'balt-mobile-drawer__detail-menu';
-		clone.querySelectorAll('[id]').forEach((element) => element.removeAttribute('id'));
+		// Construct a fresh, visible list from real WordPress child links.
+		// Cloning the hidden source <ul> retained layout styles/identifiers
+		// that could leave the detail screen looking empty.
+		const childLinks = submenu.querySelectorAll(':scope > li > a');
+		if (!childLinks.length) return false;
+		const list = document.createElement('ul');
+		list.className = 'balt-mobile-drawer__detail-menu';
+		childLinks.forEach((child) => {
+			const row = document.createElement('li');
+			row.appendChild(child.cloneNode(true));
+			list.appendChild(row);
+		});
 		const fragment = document.createDocumentFragment();
 
 		// Primary parent destinations remain available from the drill-down.
@@ -63,7 +72,7 @@
 			overview.textContent = 'View ' + label;
 			fragment.appendChild(overview);
 		}
-		fragment.appendChild(clone);
+		fragment.appendChild(list);
 		detailItems.replaceChildren(fragment);
 		title.textContent = label;
 		previousControl = control;
@@ -71,10 +80,12 @@
 		link?.setAttribute('aria-expanded', 'true');
 		detail.inert = false;
 		detail.removeAttribute('aria-hidden');
+		detail.scrollTop = 0;
 		drawer.dataset.view = 'detail';
-		backButton.focus();
 		root.inert = true;
 		root.setAttribute('aria-hidden', 'true');
+		backButton.focus();
+		return true;
 	};
 
 	primary?.querySelectorAll(':scope > li.menu-item-has-children').forEach((item) => {
@@ -90,8 +101,7 @@
 		toggle?.setAttribute('aria-controls', 'balt-mobile-navigation-detail');
 		link?.addEventListener('click', (event) => {
 			if (event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
-			event.preventDefault();
-			showDetail(item, link);
+			if (showDetail(item, link)) event.preventDefault();
 		});
 		link?.addEventListener('keydown', (event) => {
 			if (event.key === ' ') {
@@ -126,6 +136,10 @@
 			return;
 		}
 		restoreFocus = true;
+		// Always reopen on the root screen, independent of the last visit.
+		showRoot(false);
+		root.scrollTop = 0;
+		detail.scrollTop = 0;
 		drawer.showModal();
 		document.documentElement.classList.add('balt-mobile-menu-open');
 		trigger.setAttribute('aria-expanded', 'true');
@@ -143,6 +157,9 @@
 		document.documentElement.classList.remove('balt-mobile-menu-open');
 		trigger.setAttribute('aria-expanded', 'false');
 		showRoot(false);
+		detailItems.replaceChildren();
+		detail.scrollTop = 0;
+		root.scrollTop = 0;
 		closeUtility();
 		if (restoreFocus && !desktop.matches) trigger.focus();
 		restoreFocus = true;

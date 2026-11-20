@@ -16,7 +16,7 @@ for (const field of ['balt_mobile_help_link', 'balt_mobile_donate_link']) {
 for (const item of ['<dialog', 'data-balt-mobile-back', 'data-balt-mobile-search', 'balt-mobile-primary-menu', 'balt-mobile-utility-menu']) {
 	assert.ok(template.includes(item), 'Missing mobile template element ' + item);
 }
-for (const rule of ['width: min(400px, 100%)', 'balt-mobile-drawer-enter', 'data-view="detail"', 'prefers-reduced-motion']) {
+for (const rule of ['width: min(400px, 100%)', 'balt-mobile-drawer-enter', 'data-view="detail"', 'prefers-reduced-motion', 'transform: translateX(-100%)', 'transform: translateX(100%)', 'transform: rotate(-45deg)']) {
 	assert.ok(css.includes(rule), 'Missing responsive style ' + rule);
 }
 
@@ -57,7 +57,8 @@ const detailItems = element();
 const title = element();
 const parentLink = element({textContent:'About',attributes:{href:'/about/'}});
 const parentToggle = element();
-const sourceSubmenu = element({cloneNode: () => element()});
+const childLink = element({textContent: 'Archbishop Lori', attributes: {href:'/about/archbishop/'}, cloneNode() { return element({textContent:this.textContent,attributes:{...this.attributes}}); }});
+const sourceSubmenu = element({querySelectorAll: () => [childLink]});
 const aboutItem = element({querySelector(selector) {
 	return ({
 		':scope > a': parentLink,
@@ -114,6 +115,9 @@ assert.equal(detail.inert, false);
 assert.equal(title.textContent, 'About');
 assert.equal(backButton.focused, true);
 assert.ok(detailItems.children.length);
+const childList = detailItems.children[0]?.children?.at(-1);
+assert.equal(childList?.className, 'balt-mobile-drawer__detail-menu');
+assert.equal(childList?.children?.[0]?.children?.[0]?.textContent, 'Archbishop Lori', 'Actual child links must appear, not just an empty panel');
 
 backButton.events.click();
 assert.equal(drawer.dataset.view, 'root');
@@ -135,6 +139,16 @@ assert.equal(input.dispatched, true);
 assert.equal(trigger.attributes['aria-expanded'], 'false');
 
 trigger.events.click();
+assert.equal(drawer.dataset.view, 'root', 'Reopening must start on main navigation');
+assert.equal(root.inert, false);
+parentToggle.events.click();
+assert.equal(drawer.dataset.view, 'detail', 'Second drill-down must work after reopening');
+closeButton.events.click();
+assert.equal(drawer.open, false);
+assert.equal(drawer.dataset.view, 'root');
+trigger.events.click();
+assert.equal(drawer.dataset.view, 'root');
+assert.equal(detailItems.children.length, 0, 'No stale child panel after close/reopen');
 media.matches = true;
 media.changed();
 assert.equal(drawer.open, false, 'Drawer must close on desktop breakpoint');
