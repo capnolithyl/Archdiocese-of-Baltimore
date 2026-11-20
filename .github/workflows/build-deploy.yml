@@ -425,6 +425,13 @@ jobs:
           }
           NODE
 
+      - name: Verify native live-search dialog and endpoint
+        run: |
+          node --check theme/js/live-search.js
+          node tests/live-search-smoke.mjs
+          php -l theme/inc/live-search.php
+          php -l theme/template-parts/layout/live-search.php
+
       - name: Verify Figma navigation variants and interactions
         run: |
           php tests/header-smoke.php
