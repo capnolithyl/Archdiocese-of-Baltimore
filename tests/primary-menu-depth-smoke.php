@@ -7,7 +7,7 @@ declare(strict_types=1);
 
 define( 'ABSPATH', __DIR__ . '/' );
 $GLOBALS['primary_menu'] = 17;
-$GLOBALS['locations'] = array( 'menu-1' => 17, 'menu-2' => 28 );
+$GLOBALS['locations'] = array( 'menu-1' => 17, 'menu-2' => 28, 'dpi-top-bar' => 29 );
 $GLOBALS['updated_parents'] = array();
 $GLOBALS['hooks'] = array();
 $GLOBALS['inline_js'] = array();
@@ -51,6 +51,7 @@ assert_equal( array( 0, 10, 11, 12, 10 ), array_map( static fn( $item ) => $item
 assert_equal( true, in_array( 'menu-item-has-children', $flat[0]->classes, true ), 'Top-level parent needs the dropdown chevron' );
 assert_equal( false, in_array( 'menu-item-has-children', $flat[1]->classes, true ), 'Nested child must not show a flyout chevron' );
 assert_equal( $original, balt_primary_menu_limit_render_depth( $original, (object) array( 'theme_location' => 'menu-2' ) ), 'Other menus are not constrained' );
+assert_equal( array( 0, 10, 10, 10, 10 ), array_map( static fn( $item ) => $item->menu_item_parent, balt_primary_menu_limit_render_depth( $original, (object) array( 'theme_location' => 'dpi-top-bar' ) ) ), 'Utility dropdown depth must be limited too' );
 
 balt_primary_menu_normalize_saved_items( 28 );
 assert_equal( array(), $GLOBALS['updated_parents'], 'Other menus must never be rewritten' );
@@ -58,6 +59,9 @@ balt_primary_menu_normalize_saved_items( 17 );
 assert_equal( array( 12, 13 ), array_keys( $GLOBALS['updated_parents'] ), 'Only deeper descendants should be updated' );
 assert_equal( array( '_menu_item_menu_item_parent', '10' ), $GLOBALS['updated_parents'][12], 'Third-level link must move under root' );
 assert_equal( array( '_menu_item_menu_item_parent', '10' ), $GLOBALS['updated_parents'][13], 'Fourth-level link must move under root' );
+$GLOBALS['updated_parents'] = array();
+balt_primary_menu_normalize_saved_items( 29 );
+assert_equal( array( 12, 13 ), array_keys( $GLOBALS['updated_parents'] ), 'Utility menu saves should normalize deeper links' );
 
 assert_equal( 0, balt_primary_menu_allowed_parent( 1, array( 1 => 2, 2 => 1 ) ), 'Cycles must collapse safely' );
 assert_equal( 0, balt_primary_menu_allowed_parent( 42, array( 42 => 999 ) ), 'Orphaned items must be top-level' );
@@ -70,5 +74,9 @@ assert_equal( true, str_contains( $GLOBALS['inline_js'][0][1], 'globalMaxDepth =
 $GLOBALS['nav_menu_selected_id'] = 28;
 balt_primary_menu_limit_admin_editor( 'nav-menus.php' );
 assert_equal( 1, count( $GLOBALS['inline_js'] ), 'Other menus should be unrestricted' );
+$GLOBALS['nav_menu_selected_id'] = 29;
+balt_primary_menu_limit_admin_editor( 'nav-menus.php' );
+assert_equal( 2, count( $GLOBALS['inline_js'] ), 'Utility menu editor should share the one-level limit' );
+assert_equal( true, str_contains( $GLOBALS['inline_js'][1][1], 'globalMaxDepth = 1' ), 'Utility menu maximum indentation should be one' );
 
-echo "Primary menu single-dropdown editor limit, safe reparenting and frontend fallback passed\n";
+echo "Primary and utility menu single-dropdown editor limits, safe reparenting and frontend fallbacks passed\n";

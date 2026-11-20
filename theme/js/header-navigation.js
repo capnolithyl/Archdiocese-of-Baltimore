@@ -6,7 +6,7 @@
 	const menu = header.querySelector('.site-header__nav');
 	const searchButton = header.querySelector('.site-header__search-toggle');
 	const desktop = window.matchMedia('(min-width: 1280px)');
-	const submenuItems = [...header.querySelectorAll('.site-header__menu > li.menu-item-has-children')];
+	const submenuItems = [...header.querySelectorAll('.site-header__menu > li.menu-item-has-children, .site-header__utility-menu > li.menu-item-has-children')];
 	let pending = false;
 
 	const updateScroll = () => {
@@ -20,13 +20,14 @@
 	};
 
 	const directChild = (item, selector) => item.querySelector(':scope > ' + selector);
+	const submenuToggle = (item) => directChild(item, '.site-header__submenu-toggle') || directChild(item, '.site-header__utility-toggle');
 
 	const closeBranch = (item) => {
 		item.classList.remove('is-open');
-		directChild(item, '.site-header__submenu-toggle')?.setAttribute('aria-expanded', 'false');
+		submenuToggle(item)?.setAttribute('aria-expanded', 'false');
 		item.querySelectorAll('li.is-open').forEach((child) => {
 			child.classList.remove('is-open');
-			directChild(child, '.site-header__submenu-toggle')?.setAttribute('aria-expanded', 'false');
+			submenuToggle(child)?.setAttribute('aria-expanded', 'false');
 		});
 	};
 
@@ -64,11 +65,12 @@
 
 	const openDesktop = (item) => {
 		if (!desktop.matches) return;
-		for (const sibling of item.parentElement?.children || []) {
+		// Primary and utility dropdowns mutually exclude each other.
+		for (const sibling of submenuItems) {
 			if (sibling !== item && sibling.classList?.contains('is-open')) closeBranch(sibling);
 		}
 		item.classList.add('is-open');
-		directChild(item, '.site-header__submenu-toggle')?.setAttribute('aria-expanded', 'true');
+		submenuToggle(item)?.setAttribute('aria-expanded', 'true');
 		placeSubmenu(item);
 	};
 
@@ -93,7 +95,7 @@
 	searchButton?.addEventListener('click', closeMenus);
 
 	submenuItems.forEach((item, index) => {
-		const toggle = directChild(item, '.site-header__submenu-toggle');
+		const toggle = submenuToggle(item);
 		const submenu = directChild(item, '.sub-menu');
 		if (!toggle || !submenu) return;
 
@@ -140,7 +142,7 @@
 			event.preventDefault();
 			const deepest = opened[opened.length - 1];
 			closeBranch(deepest);
-			directChild(deepest, '.site-header__submenu-toggle')?.focus();
+			submenuToggle(deepest)?.focus();
 			return;
 		}
 		if (header.dataset.menuOpen === 'true' || opened.length) {

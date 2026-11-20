@@ -70,7 +70,9 @@ ministries.parentElement = { children: [ministries, give] };
 give.parentElement = ministries.parentElement;
 nested.parentElement = { children: [nested] };
 
-const items = [ministries, give];
+const report = menuItem('report', 1120, 1260);
+report.parentElement = { children: [report] };
+const items = [ministries, give, report];
 const header = {
 	dataset: { compact: 'false', menuOpen: 'false' },
 	querySelector(selector) {
@@ -116,6 +118,14 @@ assert.equal(prevented, true);
 assert.equal(give.classList.contains('is-open'), false);
 assert.equal(give.toggle.focused, true);
 
+// The utility dropdown also opens, flips at the right edge and closes its peers.
+report.events.mouseenter();
+assert.equal(report.classList.contains('is-open'), true);
+assert.equal(report.submenu.dataset.flyoutDirection, 'left');
+assert.equal(report.toggle.attributes['aria-expanded'], 'true');
+ministries.events.mouseenter();
+assert.equal(report.classList.contains('is-open'), false);
+
 // Mobile toggle behavior remains unchanged until the mobile design arrives.
 match.matches = false;
 match.onChange();
@@ -129,4 +139,7 @@ assert.match(css, /\.sub-menu\[data-flyout-direction="left"\]/);
 assert.doesNotMatch(css, /\.sub-menu \.sub-menu \{/);
 assert.match(css, /background: #f2f0ed/);
 assert.match(css, /color: #e43d36/);
+assert.match(css, /\.site-header__utility-menu > li > \.sub-menu/);
+assert.match(css, /background: #202b40/);
+assert.match(css, /\.site-header__utility-menu > li\.is-open > \.sub-menu/);
 console.log('Single-level dropdown, viewport alignment and mobile regression tests passed');

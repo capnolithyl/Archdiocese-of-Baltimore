@@ -28,7 +28,7 @@ $asset_base = get_template_directory_uri() . '/assets';
 						'container'      => false,
 						'menu_id'        => 'top-bar-menu',
 						'menu_class'     => 'site-header__utility-menu',
-						'depth'          => 1,
+						'depth'          => 2,
 						'fallback_cb'    => false,
 					)
 				);

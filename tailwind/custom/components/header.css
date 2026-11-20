@@ -45,12 +45,116 @@
 	@apply m-0 flex list-none items-center gap-6 p-0;
 }
 
-.site-header__utility-menu li:last-child:not(:first-child) {
+.site-header__utility-menu > li:last-child:not(:first-child) {
 	@apply border-l border-white/20 pl-6;
 }
 
 .site-header__utility-menu a {
 	@apply text-[11px] font-medium leading-[16.5px] tracking-[0.136em] text-white/60 uppercase no-underline hover:text-white;
+}
+
+
+/**
+ * One-level utility navigation dropdown: navy panel, readable white links.
+ * Keep this layer above the main header to prevent covering the submenu.
+ */
+.site-header__utility {
+	position: relative;
+	z-index: 30;
+	overflow: visible;
+}
+
+.site-header__utility-menu > li {
+	position: relative;
+	display: flex;
+	height: 100%;
+	align-items: center;
+}
+
+.site-header__utility-toggle {
+	display: inline-flex;
+	width: 20px;
+	height: 26px;
+	flex-shrink: 0;
+	align-items: center;
+	justify-content: center;
+	margin-left: 3px;
+	border: 0;
+	border-radius: 2px;
+	background: transparent;
+	cursor: pointer;
+}
+
+.site-header__utility-toggle img {
+	width: 9px;
+	height: 9px;
+}
+
+.site-header__utility-toggle:hover,
+.site-header__utility-toggle:focus-visible {
+	background: rgb(255 255 255 / 12%);
+	outline-color: #fff;
+}
+
+.site-header__utility-menu > li > .sub-menu {
+	position: absolute;
+	top: 100%;
+	left: 0;
+	right: auto;
+	z-index: 40;
+	display: none;
+	width: 260px;
+	max-width: calc(100vw - 16px);
+	margin: 0;
+	padding: 9px 0;
+	list-style: none;
+	background: #202b40;
+	box-shadow: 0 15px 30px rgb(0 0 0 / 20%);
+	transform: translateX(var(--balt-submenu-shift, 0px));
+}
+
+.site-header__utility-menu > li > .sub-menu[data-flyout-direction="left"] {
+	left: auto;
+	right: 0;
+}
+
+.site-header__utility-menu .sub-menu li {
+	display: block;
+	margin: 0;
+	padding: 0;
+	border: 0;
+}
+
+.site-header__utility-menu .sub-menu a {
+	display: flex;
+	min-height: 43px;
+	align-items: center;
+	padding: 10px 20px;
+	color: #fff;
+	font-size: 12px;
+	font-weight: 500;
+	line-height: 1.5;
+	letter-spacing: normal;
+	text-transform: none;
+	text-decoration: none;
+}
+
+.site-header__utility-menu .sub-menu a:hover,
+.site-header__utility-menu .sub-menu a:focus-visible,
+.site-header__utility-menu .sub-menu .current-menu-item > a {
+	background: rgb(255 255 255 / 10%);
+	color: #fff;
+}
+
+.site-header__utility-menu > li.is-open > .sub-menu {
+	display: block;
+}
+
+@media (min-width: 80rem) {
+	.site-header__utility-menu > li:hover > .sub-menu,
+	.site-header__utility-menu > li:focus-within > .sub-menu {
+		display: block;
+	}
 }
 
 .site-header__menu {

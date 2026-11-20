@@ -80,6 +80,10 @@ $item = (object) array(
 );
 $menu_item = balt_header_submenu_button( '<a href="/parishes">Parishes</a>', $item, 0, $args );
 check( str_contains( $menu_item, 'site-header__submenu-toggle' ) && str_contains( $menu_item, 'chevron.svg' ), 'Primary menu toggle must render exact Figma chevron' );
+$args->theme_location = 'dpi-top-bar';
+$utility = balt_header_submenu_button( '<a href="/report">Report Misconduct</a>', $item, 0, $args );
+check( str_contains( $utility, 'site-header__utility-toggle' ) && str_contains( $utility, 'chevron.svg' ), 'Utility navigation should have an accessible toggle' );
+check( balt_header_submenu_button( '<a>Grandchild</a>', $item, 1, $args ) === '<a>Grandchild</a>', 'Utility navigation does not support nested flyouts' );
 $args->theme_location = 'menu-2';
 check( balt_header_submenu_button( '<a>Footer</a>', $item, 0, $args ) === '<a>Footer</a>', 'Footer menus should not receive header toggles' );
 

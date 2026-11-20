@@ -39,15 +39,16 @@ function balt_header_variant(): string {
 
 /**
  * A separate submenu toggle allows the parent item to remain a real link.
- * This applies only to the primary menu, not utility/footer navigation.
+ * Applies to primary and utility navigation, not footer links.
  */
 function balt_header_submenu_button( $item_output, $item, $depth, $args ) {
-	if ( 0 !== (int) $depth || 'menu-1' !== ( $args->theme_location ?? '' ) || ! in_array( 'menu-item-has-children', (array) ( $item->classes ?? array() ), true ) ) {
+	if ( 0 !== (int) $depth || ! in_array( $args->theme_location ?? '', array( 'menu-1', 'dpi-top-bar' ), true ) || ! in_array( 'menu-item-has-children', (array) ( $item->classes ?? array() ), true ) ) {
 		return $item_output;
 	}
 
+	$button_class = 'dpi-top-bar' === $args->theme_location ? 'site-header__utility-toggle' : 'site-header__submenu-toggle';
 	$src = get_template_directory_uri() . '/assets/header/chevron.svg';
-	return $item_output . '<button type="button" class="site-header__submenu-toggle" aria-expanded="false" aria-label="' .
+	return $item_output . '<button type="button" class="' . esc_attr( $button_class ) . '" aria-expanded="false" aria-label="' .
 		esc_attr( sprintf( __( 'Toggle %s submenu', 'baltimore' ), $item->title ) ) . '">' .
 		'<img src="' . esc_url( $src ) . '" width="10" height="10" alt="" aria-hidden="true"></button>';
 }
