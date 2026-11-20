@@ -30,6 +30,7 @@ const classList = () => {
 };
 const element = (overrides = {}) => ({
 	dataset: {}, events: {}, attributes: {}, classList: classList(),
+	style: {properties: {}, setProperty(name, value) { this.properties[name] = value; }},
 	inert: false, isConnected: true, focused: false,
 	addEventListener(name, callback) { this.events[name] = callback; },
 	setAttribute(name, value) { this.attributes[name] = value; },
@@ -68,7 +69,7 @@ const aboutItem = element({querySelector(selector) {
 }});
 const primary = element({querySelectorAll:()=>[aboutItem]});
 const utilityToggle = element();
-const utilitySubmenu = element();
+const utilitySubmenu = element({scrollHeight: 166});
 const utilityItem = element({querySelector(selector) {
 	return ({
 		':scope > .site-header__utility-toggle': utilityToggle,
@@ -106,30 +107,39 @@ assert.equal(drawer.open, true, 'Hamburger must open native modal');
 assert.equal(trigger.attributes['aria-expanded'], 'true');
 assert.equal(document.documentElement.classList.contains('balt-mobile-menu-open'), true);
 
-let prevented = false;
-parentLink.events.click({button:0,preventDefault() {prevented = true;}});
-assert.equal(prevented, true);
-assert.equal(drawer.dataset.view, 'detail', 'Main submenu should shift screens');
+assert.equal(parentLink.events.click, undefined, 'Parent text must stay a normal navigable link');
+assert.equal(parentLink.getAttribute('href'), '/about/', 'Parent destination remains intact');
+assert.equal(parentLink.getAttribute('role'), null, 'Parent anchor is not a button');
+assert.equal(parentToggle.attributes['aria-controls'], 'balt-mobile-navigation-detail');
+parentToggle.events.click();
+assert.equal(drawer.dataset.view, 'detail', 'Only the chevron drills into the submenu');
 assert.equal(root.inert, true);
 assert.equal(detail.inert, false);
 assert.equal(title.textContent, 'About');
 assert.equal(backButton.focused, true);
-assert.ok(detailItems.children.length);
-const childList = detailItems.children[0]?.children?.at(-1);
+assert.equal(detailItems.children.length, 1, 'Only the child list is rendered, without View About');
+const childList = detailItems.children[0];
 assert.equal(childList?.className, 'balt-mobile-drawer__detail-menu');
 assert.equal(childList?.children?.[0]?.children?.[0]?.textContent, 'Archbishop Lori', 'Actual child links must appear, not just an empty panel');
+assert.match(css, /max-height: var\(--balt-utility-height, 0px\)/);
+assert.match(css, /grid-template-columns: max-content minmax\(0, 1fr\)/);
+assert.match(template, /<h2 class="balt-mobile-drawer__detail-title"/);
 
 backButton.events.click();
 assert.equal(drawer.dataset.view, 'root');
 assert.equal(root.inert, false);
 assert.equal(detail.inert, true);
-assert.equal(parentLink.focused, true);
+assert.equal(parentToggle.focused, true, 'Back returns focus to the submenu arrow');
 
+assert.equal(utilitySubmenu.inert, true, 'Collapsed utility submenu cannot be tabbed into');
 utilityToggle.events.click();
 assert.equal(utilityItem.classList.contains('is-open'), true);
 assert.equal(utilityToggle.attributes['aria-expanded'], 'true');
+assert.equal(utilitySubmenu.style.properties['--balt-utility-height'], '178px');
+assert.equal(utilitySubmenu.inert, false);
 utilityToggle.events.click();
 assert.equal(utilityItem.classList.contains('is-open'), false);
+assert.equal(utilitySubmenu.inert, true);
 
 searchButton.events.click();
 assert.equal(drawer.open, false);

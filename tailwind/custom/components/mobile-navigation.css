@@ -141,8 +141,8 @@
 		text-decoration: none;
 	}
 
-	.balt-mobile-primary-menu .sub-menu,
-	.balt-mobile-utility-menu .sub-menu {
+	/* Source submenus for drill-down stay hidden on the root screen. */
+	.balt-mobile-primary-menu .sub-menu {
 		display: none;
 	}
 
@@ -213,11 +213,34 @@
 		border-color: #315173;
 	}
 
-	.balt-mobile-utility-menu > li.is-open > .sub-menu {
+	.balt-mobile-utility-menu > li > .sub-menu {
 		display: block;
 		width: 100%;
+		max-height: 0;
 		margin: 0;
-		padding: 0 0 9px 16px;
+		padding: 0 0 0 16px;
+		overflow: hidden;
+		visibility: hidden;
+		opacity: 0;
+		pointer-events: none;
+		transition:
+			max-height 260ms ease,
+			opacity 180ms ease,
+			padding-bottom 260ms ease,
+			visibility 0s linear 260ms;
+	}
+
+	.balt-mobile-utility-menu > li.is-open > .sub-menu {
+		max-height: var(--balt-utility-height, 0px);
+		padding-bottom: 9px;
+		visibility: visible;
+		opacity: 1;
+		pointer-events: auto;
+		transition:
+			max-height 260ms ease,
+			opacity 180ms ease,
+			padding-bottom 260ms ease,
+			visibility 0s;
 	}
 
 	.balt-mobile-utility-menu .sub-menu li > a {
@@ -236,35 +259,42 @@
 	}
 
 	.balt-mobile-drawer__detail-header {
-		display: flex;
+		display: grid;
+		grid-template-columns: max-content minmax(0, 1fr);
 		min-height: 64px;
 		align-items: center;
-		gap: 16px;
+		gap: 14px;
 		border-bottom: 1px solid #d7dade;
 	}
 
 	.balt-mobile-drawer__back {
 		display: inline-flex;
-		min-height: 44px;
+		height: 44px;
 		align-items: center;
 		gap: 4px;
 		padding: 0;
 		border: 0;
 		background: transparent;
 		color: #1d4974;
-		font-size: 13px;
-		font-weight: 600;
+		font-size: 14px;
+		font-weight: 500;
+		line-height: 24px;
 		cursor: pointer;
 	}
 
 	.balt-mobile-drawer__detail-title {
+		display: flex;
+		min-width: 0;
+		height: 44px;
+		align-items: center;
+		margin: 0;
 		color: #1f2e44;
 		font-size: 16px;
 		font-weight: 600;
+		line-height: 24px;
 	}
 
-	.balt-mobile-drawer__detail-menu li,
-	.balt-mobile-drawer__overview {
+	.balt-mobile-drawer__detail-menu li {
 		display: flex;
 		width: 100%;
 		min-height: 58px;
@@ -272,8 +302,7 @@
 		border-bottom: 1px solid #d7dade;
 	}
 
-	.balt-mobile-drawer__detail-menu a,
-	.balt-mobile-drawer__overview {
+	.balt-mobile-drawer__detail-menu a {
 		width: 100%;
 		padding: 12px 0;
 		color: #1f2e44;
@@ -282,10 +311,6 @@
 		text-decoration: none;
 	}
 
-	.balt-mobile-drawer__overview {
-		color: #315777;
-		font-weight: 600;
-	}
 
 	.balt-mobile-primary-menu a:hover,
 	.balt-mobile-utility-menu a:hover,
@@ -361,7 +386,8 @@
 		animation: none;
 	}
 	.balt-mobile-drawer__root,
-	.balt-mobile-drawer__detail {
+	.balt-mobile-drawer__detail,
+	.balt-mobile-utility-menu > li > .sub-menu {
 		transition: none;
 	}
 }

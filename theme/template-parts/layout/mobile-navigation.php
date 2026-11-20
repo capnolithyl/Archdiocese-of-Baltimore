@@ -83,7 +83,7 @@ if ( ! $donate_link && has_nav_menu( 'menu-1' ) ) {
 							<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m14.5 5-7 7 7 7"/></svg>
 							<?php esc_html_e( 'Back', 'baltimore' ); ?>
 						</button>
-						<span class="balt-mobile-drawer__detail-title" data-balt-mobile-title></span>
+						<h2 class="balt-mobile-drawer__detail-title" data-balt-mobile-title></h2>
 					</div>
 					<nav aria-label="<?php esc_attr_e( 'Section pages', 'baltimore' ); ?>" data-balt-mobile-detail-items></nav>
 				</div>
