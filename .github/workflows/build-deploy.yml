@@ -271,7 +271,7 @@ jobs:
 
           const expected = [
             ['eyebrow', 'text'], ['heading', 'text'], ['description', 'textarea'],
-            ['background_image', 'image'], ['stats', 'repeater'], ['buttons', 'repeater']
+            ['background_image', 'image'], ['item_background', 'select'], ['stats', 'repeater'], ['buttons', 'repeater']
           ];
           if (group.fields.length !== expected.length) throw new Error('Unexpected Stats ACF field count');
           for (const [name, type] of expected) {
@@ -280,6 +280,12 @@ jobs:
             }
           }
 
+          const itemBackground = group.fields.find(f => f.name === 'item_background');
+          if (itemBackground.default_value !== 'transparent' ||
+              itemBackground.choices.transparent !== 'Transparent (Figma)' ||
+              itemBackground.choices.tinted !== 'Tinted Overlay') {
+            throw new Error('Stats item background choices or default are incorrect');
+          }
           const stats = group.fields.find(f => f.name === 'stats');
           const buttons = group.fields.find(f => f.name === 'buttons');
           if (stats.min !== 1 || stats.max !== 6 || buttons.min !== 0 || buttons.max !== 2) {
@@ -293,7 +299,7 @@ jobs:
             throw new Error('Stats button or image field format incorrect');
           }
 
-          for (const token of ["get_field( 'stats' )", "get_field( 'background_image' )", "get_field( 'buttons' )", 'bg-linear-[158deg]', 'xl:grid-cols-6', 'btn btn-outline', 'btn btn-gold']) {
+          for (const token of ["get_field( 'stats' )", "get_field( 'background_image' )", "get_field( 'buttons' )", 'bg-linear-[158deg]', 'xl:grid-cols-6', "get_field( 'item_background' )", 'bg-transparent', 'bg-primary/25', 'btn btn-outline', 'btn btn-gold']) {
             if (!render.includes(token)) throw new Error('Stats markup missing: ' + token);
           }
           if (!integration.includes('dpi_blocks/acf_field_group/key=group_dpi_stats') ||

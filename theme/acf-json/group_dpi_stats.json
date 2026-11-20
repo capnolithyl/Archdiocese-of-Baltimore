@@ -70,6 +70,29 @@
       "library": "all"
     },
     {
+      "key": "field_dpi_stats_item_background",
+      "label": "Statistic Item Background",
+      "name": "item_background",
+      "type": "select",
+      "instructions": "Transparent matches Figma. Tinted Overlay keeps the existing shaded statistic cells.",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "choices": {
+        "transparent": "Transparent (Figma)",
+        "tinted": "Tinted Overlay"
+      },
+      "default_value": "transparent",
+      "return_format": "value",
+      "allow_null": 0,
+      "multiple": 0,
+      "ui": 1
+    },
+    {
       "key": "field_6a303e267a25c",
       "label": "Stats",
       "name": "stats",
