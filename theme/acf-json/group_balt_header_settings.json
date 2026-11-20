@@ -86,6 +86,32 @@
                     "parent_repeater": "field_balt_search_topics"
                 }
             ]
+        },
+        {
+            "key": "field_balt_header_mobile_tab",
+            "label": "Mobile Navigation",
+            "name": "",
+            "type": "tab",
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_balt_mobile_help_link",
+            "label": "Get Help Button",
+            "name": "balt_mobile_help_link",
+            "type": "link",
+            "instructions": "Where the red Get Help button in the mobile menu should go. When blank it opens the site search for help.",
+            "required": 0,
+            "return_format": "array"
+        },
+        {
+            "key": "field_balt_mobile_donate_link",
+            "label": "Donate Button",
+            "name": "balt_mobile_donate_link",
+            "type": "link",
+            "instructions": "Where the outlined Donate button should go. When blank, uses the primary menu's Give link when available; otherwise opens site search for donate.",
+            "required": 0,
+            "return_format": "array"
         }
     ],
     "location": [
@@ -104,7 +130,7 @@
     "instruction_placement": "label",
     "hide_on_screen": "",
     "active": true,
-    "description": "Global header branding and image fallbacks.",
+    "description": "Sitewide header branding, popular search topics and mobile drawer action buttons.",
     "show_in_rest": 0,
     "modified": 1795219200
 }

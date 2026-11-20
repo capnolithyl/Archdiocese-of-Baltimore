@@ -66,3 +66,24 @@ function balt_enqueue_header_script(): void {
 }
 add_action( 'wp_enqueue_scripts', 'balt_enqueue_header_script' );
 
+/** Separate mobile drill-down drawer, sharing the same WordPress menu locations. */
+function balt_enqueue_mobile_navigation_script(): void {
+	wp_enqueue_script(
+		'balt-mobile-navigation',
+		get_template_directory_uri() . '/js/mobile-navigation.js',
+		array(),
+		BALT_VERSION,
+		true
+	);
+}
+add_action( 'wp_enqueue_scripts', 'balt_enqueue_mobile_navigation_script' );
+
+/** Avoid duplicate DOM IDs when the same menu renders on desktop and mobile. */
+function balt_mobile_navigation_item_id( $id, $item, $args, $depth ) {
+	if ( in_array( $args->menu_id ?? '', array( 'balt-mobile-primary-menu', 'balt-mobile-utility-menu' ), true ) ) {
+		return sanitize_html_class( $args->menu_id . '-item-' . (int) $item->ID );
+	}
+	return $id;
+}
+add_filter( 'nav_menu_item_id', 'balt_mobile_navigation_item_id', 10, 4 );
+

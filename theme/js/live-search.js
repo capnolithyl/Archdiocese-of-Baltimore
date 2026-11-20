@@ -170,7 +170,10 @@
 		showPopular();
 		document.documentElement.classList.remove('balt-search-open');
 		trigger.setAttribute('aria-expanded', 'false');
-		trigger.focus();
+		const mobileReturn = window.matchMedia('(max-width: 1279px)').matches
+			? document.querySelector('#masthead .site-header__mobile-toggle')
+			: null;
+		(mobileReturn || trigger).focus();
 	});
 
 	input.addEventListener('input', update);

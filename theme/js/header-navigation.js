@@ -2,8 +2,6 @@
 	const header = document.getElementById('masthead');
 	if (!header) return;
 
-	const menuButton = header.querySelector('.site-header__mobile-toggle');
-	const menu = header.querySelector('.site-header__nav');
 	const searchButton = header.querySelector('.site-header__search-toggle');
 	const desktop = window.matchMedia('(min-width: 1280px)');
 	const submenuItems = [...header.querySelectorAll('.site-header__menu > li.menu-item-has-children, .site-header__utility-menu > li.menu-item-has-children')];
@@ -14,10 +12,7 @@
 		pending = false;
 	};
 
-	const updateOpenState = () => {
-		const mobileOpen = menu && !menu.classList.contains('hidden') && !desktop.matches;
-		header.dataset.menuOpen = String(Boolean(mobileOpen));
-	};
+
 
 	const directChild = (item, selector) => item.querySelector(':scope > ' + selector);
 	const submenuToggle = (item) => directChild(item, '.site-header__submenu-toggle') || directChild(item, '.site-header__utility-toggle');
@@ -75,21 +70,8 @@
 	};
 
 	const closeMenus = () => {
-		menu?.classList.add('hidden');
-		menuButton?.setAttribute('aria-expanded', 'false');
 		submenuItems.forEach((item) => closeBranch(item));
-		updateOpenState();
 	};
-
-	menuButton?.addEventListener('click', () => {
-		const opening = menu?.classList.contains('hidden');
-		closeMenus();
-		if (opening && menu) {
-			menu.classList.remove('hidden');
-			menuButton.setAttribute('aria-expanded', 'true');
-			updateOpenState();
-		}
-	});
 
 	// The native search dialog owns its own open, close and focus lifecycle.
 	searchButton?.addEventListener('click', closeMenus);
@@ -108,10 +90,6 @@
 			if (desktop.matches) {
 				if (opening) openDesktop(item);
 				else closeBranch(item);
-			} else {
-				// Retain the existing mobile behavior until its design is ready.
-				item.classList.toggle('is-open', opening);
-				toggle.setAttribute('aria-expanded', String(opening));
 			}
 		});
 
@@ -145,11 +123,7 @@
 			submenuToggle(deepest)?.focus();
 			return;
 		}
-		if (header.dataset.menuOpen === 'true' || opened.length) {
-			event.preventDefault();
-			closeMenus();
-			menuButton?.focus();
-		}
+
 	});
 
 	desktop.addEventListener('change', closeMenus);

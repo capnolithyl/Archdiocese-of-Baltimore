@@ -47,7 +47,7 @@ $asset_base = get_template_directory_uri() . '/assets';
 		</a>
 
 		<?php if ( has_nav_menu( 'menu-1' ) ) : ?>
-			<nav id="site-navigation" class="site-header__nav absolute top-full right-0 left-0 hidden max-h-[calc(100dvh-90px)] overflow-y-auto bg-primary px-4 pb-5 shadow-xl xl:static xl:ml-auto xl:block xl:max-h-none xl:min-w-0 xl:overflow-visible xl:bg-transparent xl:p-0 xl:shadow-none" aria-label="<?php esc_attr_e( 'Main Navigation', 'baltimore' ); ?>">
+			<nav id="site-navigation" class="site-header__nav hidden xl:static xl:ml-auto xl:block xl:max-h-none xl:min-w-0 xl:overflow-visible xl:bg-transparent xl:p-0 xl:shadow-none" aria-label="<?php esc_attr_e( 'Main Navigation', 'baltimore' ); ?>">
 				<?php
 				wp_nav_menu(
 					array(
@@ -64,11 +64,11 @@ $asset_base = get_template_directory_uri() . '/assets';
 		<?php endif; ?>
 
 		<div class="ml-auto flex shrink-0 items-center gap-1 xl:ml-0">
-			<button type="button" class="site-header__search-toggle flex size-11 items-center justify-center rounded-sm text-white hover:bg-white/10" aria-label="<?php esc_attr_e( 'Search', 'baltimore' ); ?>" aria-expanded="false" aria-haspopup="dialog" aria-controls="balt-live-search-dialog">
+			<button type="button" class="site-header__search-toggle hidden size-11 items-center justify-center xl:flex rounded-sm text-white hover:bg-white/10" aria-label="<?php esc_attr_e( 'Search', 'baltimore' ); ?>" aria-expanded="false" aria-haspopup="dialog" aria-controls="balt-live-search-dialog">
 				<img src="<?php echo esc_url( $asset_base . '/header/search.svg' ); ?>" width="18" height="18" alt="" aria-hidden="true">
 			</button>
 			<?php if ( has_nav_menu( 'menu-1' ) ) : ?>
-				<button type="button" class="site-header__mobile-toggle flex size-11 items-center justify-center rounded-sm text-white hover:bg-white/10 xl:hidden" aria-controls="site-navigation" aria-expanded="false" aria-label="<?php esc_attr_e( 'Open navigation menu', 'baltimore' ); ?>">
+				<button type="button" class="site-header__mobile-toggle flex size-11 items-center justify-center rounded-sm text-white hover:bg-white/10 xl:hidden" aria-controls="balt-mobile-navigation" aria-expanded="false" aria-haspopup="dialog" aria-label="<?php esc_attr_e( 'Open navigation menu', 'baltimore' ); ?>">
 					<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
 				</button>
 			<?php endif; ?>

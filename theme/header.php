@@ -24,6 +24,7 @@
 <?php wp_body_open(); ?>
 
 <?php get_template_part( 'template-parts/layout/live-search' ); ?>
+<?php get_template_part( 'template-parts/layout/mobile-navigation' ); ?>
 
 <div id="page">
 	<a href="#content" class="sr-only"><?php esc_html_e( 'Skip to content', 'baltimore' ); ?></a>
