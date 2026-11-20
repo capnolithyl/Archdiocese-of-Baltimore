@@ -308,3 +308,49 @@ jobs:
             }
           }
           NODE
+
+      - name: Verify RSS News ACF, Tailwind, and feed merging
+        run: |
+          php tests/rss-news-smoke.php
+          node --input-type=module <<'NODE'
+          import { readFileSync } from 'node:fs';
+
+          const block = JSON.parse(readFileSync('theme/blocks/rss-news/block.json', 'utf8'));
+          const acf = JSON.parse(readFileSync('theme/acf-json/group_balt_rss_news.json', 'utf8'));
+          const php = readFileSync('theme/blocks/rss-news/render.php', 'utf8');
+          const helper = readFileSync('theme/inc/rss-news.php', 'utf8');
+          const source = readFileSync('tailwind.css', 'utf8');
+
+          if (block.name !== 'balt/rss-news' || block.acf.renderCallback !== 'balt_render_rss_news_block') {
+            throw new Error('RSS News block registration is incorrect');
+          }
+          if (acf.location[0][0].value !== block.name) {
+            throw new Error('RSS News ACF field group is not assigned to the block');
+          }
+          const fields = new Map(acf.fields.map(field => [field.name, field]));
+          for (const [name, type] of [['eyebrow', 'text'], ['heading', 'text'], ['subheading', 'textarea'], ['feeds', 'repeater'], ['view_all_link', 'link']]) {
+            if (fields.get(name)?.type !== type) throw new Error('RSS News ACF field missing: ' + name);
+          }
+          const feeds = fields.get('feeds');
+          if (feeds.min !== 1 || feeds.max !== 6 || feeds.sub_fields.length !== 1 || feeds.sub_fields[0].type !== 'url') {
+            throw new Error('RSS News should allow 1–6 URL sources');
+          }
+          if (!feeds.sub_fields[0].default_value.includes('catholicreview.org/category/local-news/feed/')) {
+            throw new Error('Catholic Review default is missing');
+          }
+          for (const token of ['get_field( \'feeds\' )', 'balt_rss_news_articles(', 'lg:grid-cols-3', 'h-[200px]', 'btn btn-primary', 'target="_blank"', 'rel="noopener noreferrer"']) {
+            if (!php.includes(token)) throw new Error('RSS News card or external link missing: ' + token);
+          }
+          for (const token of ['fetch_feed(', 'wp_feed_cache_transient_lifetime', 'wp_http_validate_url(', 'WP_HTML_Tag_Processor', 'usort(', "array_slice( $articles, 0, 6 )"]) {
+            if (!helper.includes(token)) throw new Error('RSS helper missing: ' + token);
+          }
+          if (!source.includes('@source "./theme/blocks/rss-news";')) {
+            throw new Error('RSS News block is not scanned by Tailwind');
+          }
+          for (const path of ['theme/style.css', 'theme/style-editor.css']) {
+            const css = readFileSync(path, 'utf8');
+            if (!css.includes('200px') || !css.includes('.btn-primary')) {
+              throw new Error('Compiled RSS News utilities missing in ' + path);
+            }
+          }
+          NODE

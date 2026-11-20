@@ -1,0 +1,35 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "balt/rss-news",
+  "version": "1.0.0",
+  "title": "RSS News",
+  "category": "baltimore",
+  "icon": "rss",
+  "description": "Six recent articles from one or more external RSS feeds, with an optional source link.",
+  "keywords": [
+    "news",
+    "rss",
+    "feed",
+    "articles"
+  ],
+  "textdomain": "baltimore",
+  "acf": {
+    "mode": "preview",
+    "renderCallback": "balt_render_rss_news_block",
+    "blockVersion": 3
+  },
+  "supports": {
+    "anchor": true,
+    "align": [
+      "full"
+    ],
+    "html": false
+  },
+  "attributes": {
+    "align": {
+      "type": "string",
+      "default": "full"
+    }
+  }
+}

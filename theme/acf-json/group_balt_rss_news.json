@@ -1,0 +1,125 @@
+{
+  "key": "group_balt_rss_news",
+  "title": "RSS News",
+  "fields": [
+    {
+      "key": "field_balt_rss_news_eyebrow",
+      "label": "Eyebrow",
+      "name": "eyebrow",
+      "type": "text",
+      "instructions": "",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "default_value": "Stay Informed"
+    },
+    {
+      "key": "field_balt_rss_news_heading",
+      "label": "Heading",
+      "name": "heading",
+      "type": "text",
+      "instructions": "",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "default_value": "Archdiocese News"
+    },
+    {
+      "key": "field_balt_rss_news_subheading",
+      "label": "Subheading",
+      "name": "subheading",
+      "type": "textarea",
+      "instructions": "",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "default_value": "Stay informed about upcoming events, programs, and the latest news from the Archdiocese.",
+      "rows": 3,
+      "new_lines": ""
+    },
+    {
+      "key": "field_balt_rss_news_feeds",
+      "label": "RSS Feeds",
+      "name": "feeds",
+      "type": "repeater",
+      "instructions": "Add 1–6 RSS feeds. The newest six unique articles across all feeds will appear, sorted by publication date. If no feeds have been saved, Catholic Review Local News is used.",
+      "required": 1,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "layout": "row",
+      "pagination": 0,
+      "min": 1,
+      "max": 6,
+      "collapsed": "field_balt_rss_news_feed_url",
+      "button_label": "Add RSS Feed",
+      "rows_per_page": 6,
+      "sub_fields": [
+        {
+          "key": "field_balt_rss_news_feed_url",
+          "label": "Feed URL",
+          "name": "url",
+          "type": "url",
+          "instructions": "Full RSS or Atom URL, such as a WordPress category /feed/ endpoint.",
+          "required": 1,
+          "conditional_logic": 0,
+          "wrapper": {
+            "width": "",
+            "class": "",
+            "id": ""
+          },
+          "default_value": "https://catholicreview.org/category/local-news/feed/",
+          "placeholder": "https://example.com/feed/"
+        }
+      ]
+    },
+    {
+      "key": "field_balt_rss_news_view_all_link",
+      "label": "View All Link (optional)",
+      "name": "view_all_link",
+      "type": "link",
+      "instructions": "Optional button URL and label. Opens in a new tab. If empty, links to the first feed's website/category page, not the XML feed.",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "return_format": "array"
+    }
+  ],
+  "location": [
+    [
+      {
+        "param": "block",
+        "operator": "==",
+        "value": "balt/rss-news"
+      }
+    ]
+  ],
+  "menu_order": 0,
+  "position": "normal",
+  "style": "default",
+  "label_placement": "top",
+  "instruction_placement": "label",
+  "hide_on_screen": "",
+  "active": true,
+  "description": "Figma Archdiocese News section. Fetches up to six newest items from RSS/Atom feeds.",
+  "show_in_rest": 0
+}

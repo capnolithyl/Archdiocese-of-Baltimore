@@ -7,6 +7,7 @@
 @source "./theme/blocks/feature-grid";
 @source "./theme/blocks/image-cta-grid";
 @source "./theme/blocks/media-center";
+@source "./theme/blocks/rss-news";
 @source "./theme/blocks/image-text-banner";
 
 @import "./tailwind/tailwind-theme.css";

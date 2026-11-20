@@ -15,7 +15,7 @@ Custom PHP WordPress theme based on **_tw**, using Tailwind CSS 4, `theme.json` 
 | Search | Standard search form and search results page implemented; **live typeahead search is not implemented** |
 | Comments | Disabled by `theme/inc/comments.php`: discussion support, admin links/screens, API routes and feeds |
 | Homepage | **Approved homepage composition is not built yet** |
-| Custom Gutenberg/ACF blocks | **Theme-owned:** `dpi/hero`, `dpi/five-pillars`, `dpi/feature-banner`, `dpi/community-slider`, `dpi/stats`, plus `balt/feature-grid` (Navigate), `balt/image-cta-grid` (Image CTA Grid), `balt/media-center` (Media Center), and `balt/image-text-banner` (Image & Text Banner). Other `dpi/*` blocks remain in the plugin. |
+| Custom Gutenberg/ACF blocks | **Theme-owned:** `dpi/hero`, `dpi/five-pillars`, `dpi/feature-banner`, `dpi/community-slider`, `dpi/stats`, plus `balt/feature-grid` (Navigate), `balt/image-cta-grid` (Image CTA Grid), `balt/media-center` (Media Center), `balt/image-text-banner` (Image & Text Banner), and `balt/rss-news` (RSS News). Other `dpi/*` blocks remain in the plugin. |
 | Media Center | New tabbed ACF block and seven media CPTs with separate hierarchical category taxonomies; visual QA and content entry pending |
 | GIS | External existing plugin; integration and configuration later |
 | Staff / ministries | No theme CPT implementation; planned as reusable plugin modules |
@@ -62,7 +62,17 @@ The existing \`dpi/stats\` block is now styled for Figma node \`320:662\`. Its o
 
 The full-width section uses a red top rule, navy overlay, gold-free neutral heading typography and a bordered statistics grid that rearranges according to item count and screen width. The background photo is editor-provided; the source Figma picture is not hardcoded. The older Row/Cards display toggle was removed to keep this design consistent. When DPI Blocks is active, the theme also overrides the plugin's Stats field group, preserving the block name and existing stat values.
 
-**Archdiocese News/RSS is not part of this change.** The source feed, fields, publication rules and presentation still need clarification.
+### RSS News
+
+The reusable \`balt/rss-news\` block implements Figma node \`320:479\`. Its ACF fields are **eyebrow**, **heading**, **subheading**, a **1–6 RSS Feed URL repeater**, and an optional **View All link** (URL and label). A new feed row defaults to the verified Catholic Review Local News source: \`https://catholicreview.org/category/local-news/feed/\`. The renderer uses that source when the repeater has no saved URLs.
+
+WordPress \`fetch_feed()\`/SimplePie retrieves up to six items from each configured source and caches the responses for **30 minutes**. Results are combined, deduplicated by article URL, sorted newest first, and capped at **six articles total**. One broken feed does not block the other feeds. Cards display the RSS publication date, title, excerpt and featured image from an image enclosure or feed HTML when available. Missing images use a neutral placeholder. The image URLs, article text and external destinations are escaped. Articles open on the original publisher in a new tab; no importing, synchronization plugin, JavaScript or additional stylesheet is required.
+
+The centered **View All** button also opens a new tab. With an explicit ACF link, it uses the supplied URL/label. Otherwise it uses the first working feed's channel homepage (a browsable category/site archive), not its raw RSS XML URL. For multiple sources, configure a custom View All link if a combined archive is needed. The 3×2 desktop cards become two columns on tablets and a single column on mobile.
+
+For regression checks, \`tests/rss-news-smoke.php\` uses stub feeds to validate sorting, deduplication, missing sources, image extraction and the caching interval. It does not substitute for visual QA or a live WordPress feed test.
+
+
 
 ### Image & Text Banner
 
