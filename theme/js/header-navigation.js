@@ -6,6 +6,7 @@
 	const menu = header.querySelector('.site-header__nav');
 	const searchButton = header.querySelector('.site-header__search-toggle');
 	const desktop = window.matchMedia('(min-width: 1280px)');
+	const submenuItems = [...header.querySelectorAll('.site-header__menu li.menu-item-has-children')];
 	let pending = false;
 
 	const updateScroll = () => {
@@ -18,13 +19,64 @@
 		header.dataset.menuOpen = String(Boolean(mobileOpen));
 	};
 
+	const directChild = (item, selector) => item.querySelector(':scope > ' + selector);
+
+	const closeBranch = (item) => {
+		item.classList.remove('is-open');
+		directChild(item, '.site-header__submenu-toggle')?.setAttribute('aria-expanded', 'false');
+		item.querySelectorAll('li.is-open').forEach((child) => {
+			child.classList.remove('is-open');
+			directChild(child, '.site-header__submenu-toggle')?.setAttribute('aria-expanded', 'false');
+		});
+	};
+
+	/**
+	 * Open the submenu before measuring it. Only desktop flyouts use this:
+	 * the narrow/mobile navigation stays under its existing behavior.
+	 */
+	const placeSubmenu = (item) => {
+		if (!desktop.matches) return;
+		const submenu = directChild(item, '.sub-menu');
+		if (!submenu) return;
+
+		submenu.dataset.flyoutDirection = 'right';
+		submenu.style.removeProperty('--balt-submenu-shift');
+
+		const viewport = document.documentElement?.clientWidth || window.innerWidth;
+		const edge = 8;
+		const firstRect = submenu.getBoundingClientRect();
+		if (firstRect.right > viewport - edge) {
+			// Nested lists fly left. First-level dropdowns align to their
+			// parent's right edge instead of going outside the viewport.
+			submenu.dataset.flyoutDirection = 'left';
+		}
+
+		// Protect narrow windows and unusually wide translated labels.
+		const rect = submenu.getBoundingClientRect();
+		const shift = rect.left < edge
+			? edge - rect.left
+			: rect.right > viewport - edge
+				? viewport - edge - rect.right
+				: 0;
+		if (shift) {
+			submenu.style.setProperty('--balt-submenu-shift', Math.round(shift) + 'px');
+		}
+	};
+
+	const openDesktop = (item) => {
+		if (!desktop.matches) return;
+		for (const sibling of item.parentElement?.children || []) {
+			if (sibling !== item && sibling.classList?.contains('is-open')) closeBranch(sibling);
+		}
+		item.classList.add('is-open');
+		directChild(item, '.site-header__submenu-toggle')?.setAttribute('aria-expanded', 'true');
+		placeSubmenu(item);
+	};
+
 	const closeMenus = () => {
 		menu?.classList.add('hidden');
 		menuButton?.setAttribute('aria-expanded', 'false');
-		header.querySelectorAll('.site-header__menu li.is-open').forEach((item) => {
-			item.classList.remove('is-open');
-			item.querySelector(':scope > .site-header__submenu-toggle')?.setAttribute('aria-expanded', 'false');
-		});
+		submenuItems.forEach((item) => closeBranch(item));
 		updateOpenState();
 	};
 
@@ -38,20 +90,42 @@
 		}
 	});
 
-	// The search dialog owns its own open, close and focus behavior.
+	// The native search dialog owns its own open, close and focus lifecycle.
 	searchButton?.addEventListener('click', closeMenus);
 
-	header.querySelectorAll('.site-header__menu li.menu-item-has-children').forEach((item) => {
-		const toggle = item.querySelector(':scope > .site-header__submenu-toggle');
-		const submenu = item.querySelector(':scope > .sub-menu');
+	submenuItems.forEach((item, index) => {
+		const toggle = directChild(item, '.site-header__submenu-toggle');
+		const submenu = directChild(item, '.sub-menu');
 		if (!toggle || !submenu) return;
-		const id = 'balt-submenu-' + (item.id || Math.random().toString(36).slice(2));
+
+		const id = 'balt-submenu-' + (item.id || String(index + 1));
 		submenu.id = id;
 		toggle.setAttribute('aria-controls', id);
+
 		toggle.addEventListener('click', () => {
 			const opening = !item.classList.contains('is-open');
-			item.classList.toggle('is-open', opening);
-			toggle.setAttribute('aria-expanded', String(opening));
+			if (desktop.matches) {
+				if (opening) openDesktop(item);
+				else closeBranch(item);
+			} else {
+				// Retain the existing mobile behavior until its design is ready.
+				item.classList.toggle('is-open', opening);
+				toggle.setAttribute('aria-expanded', String(opening));
+			}
+		});
+
+		item.addEventListener('mouseenter', () => openDesktop(item));
+		item.addEventListener('mouseleave', () => {
+			if (desktop.matches && !item.contains(document.activeElement)) closeBranch(item);
+		});
+
+		item.addEventListener('focusin', (event) => {
+			if (desktop.matches && event.target !== toggle) openDesktop(item);
+		});
+		item.addEventListener('focusout', (event) => {
+			if (!desktop.matches) return;
+			const focusMovedOutside = !item.contains(event.relatedTarget);
+			if (focusMovedOutside && !item.matches(':hover')) closeBranch(item);
 		});
 	});
 
@@ -61,14 +135,27 @@
 
 	document.addEventListener('keydown', (event) => {
 		if (event.key !== 'Escape') return;
-		const open = header.dataset.menuOpen === 'true' || header.querySelector('.site-header__menu li.is-open');
-		if (open) {
+
+		const opened = submenuItems.filter((item) => item.classList.contains('is-open'));
+		if (desktop.matches && opened.length) {
+			event.preventDefault();
+			const deepest = opened[opened.length - 1];
+			closeBranch(deepest);
+			directChild(deepest, '.site-header__submenu-toggle')?.focus();
+			return;
+		}
+		if (header.dataset.menuOpen === 'true' || opened.length) {
+			event.preventDefault();
 			closeMenus();
 			menuButton?.focus();
 		}
 	});
 
 	desktop.addEventListener('change', closeMenus);
+	window.addEventListener('resize', () => {
+		if (!desktop.matches) return;
+		submenuItems.filter((item) => item.classList.contains('is-open')).forEach(placeSubmenu);
+	});
 	window.addEventListener('scroll', () => {
 		if (pending) return;
 		pending = true;
