@@ -100,7 +100,7 @@ $heading_id = $instance . '-heading';
 				data-balt-media-panel
 				aria-labelledby="<?php echo esc_attr( $instance . '-tab-' . $index ); ?>"
 				tabindex="0"
-				class="mt-10 [&[hidden]]:hidden!"
+				class="mt-10<?php echo $selected ? '' : ' hidden'; ?>"
 				<?php if ( ! $selected ) : ?>hidden<?php endif; ?>
 			>
 				<?php if ( $posts ) : ?>

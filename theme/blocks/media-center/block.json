@@ -33,5 +33,6 @@
       "type": "string",
       "default": "full"
     }
-  }
+  },
+  "editorScript": "file:./view.js"
 }

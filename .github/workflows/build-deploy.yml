@@ -160,6 +160,7 @@ jobs:
       - name: Verify Media Center post types and tabbed block
         run: |
           node --check theme/blocks/media-center/view.js
+          node tests/media-center-preview.mjs
           node --input-type=module <<'NODE'
           import { readFileSync } from 'node:fs';
 
@@ -186,7 +187,7 @@ jobs:
           if (render.includes("'-panel-' . $type") || render.includes("'-tab-' . $type")) {
             throw new Error('Media Center tab DOM IDs must be based on row order');
           }
-          if (block.name !== 'balt/media-center' || block.viewScript !== 'file:./view.js') {
+          if (block.name !== 'balt/media-center' || block.viewScript !== 'file:./view.js' || block.editorScript !== 'file:./view.js') {
             throw new Error('Media Center block registration is incorrect');
           }
           if (group.fields.map(f => f.name).join(',') !== 'eyebrow,heading,tabs') {
@@ -203,7 +204,10 @@ jobs:
           for (const token of ["balt_media_types()", "get_posts(", "'numberposts'     => 3", 'balt_media_center_resolve_source(', 'get_the_post_thumbnail(', 'data-balt-media-panel', 'data-balt-media-tab']) {
             if (!render.includes(token)) throw new Error('Media Center renderer missing: ' + token);
           }
-          for (const token of ['aria-selected', 'ArrowRight', 'ArrowLeft', 'Home', 'End', 'panels[i].hidden']) {
+          if (!render.includes("class=\"mt-10<?php echo $selected ? '' : ' hidden'; ?>\"")) {
+            throw new Error('Media Center inactive editor panels must be initially hidden');
+          }
+          for (const token of ['aria-selected', 'ArrowRight', 'ArrowLeft', 'Home', 'End', 'panels[i].hidden', 'render_block_preview', 'panels[i].classList.toggle']) {
             if (!script.includes(token)) throw new Error('Media Center tab behavior missing: ' + token);
           }
           for (const css of ['theme/style.css', 'theme/style-editor.css']) {
