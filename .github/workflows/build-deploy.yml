@@ -41,6 +41,11 @@ jobs:
           node --input-type=module <<'NODE'
           import { readFileSync } from 'node:fs';
 
+          const hero = readFileSync('theme/dpi-blocks/blocks/hero/render.php', 'utf8');
+          if (!hero.includes('mt-0!')) {
+            throw new Error('Hero should start flush against the top of the page under transparent nav');
+          }
+
           for (const path of ['theme/style.css', 'theme/style-editor.css']) {
             const css = readFileSync(path, 'utf8');
             for (const token of ['.btn-outline', '.btn-gold', '865px', 'object-fit:cover']) {
