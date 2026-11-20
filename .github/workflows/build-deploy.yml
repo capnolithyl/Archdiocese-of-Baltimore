@@ -432,6 +432,9 @@ jobs:
           php -l theme/inc/live-search.php
           php -l theme/template-parts/layout/live-search.php
 
+      - name: Verify primary menu maximum depth and preserve existing links
+        run: php tests/primary-menu-depth-smoke.php
+
       - name: Verify Figma navigation variants and interactions
         run: |
           php tests/header-smoke.php

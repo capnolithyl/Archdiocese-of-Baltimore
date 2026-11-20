@@ -81,9 +81,6 @@
 	@apply m-0 hidden w-full list-none bg-primary-light p-2 xl:absolute xl:top-full xl:left-0 xl:z-20 xl:w-[240px] xl:rounded-b-md xl:shadow-xl;
 }
 
-.site-header__menu .sub-menu .sub-menu {
-	@apply xl:top-0 xl:left-full;
-}
 
 .site-header__menu .sub-menu a {
 	@apply block rounded-sm px-4 py-3 text-sm leading-snug text-white no-underline hover:bg-white/10;
@@ -95,8 +92,7 @@
 
 /**
  * Desktop navigation follows the approved single-column dropdown treatment.
- * The nested menu remains a separate compact flyout rather than forming a
- * continuous two-column mega-menu with its parent.
+ * Only one submenu level exists, so there are no nested flyouts.
  * Mobile styles intentionally remain unchanged.
  */
 @media (min-width: 80rem) {
@@ -188,55 +184,6 @@
 	.site-header__menu .sub-menu li.current-menu-item > a {
 		background: transparent;
 		color: #e43d36;
-	}
-
-	.site-header__menu .sub-menu .site-header__submenu-toggle {
-		flex: 0 0 28px;
-		align-self: center;
-		width: 28px;
-		height: 36px;
-		margin: 0 10px 0 -16px;
-		color: #243954;
-		background: transparent;
-	}
-
-	.site-header__menu .sub-menu .site-header__submenu-toggle img {
-		filter: brightness(0) saturate(100%) opacity(0.65);
-		transform: rotate(-90deg);
-	}
-
-	/*
-	 * A small visual gap keeps nested flyouts separate from their parents.
-	 * Invisible hit areas bridge the gap so hovering doesn't close the menu.
-	 */
-	.site-header__menu .sub-menu .sub-menu {
-		top: 0;
-		left: 100%;
-		right: auto;
-		margin-left: 10px;
-		margin-right: 0;
-		transform: translateX(var(--balt-submenu-shift, 0px));
-	}
-
-	.site-header__menu .sub-menu .sub-menu::before {
-		content: '';
-		position: absolute;
-		top: 0;
-		left: -10px;
-		width: 10px;
-		height: 100%;
-	}
-
-	.site-header__menu .sub-menu .sub-menu[data-flyout-direction="left"] {
-		left: auto;
-		right: 100%;
-		margin-left: 0;
-		margin-right: 10px;
-	}
-
-	.site-header__menu .sub-menu .sub-menu[data-flyout-direction="left"]::before {
-		left: auto;
-		right: -10px;
 	}
 
 	.site-header__menu li.menu-item-has-children.is-open > .sub-menu {

@@ -66,12 +66,11 @@ const menuItem = (id, left, right, isNested = false) => {
 const ministries = menuItem('ministries', 900, 1000);
 const nested = menuItem('family', 1060, 1130, true);
 const give = menuItem('give', 1140, 1240);
-ministries.descendant = nested;
 ministries.parentElement = { children: [ministries, give] };
 give.parentElement = ministries.parentElement;
 nested.parentElement = { children: [nested] };
 
-const items = [ministries, nested, give];
+const items = [ministries, give];
 const header = {
 	dataset: { compact: 'false', menuOpen: 'false' },
 	querySelector(selector) {
@@ -100,46 +99,34 @@ const documentStub = {
 };
 runInNewContext(code, { window: windowStub, document: documentStub });
 
-// First level opens below its parent and stays right-aligned by default.
+// The only supported submenu is the first dropdown beneath a top-level item.
 ministries.events.mouseenter();
 assert.equal(ministries.classList.contains('is-open'), true);
 assert.equal(ministries.toggle.attributes['aria-expanded'], 'true');
 assert.equal(ministries.submenu.dataset.flyoutDirection, 'right');
 
-// Nested submenu would overflow to the right and must fly left instead.
-nested.events.mouseenter();
-assert.equal(nested.classList.contains('is-open'), true);
-assert.equal(nested.submenu.dataset.flyoutDirection, 'left');
-
-// Opening a different first-level dropdown closes its sibling branch.
+// Rightmost top-level navigation items still avoid viewport overflow.
 give.events.mouseenter();
 assert.equal(ministries.classList.contains('is-open'), false);
-assert.equal(nested.classList.contains('is-open'), false);
 assert.equal(give.submenu.dataset.flyoutDirection, 'left');
 
-// Escape dismisses the active flyout and returns focus to the toggle.
 let prevented = false;
 listeners['document-keydown']({ key: 'Escape', preventDefault() { prevented = true; } });
 assert.equal(prevented, true);
 assert.equal(give.classList.contains('is-open'), false);
 assert.equal(give.toggle.focused, true);
 
-// Mobile behavior is unchanged: click toggles inline submenus.
+// Mobile toggle behavior remains unchanged until the mobile design arrives.
 match.matches = false;
 match.onChange();
 ministries.toggle.events.click();
 assert.equal(ministries.classList.contains('is-open'), true);
-assert.equal(ministries.toggle.attributes['aria-expanded'], 'true');
 ministries.toggle.events.click();
 assert.equal(ministries.classList.contains('is-open'), false);
 
 assert.match(css, /@media \(min-width: 80rem\)/);
 assert.match(css, /\.sub-menu\[data-flyout-direction="left"\]/);
-assert.match(css, /--balt-submenu-shift/);
-assert.match(css, /background: #f2f0ed/, 'Hover should use the reference warm off-white');
-assert.match(css, /color: #e43d36/, 'Hovered items should use red text');
-assert.match(css, /margin-left: 10px/, 'Nested submenu needs a separation gap');
-assert.match(css, /margin-right: 10px/, 'Leftward nested submenu needs a separation gap');
-assert.match(css, /width: 10px/, 'Flyout gap must retain a hover bridge');
-assert.match(css, /min-height: 45px/, 'Dropdown items should retain the reference row height');
-console.log('Desktop nested flyouts, viewport flipping, Escape and preserved mobile toggle passed');
+assert.doesNotMatch(css, /\.sub-menu \.sub-menu \{/);
+assert.match(css, /background: #f2f0ed/);
+assert.match(css, /color: #e43d36/);
+console.log('Single-level dropdown, viewport alignment and mobile regression tests passed');

@@ -6,7 +6,7 @@
 	const menu = header.querySelector('.site-header__nav');
 	const searchButton = header.querySelector('.site-header__search-toggle');
 	const desktop = window.matchMedia('(min-width: 1280px)');
-	const submenuItems = [...header.querySelectorAll('.site-header__menu li.menu-item-has-children')];
+	const submenuItems = [...header.querySelectorAll('.site-header__menu > li.menu-item-has-children')];
 	let pending = false;
 
 	const updateScroll = () => {
@@ -31,8 +31,8 @@
 	};
 
 	/**
-	 * Open the submenu before measuring it. Only desktop flyouts use this:
-	 * the narrow/mobile navigation stays under its existing behavior.
+	 * Open the first-level dropdown before measuring its viewport bounds.
+	 * The narrow/mobile navigation stays under its existing behavior.
 	 */
 	const placeSubmenu = (item) => {
 		if (!desktop.matches) return;
@@ -46,8 +46,7 @@
 		const edge = 8;
 		const firstRect = submenu.getBoundingClientRect();
 		if (firstRect.right > viewport - edge) {
-			// Nested lists fly left. First-level dropdowns align to their
-			// parent's right edge instead of going outside the viewport.
+			// Align this single dropdown to its parent's right edge.
 			submenu.dataset.flyoutDirection = 'left';
 		}
 

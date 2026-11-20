@@ -42,7 +42,7 @@ function balt_header_variant(): string {
  * This applies only to the primary menu, not utility/footer navigation.
  */
 function balt_header_submenu_button( $item_output, $item, $depth, $args ) {
-	if ( 'menu-1' !== ( $args->theme_location ?? '' ) || ! in_array( 'menu-item-has-children', (array) ( $item->classes ?? array() ), true ) ) {
+	if ( 0 !== (int) $depth || 'menu-1' !== ( $args->theme_location ?? '' ) || ! in_array( 'menu-item-has-children', (array) ( $item->classes ?? array() ), true ) ) {
 		return $item_output;
 	}
 
@@ -64,3 +64,4 @@ function balt_enqueue_header_script(): void {
 	);
 }
 add_action( 'wp_enqueue_scripts', 'balt_enqueue_header_script' );
+

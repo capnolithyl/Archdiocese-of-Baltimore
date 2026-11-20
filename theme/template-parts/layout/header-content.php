@@ -55,7 +55,7 @@ $asset_base = get_template_directory_uri() . '/assets';
 						'container'      => false,
 						'menu_id'        => 'primary-menu',
 						'menu_class'     => 'site-header__menu',
-						'depth'          => 3,
+						'depth'          => 2,
 						'fallback_cb'    => false,
 					)
 				);
