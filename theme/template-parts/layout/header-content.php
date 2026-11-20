@@ -76,7 +76,6 @@ $asset_base = get_template_directory_uri() . '/assets';
 
 	</div>
 </header>
-<?php get_template_part( 'template-parts/layout/live-search' ); ?>
 <?php if ( 'solid' === $variant ) : ?>
 	<div class="h-20 xl:h-[124px]" aria-hidden="true"></div>
 <?php endif; ?>

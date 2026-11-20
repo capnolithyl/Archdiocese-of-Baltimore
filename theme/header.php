@@ -27,5 +27,6 @@
 	<a href="#content" class="sr-only"><?php esc_html_e( 'Skip to content', 'baltimore' ); ?></a>
 
 	<?php get_template_part( 'template-parts/layout/header', 'content' ); ?>
+	<?php get_template_part( 'template-parts/layout/live-search' ); ?>
 
 	<div id="content">
