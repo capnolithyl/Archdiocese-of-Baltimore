@@ -302,6 +302,9 @@ jobs:
           for (const token of ["get_field( 'stats' )", "get_field( 'background_image' )", "get_field( 'buttons' )", 'bg-linear-[158deg]', 'xl:grid-cols-6', "get_field( 'item_background' )", 'bg-transparent', 'bg-primary/25', 'btn btn-outline', 'btn btn-gold']) {
             if (!render.includes(token)) throw new Error('Stats markup missing: ' + token);
           }
+          for (const token of ["get_field( 'item_background' )", "'gap-px bg-white/15'", "'gap-0 bg-transparent'", "'border-r border-b border-white/15 bg-transparent'", "esc_attr( $columns . ' ' . $grid_style )", "esc_attr( $item_style )"]) {
+            if (!render.includes(token)) throw new Error('Stats variant does not control both parent and cell: ' + token);
+          }
           if (!integration.includes('dpi_blocks/acf_field_group/key=group_dpi_stats') ||
               !tailwind.includes('@source "./theme/dpi-blocks/blocks/stats";')) {
             throw new Error('Stats fields or Tailwind not loaded by theme');

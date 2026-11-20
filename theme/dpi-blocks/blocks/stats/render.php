@@ -30,7 +30,9 @@ $image       = get_field( 'background_image' );
 $image_id    = absint( is_array( $image ) ? ( $image['ID'] ?? 0 ) : $image );
 $buttons     = array_slice( (array) ( get_field( 'buttons' ) ?: array() ), 0, 2 );
 $heading_id  = wp_unique_id( 'balt-stats-' );
-$item_bg     = 'tinted' === get_field( 'item_background' ) ? 'bg-primary/25' : 'bg-transparent';
+$tinted      = 'tinted' === get_field( 'item_background' );
+$grid_style  = $tinted ? 'gap-px bg-white/15' : 'gap-0 bg-transparent';
+$item_style  = $tinted ? 'bg-primary/25' : 'border-r border-b border-white/15 bg-transparent';
 
 $columns = match ( count( $items ) ) {
 	1       => 'grid-cols-1 max-w-[280px]',
@@ -60,9 +62,9 @@ $columns = match ( count( $items ) ) {
 			<p class="mx-auto mt-3 max-w-[580px] font-body text-lg leading-[1.625] text-white/75"><?php echo esc_html( $description ); ?></p>
 		<?php endif; ?>
 
-		<ul class="mx-auto mt-14 grid w-full gap-px overflow-hidden rounded-card border-2 border-white/15 bg-white/15 p-0 list-none <?php echo esc_attr( $columns ); ?>">
+		<ul class="mx-auto mt-14 grid w-full overflow-hidden rounded-card border-2 border-white/15 p-0 list-none <?php echo esc_attr( $columns . ' ' . $grid_style ); ?>">
 			<?php foreach ( $items as $item ) : ?>
-				<li class="flex min-h-[160px] flex-col items-center justify-center gap-3 px-3 py-7 text-center sm:px-4 <?php echo esc_attr( $item_bg ); ?>">
+				<li class="flex min-h-[160px] flex-col items-center justify-center gap-3 px-3 py-7 text-center sm:px-4 <?php echo esc_attr( $item_style ); ?>">
 					<?php if ( $item['value'] ) : ?>
 						<strong class="font-body text-[clamp(1.75rem,2.9vw,3rem)] font-extrabold leading-none tracking-[-0.025em] text-white"><?php echo esc_html( $item['value'] ); ?></strong>
 					<?php endif; ?>
