@@ -5,7 +5,6 @@
 	const menuButton = header.querySelector('.site-header__mobile-toggle');
 	const menu = header.querySelector('.site-header__nav');
 	const searchButton = header.querySelector('.site-header__search-toggle');
-	const searchPanel = header.querySelector('.site-header__search');
 	const desktop = window.matchMedia('(min-width: 1280px)');
 	let pending = false;
 
@@ -16,15 +15,12 @@
 
 	const updateOpenState = () => {
 		const mobileOpen = menu && !menu.classList.contains('hidden') && !desktop.matches;
-		const searchOpen = searchPanel && !searchPanel.classList.contains('hidden');
-		header.dataset.menuOpen = String(Boolean(mobileOpen || searchOpen));
+		header.dataset.menuOpen = String(Boolean(mobileOpen));
 	};
 
 	const closeMenus = () => {
 		menu?.classList.add('hidden');
 		menuButton?.setAttribute('aria-expanded', 'false');
-		searchPanel?.classList.add('hidden');
-		searchButton?.setAttribute('aria-expanded', 'false');
 		header.querySelectorAll('.site-header__menu li.is-open').forEach((item) => {
 			item.classList.remove('is-open');
 			item.querySelector(':scope > .site-header__submenu-toggle')?.setAttribute('aria-expanded', 'false');
@@ -42,16 +38,8 @@
 		}
 	});
 
-	searchButton?.addEventListener('click', () => {
-		const opening = searchPanel?.classList.contains('hidden');
-		closeMenus();
-		if (opening && searchPanel) {
-			searchPanel.classList.remove('hidden');
-			searchButton.setAttribute('aria-expanded', 'true');
-			searchPanel.querySelector('input[type="search"]')?.focus();
-			updateOpenState();
-		}
-	});
+	// The search dialog owns its own open, close and focus behavior.
+	searchButton?.addEventListener('click', closeMenus);
 
 	header.querySelectorAll('.site-header__menu li.menu-item-has-children').forEach((item) => {
 		const toggle = item.querySelector(':scope > .site-header__submenu-toggle');

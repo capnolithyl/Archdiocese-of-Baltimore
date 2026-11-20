@@ -64,7 +64,7 @@ $asset_base = get_template_directory_uri() . '/assets';
 		<?php endif; ?>
 
 		<div class="ml-auto flex shrink-0 items-center gap-1 xl:ml-0">
-			<button type="button" class="site-header__search-toggle flex size-11 items-center justify-center rounded-sm text-white hover:bg-white/10" aria-label="<?php esc_attr_e( 'Search', 'baltimore' ); ?>" aria-expanded="false" aria-controls="balt-header-search">
+			<button type="button" class="site-header__search-toggle flex size-11 items-center justify-center rounded-sm text-white hover:bg-white/10" aria-label="<?php esc_attr_e( 'Search', 'baltimore' ); ?>" aria-expanded="false" aria-haspopup="dialog" aria-controls="balt-live-search-dialog">
 				<img src="<?php echo esc_url( $asset_base . '/header/search.svg' ); ?>" width="18" height="18" alt="" aria-hidden="true">
 			</button>
 			<?php if ( has_nav_menu( 'menu-1' ) ) : ?>
@@ -74,11 +74,9 @@ $asset_base = get_template_directory_uri() . '/assets';
 			<?php endif; ?>
 		</div>
 
-		<div id="balt-header-search" class="site-header__search absolute top-full right-0 left-0 hidden bg-primary px-6 py-5 shadow-xl sm:right-6 sm:left-auto sm:w-[440px] sm:rounded-b-lg" role="search">
-			<?php get_search_form(); ?>
-		</div>
 	</div>
 </header>
+<?php get_template_part( 'template-parts/layout/live-search' ); ?>
 <?php if ( 'solid' === $variant ) : ?>
 	<div class="h-20 xl:h-[124px]" aria-hidden="true"></div>
 <?php endif; ?>

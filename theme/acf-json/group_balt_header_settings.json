@@ -42,6 +42,50 @@
             "return_format": "id",
             "library": "all",
             "preview_size": "medium"
+        },
+        {
+            "key": "field_balt_header_search_tab",
+            "label": "Search",
+            "name": "",
+            "type": "tab",
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_balt_search_topics",
+            "label": "Popular Search Topics",
+            "name": "balt_search_topics",
+            "type": "repeater",
+            "instructions": "Topics shown before typing. Provide an optional destination link; otherwise selecting the topic searches for that phrase. Without entries, the six prototype topics are shown.",
+            "required": 0,
+            "layout": "table",
+            "button_label": "Add Topic",
+            "rows_per_page": 20,
+            "sub_fields": [
+                {
+                    "key": "field_balt_search_topic_label",
+                    "label": "Topic",
+                    "name": "label",
+                    "type": "text",
+                    "required": 1,
+                    "wrapper": {
+                        "width": "40"
+                    },
+                    "parent_repeater": "field_balt_search_topics"
+                },
+                {
+                    "key": "field_balt_search_topic_link",
+                    "label": "Optional Destination",
+                    "name": "link",
+                    "type": "link",
+                    "required": 0,
+                    "return_format": "array",
+                    "wrapper": {
+                        "width": "60"
+                    },
+                    "parent_repeater": "field_balt_search_topics"
+                }
+            ]
         }
     ],
     "location": [
@@ -62,5 +106,5 @@
     "active": true,
     "description": "Global header branding and image fallbacks.",
     "show_in_rest": 0,
-    "modified": 1787673600
+    "modified": 1795219200
 }

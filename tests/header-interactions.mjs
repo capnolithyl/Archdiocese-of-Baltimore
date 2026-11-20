@@ -23,20 +23,16 @@ const element = (classes = []) => ({
 const nav = element(['hidden']);
 const menuButton = element();
 const searchButton = element();
-const search = element(['hidden']);
-const searchInput = element();
-search.querySelector = () => searchInput;
 const keyMap = {
 	'.site-header__mobile-toggle': menuButton,
 	'.site-header__nav': nav,
-	'.site-header__search-toggle': searchButton,
-	'.site-header__search': search
+	'.site-header__search-toggle': searchButton
 };
 const header = {
 	dataset: { compact: 'false', menuOpen: 'false' },
 	querySelector: key => keyMap[key] || null,
 	querySelectorAll: () => [],
-	contains: target => [menuButton, nav, searchButton, search].includes(target)
+	contains: target => [menuButton, nav, searchButton].includes(target)
 };
 const mql = { matches: false, addEventListener(name, callback) { this.onChange = callback; } };
 const win = {
@@ -63,8 +59,7 @@ assert.equal(nav.classList.contains('hidden'), false);
 
 searchButton.events.click();
 assert.equal(nav.classList.contains('hidden'), true, 'Search closes mobile navigation');
-assert.equal(search.classList.contains('hidden'), false);
-assert.equal(searchInput.focused, true);
+assert.equal(header.dataset.menuOpen, 'false', 'Search trigger closes mobile menu');
 
 win.scrollY = 100;
 listeners.scroll();
@@ -75,8 +70,7 @@ assert.equal(header.dataset.compact, 'false', 'At top navbar should return to or
 
 let prevented = false;
 listeners['document-keydown']({ key: 'Escape', preventDefault() { prevented = true; } });
-assert.equal(search.classList.contains('hidden'), true, 'Escape closes search');
-assert.equal(searchButton.attributes['aria-expanded'], 'false');
+assert.equal(header.dataset.menuOpen, 'false', 'Escape leaves menu closed');
 
 menuButton.events.click();
 mql.matches = true;
@@ -84,4 +78,4 @@ mql.onChange();
 assert.equal(nav.classList.contains('hidden'), true, 'Resizing to desktop resets mobile state');
 assert.equal(header.dataset.menuOpen, 'false');
 
-console.log('Header scroll transition, responsive menu, search and keyboard behavior passed');
+console.log('Header scroll transition, responsive menu, search-trigger and keyboard behavior passed');
