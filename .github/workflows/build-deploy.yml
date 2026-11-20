@@ -435,6 +435,12 @@ jobs:
       - name: Verify primary menu maximum depth and preserve existing links
         run: php tests/primary-menu-depth-smoke.php
 
+      - name: Verify ShiftNav-style mobile drawer
+        run: |
+          node --check theme/js/mobile-navigation.js
+          node tests/mobile-navigation-smoke.mjs
+          php -l theme/template-parts/layout/mobile-navigation.php
+
       - name: Verify Figma navigation variants and interactions
         run: |
           php tests/header-smoke.php
