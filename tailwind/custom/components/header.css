@@ -1,4 +1,15 @@
 /**
+ * WP adds a top margin to <html> when the admin bar is visible.
+ * The transparent header is fixed below that bar, but the hero stays in
+ * document flow. Pull only transparent-header content up by the same amount
+ * so its image also covers the utility navigation row.
+ * Logged-out pages have an offset of zero.
+ */
+.site-header[data-header-variant="transparent"] + #content {
+	margin-top: calc(-1 * var(--wp-admin-bar-height, 0px));
+}
+
+/**
  * WordPress menu markup contains dynamic <li> elements, so the header only
  * needs a few scoped component selectors alongside the Tailwind layout classes.
  */

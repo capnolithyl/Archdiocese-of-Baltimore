@@ -34,6 +34,8 @@ The header uses the two Figma variants: transparent \`320:717\` over a leading h
 
 \`tailwind/custom/components/header.css\` styles only WordPress-generated menu markup, dropdown states and scroll transitions. Other responsive layout styling lives in Tailwind utilities; no additional JS dependency is needed. Tests: \`tests/header-smoke.php\`, \`tests/header-interactions.mjs\`. The mobile layout and dropdowns still need in-browser visual testing with real menus.
 
+On logged-in pages, WordPress's admin bar adds margin above normal document flow, so the transparent header compensates at `#content` using `--wp-admin-bar-height` (32px desktop, 46px mobile). This lets the hero image sit behind both navigation rows without altering logged-out or blue-header pages.
+
 ### Global Footer
 
 The footer implements Figma node \`320:481\`. It is a **sitewide PHP template**, not a page block. The desktop footer contains four columns (branding, Quick Links, Our Services, contact), a blue background and a separate copyright/legal row; tablets use two columns and phones one.

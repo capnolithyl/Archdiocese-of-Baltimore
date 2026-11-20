@@ -443,6 +443,14 @@ jobs:
           const helper = readFileSync('theme/inc/header-navigation.php', 'utf8');
           const source = readFileSync('tailwind.css', 'utf8');
 
+          if (!css.includes('.site-header[data-header-variant="transparent"] + #content') ||
+              !css.includes('margin-top: calc(-1 * var(--wp-admin-bar-height, 0px))')) {
+            throw new Error('Transparent hero must counter the WordPress admin-bar document offset');
+          }
+          const base = readFileSync('tailwind/custom/base.css', 'utf8');
+          if (!base.includes('--wp-admin-bar-height: 32px') || !base.includes('--wp-admin-bar-height: 46px')) {
+            throw new Error('Admin bar height tokens must handle desktop and mobile');
+          }
           for (const token of ['data-compact="true"', 'data-header-variant="solid"', 'site-header__menu .sub-menu', 'site-header__main', 'site-header__logo']) {
             if (!css.includes(token)) throw new Error('Navbar state missing: ' + token);
           }
@@ -460,6 +468,9 @@ jobs:
           }
           for (const path of ['theme/style.css', 'theme/style-editor.css']) {
             const css = readFileSync(path, 'utf8');
+            if (!css.includes('.site-header[data-header-variant="transparent"]') || !css.includes('var(--wp-admin-bar-height')) {
+              throw new Error('Compiled transparent header admin bar fix missing: ' + path);
+            }
             if (!css.includes('124px') || !css.includes('88px') || !css.includes('.site-header__menu') || !css.includes('184px')) {
               throw new Error('Compiled navbar styles missing: ' + path);
             }
