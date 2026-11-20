@@ -354,3 +354,5 @@ jobs:
             }
           }
           NODE
+      - name: Verify built-in RSS block is hidden
+        run: php tests/editor-blocks-smoke.php
