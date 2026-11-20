@@ -437,6 +437,7 @@ jobs:
           php tests/header-smoke.php
           node --check theme/js/header-navigation.js
           node tests/header-interactions.mjs
+          node tests/header-flyout-interactions.mjs
           node --input-type=module <<'NODE'
           import { readFileSync, statSync } from 'node:fs';
 

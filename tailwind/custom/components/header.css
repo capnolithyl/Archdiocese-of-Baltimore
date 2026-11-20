@@ -112,6 +112,7 @@
 		top: calc(100% + 8px);
 		left: 0;
 		right: auto;
+		transform: translateX(var(--balt-submenu-shift, 0px));
 	}
 
 	/* Extend the hover area across the eight-pixel gap to the dropdown. */
