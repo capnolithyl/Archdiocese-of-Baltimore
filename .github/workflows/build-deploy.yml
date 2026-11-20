@@ -348,6 +348,7 @@ jobs:
       - name: Verify RSS News ACF, Tailwind, and feed merging
         run: |
           php tests/rss-news-smoke.php
+          node tests/rss-news-hover-smoke.mjs
           node --input-type=module <<'NODE'
           import { readFileSync } from 'node:fs';
 

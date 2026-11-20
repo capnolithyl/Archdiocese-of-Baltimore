@@ -43,10 +43,10 @@ $heading_id = wp_unique_id( 'balt-rss-news-' );
 		<?php if ( $articles ) : ?>
 			<div class="mt-14 grid grid-cols-1 gap-px overflow-hidden rounded-card border border-[#E8E3D8] bg-[#E8E3D8] sm:grid-cols-2 lg:grid-cols-3">
 				<?php foreach ( $articles as $article ) : ?>
-					<article class="relative flex min-w-0 flex-col bg-white before:absolute before:inset-x-0 before:top-0 before:z-10 before:h-[3px] before:bg-secondary">
+					<article class="group relative flex min-w-0 flex-col bg-white transition-colors duration-300 ease-out hover:bg-surface focus-within:bg-surface before:pointer-events-none before:absolute before:inset-x-0 before:top-0 before:z-10 before:h-[3px] before:origin-center before:scale-x-0 before:bg-secondary before:transition-transform before:duration-300 before:ease-out hover:before:scale-x-100 focus-within:before:scale-x-100 motion-reduce:transition-none motion-reduce:before:transition-none">
 						<?php if ( $article['image'] ) : ?>
 							<a href="<?php echo esc_url( $article['link'] ); ?>" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true" class="block h-[200px] overflow-hidden bg-surface">
-								<img src="<?php echo esc_url( $article['image'] ); ?>" alt="" loading="lazy" decoding="async" class="size-full object-cover transition-transform duration-300 hover:scale-105">
+								<img src="<?php echo esc_url( $article['image'] ); ?>" alt="" loading="lazy" decoding="async" class="size-full object-cover transition-transform duration-300 ease-out group-hover:scale-105 group-focus-within:scale-105 motion-reduce:transition-none">
 							</a>
 						<?php else : ?>
 							<div class="h-[200px] bg-surface" aria-hidden="true"></div>
