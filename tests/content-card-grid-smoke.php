@@ -1,6 +1,11 @@
 <?php
 declare(strict_types=1);
 define('ABSPATH',__DIR__);
+define('BALT_VERSION','test');
+function esc_html_e($v,$d):void{echo esc_html($v);}
+function esc_attr_e($v,$d):void{echo esc_attr($v);}
+function get_template_directory_uri():string{return '/theme';}
+function wp_enqueue_script(...$args):void{$GLOBALS['card_filter_script']=$args;}
 function add_action(...$args):void{}
 function add_filter(...$args):void{}
 function absint($v):int{return abs((int)$v);}
@@ -78,3 +83,11 @@ check(str_contains($left,'href="/news/"')&&strpos($left,'All News')<strpos($left
 check(!str_contains($left,'btn btn-primary'),'Do not duplicate section CTA');
 check(!str_contains(grid_render($fixture+['heading_alignment'=>'left'],true),'href="/news/"'),'Section CTA preview should be inert');
 echo "Latest News header, CTA location and default grid layout passed\n";
+
+$directory=grid_render(['style'=>'directory','eyebrow'=>'Policy Directory','subheading'=>'Policies & norms','cards'=>$rows,'enable_card_search'=>1,'search_placeholder'=>'Search policies...']);
+foreach(['balt-card-directory__header','balt-card-directory__eyebrow','Policies &amp; norms','Search policies...','data-card-search hidden','data-card-empty hidden','Filter displayed cards','data-card-status','Family Formation'] as $token)check(str_contains($directory,$token),'Directory missing '.$token);
+check($GLOBALS['card_filter_script'][0]==='balt-card-directory-filter','Local filter script enqueued');
+check(!str_contains(grid_render(['style'=>'directory','cards'=>$rows]),'data-card-search'),'Search is optional');
+check(str_contains(grid_render(['style'=>'directory','cards'=>$rows,'enable_card_search'=>1],true),'autocomplete="off" disabled'),'Preview input inert');
+check(!str_contains($center,'balt-card-directory'),'Standard layout remains default');
+echo "Directory header, optional search, editor and shared cards passed\n";

@@ -2,11 +2,11 @@
   "$schema": "https://schemas.wp.org/trunk/block.json",
   "apiVersion": 3,
   "name": "balt/content-card-grid",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "title": "Content Card Grid",
   "category": "baltimore",
   "icon": "grid-view",
-  "description": "A reusable grid of manually entered cards, selected WordPress content, or latest posts.",
+  "description": "Reusable manual, selected or latest content cards, with an optional directory layout and local card filtering.",
   "keywords": [
     "cards",
     "offices",

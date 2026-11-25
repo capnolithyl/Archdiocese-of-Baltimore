@@ -3,6 +3,22 @@
   "title": "Content Card Grid",
   "fields": [
     {
+      "key": "field_balt_card_grid_style",
+      "name": "style",
+      "label": "Style",
+      "type": "select",
+      "choices": {
+        "default": "Standard",
+        "directory": "Directory"
+      },
+      "default_value": "default",
+      "return_format": "value",
+      "ui": 1,
+      "instructions": "Directory uses a compact gold eyebrow, wide introduction and optional card search. Standard preserves the original layout.",
+      "required": 0,
+      "conditional_logic": 0
+    },
+    {
       "key": "field_balt_card_grid_eyebrow",
       "label": "Eyebrow",
       "name": "eyebrow",
@@ -23,9 +39,17 @@
       "name": "heading_alignment",
       "label": "Heading Alignment",
       "type": "select",
-      "instructions": "Align the section eyebrow, heading and supporting text. Default preserves the original layout.",
+      "instructions": "Align the section eyebrow, heading and supporting text in Standard style. Directory uses its own left-aligned header.",
       "required": 0,
-      "conditional_logic": 0,
+      "conditional_logic": [
+        [
+          {
+            "field": "field_balt_card_grid_style",
+            "operator": "!=",
+            "value": "directory"
+          }
+        ]
+      ],
       "choices": {
         "default": "Default",
         "left": "Left",
@@ -46,6 +70,48 @@
       "conditional_logic": 0,
       "rows": 3,
       "new_lines": ""
+    },
+    {
+      "key": "field_balt_card_grid_enable_card_search",
+      "name": "enable_card_search",
+      "label": "Enable Card Search",
+      "type": "true_false",
+      "ui": 1,
+      "default_value": 1,
+      "required": 0,
+      "conditional_logic": [
+        [
+          {
+            "field": "field_balt_card_grid_style",
+            "operator": "==",
+            "value": "directory"
+          }
+        ]
+      ],
+      "instructions": "Filters the currently displayed cards by title, description and metadata. Does not search linked pages or documents."
+    },
+    {
+      "key": "field_balt_card_grid_search_placeholder",
+      "name": "search_placeholder",
+      "label": "Search Placeholder",
+      "type": "text",
+      "default_value": "Search resources...",
+      "required": 0,
+      "conditional_logic": [
+        [
+          {
+            "field": "field_balt_card_grid_style",
+            "operator": "==",
+            "value": "directory"
+          },
+          {
+            "field": "field_balt_card_grid_enable_card_search",
+            "operator": "==",
+            "value": "1"
+          }
+        ]
+      ],
+      "instructions": "For example, Search policies..."
     },
     {
       "key": "field_balt_card_grid_source",
@@ -290,5 +356,5 @@
   "active": true,
   "description": "Reusable content card grid with manual, selected and latest modes.",
   "show_in_rest": 0,
-  "modified": 1795643000
+  "modified": 1795647000
 }
