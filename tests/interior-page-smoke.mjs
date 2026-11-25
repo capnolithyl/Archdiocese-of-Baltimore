@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import {readFileSync} from 'node:fs';
+import {readFileSync,existsSync} from 'node:fs';
 const read=p=>readFileSync(p,'utf8');
 const fields=JSON.parse(read('theme/acf-json/group_balt_interior_page.json'));
 assert.equal(fields.position,'side','Page header controls belong in the editor sidebar');
@@ -13,17 +13,16 @@ assert.equal(fields.fields.find(f=>f.name==='balt_section_nav_links')?.layout,'b
 assert.equal(fields.location.length,1);
 assert.ok(fields.location[0].some(x=>x.param==='post_type' && x.value==='page'), 'Settings must be available on Default pages');
 assert.ok(fields.location[0].some(x=>x.param==='page_type' && x.operator==='!=' && x.value==='front_page'), 'Do not display irrelevant interior settings on homepage');
-for(const [name,kind] of [['interior-featured','featured'],['interior-title','title']]){
- const src=read('theme/page-templates/'+name+'.php');
- assert.ok(src.includes('Template Name: Interior'));
- assert.ok(src.includes("'hero' => '"+kind+"'"));
+for(const name of ['interior-featured','interior-title']){
+ assert.ok(!existsSync('theme/page-templates/'+name+'.php'),'Retired templates must not remain selectable');
 }
 const page=read('theme/page.php');
-assert.ok(page.includes("'hero' => 'auto'"), 'Default page template must auto-select hero media');
+assert.ok(!page.includes("'hero' =>"), 'Default page should not require a hero variant argument');
 assert.ok(page.includes('interior-content'), 'Default pages must share interior hero and section nav');
 assert.ok(!page.includes("content', 'page'"), 'Old page content wrapper would duplicate the H1');
 const hero=read('theme/template-parts/layout/interior-hero.php');
 assert.ok(hero.includes("get_post_thumbnail_id( $post_id )"), 'Hero must use native featured image');
+assert.ok(!hero.includes("$args['variant']"), 'Hero should always use automatic image detection');
 const common=read('theme/template-parts/layout/interior-content.php');
 assert.ok(common.includes('the_content()'));
 assert.ok(common.includes('section-navigation')&&common.includes('interior-hero'));

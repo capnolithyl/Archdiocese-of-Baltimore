@@ -9,16 +9,28 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-/** Which page templates own the shared interior hero/section navigation? */
-function balt_is_interior_page_template( int $post_id ): bool {
-	$template = get_page_template_slug( $post_id );
+/**
+ * Clear retired template assignments when an authorized editor opens a page.
+ * WordPress already falls back to page.php when the old file is missing.
+ * Only the two retired template values are changed; page content is untouched.
+ */
+function balt_reset_retired_page_template( int $post_id ): void {
+	if ( 'page' !== get_post_type( $post_id ) || ! current_user_can( 'edit_post', $post_id ) ) {
+		return;
+	}
 
-	return in_array(
-		$template,
-		array( 'page-templates/interior-featured.php', 'page-templates/interior-title.php' ),
-		true
-	);
+	if ( in_array( get_page_template_slug( $post_id ), array( 'page-templates/interior-featured.php', 'page-templates/interior-title.php' ), true ) ) {
+		update_post_meta( $post_id, '_wp_page_template', 'default' );
+	}
 }
+
+function balt_reset_retired_page_template_on_edit(): void {
+	$post_id = isset( $_GET['post'] ) && is_scalar( $_GET['post'] ) ? absint( $_GET['post'] ) : 0;
+	if ( $post_id ) {
+		balt_reset_retired_page_template( $post_id );
+	}
+}
+add_action( 'load-post.php', 'balt_reset_retired_page_template_on_edit' );
 
 /**
  * Return only usable, editor-managed section navigation links.

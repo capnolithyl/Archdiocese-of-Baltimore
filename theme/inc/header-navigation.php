@@ -16,16 +16,9 @@ function balt_header_variant(): string {
 		}
 	}
 
-	// These interior templates explicitly render their own title hero. Match
-	// the Figma layout with the shared blue header above it by default.
-	// The existing per-page ACF override still permits a transparent header.
-	// The default page layout always renders a title hero above Gutenberg content.
-	// Keep the solid header on ordinary pages; preserve the separate homepage hero.
-	if ( function_exists( 'is_page' ) && is_page() && ! is_front_page() ) {
-		return 'solid';
-	}
-
-	if ( function_exists( 'balt_is_interior_page_template' ) && balt_is_interior_page_template( $post_id ) ) {
+	// Ordinary pages use the automatic title hero above Gutenberg content.
+	// Preserve the separate homepage hero and the explicit override above.
+	if ( is_page() && ! is_front_page() ) {
 		return 'solid';
 	}
 

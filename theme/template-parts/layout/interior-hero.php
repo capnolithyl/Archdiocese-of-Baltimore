@@ -5,7 +5,6 @@
  *
  * @package Archdiocese_of_Baltimore
  *
- * @var array $args Template arguments.
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -16,8 +15,8 @@ $post_id  = get_the_ID();
 $eyebrow  = function_exists( 'get_field' ) ? trim( (string) get_field( 'balt_interior_eyebrow', $post_id ) ) : '';
 $custom_title = function_exists( 'get_field' ) ? trim( (string) get_field( 'balt_interior_title', $post_id ) ) : '';
 $hero_title   = '' !== $custom_title ? $custom_title : get_the_title( $post_id );
-// Auto and featured use the actual WordPress Featured Image when present.
-$image_id = 'title' === ( $args['variant'] ?? 'auto' ) ? 0 : (int) get_post_thumbnail_id( $post_id );
+// The native featured image alone determines the hero treatment.
+$image_id = (int) get_post_thumbnail_id( $post_id );
 $variant  = $image_id > 0 ? 'image' : 'title';
 ?>
 <header class="balt-interior-hero balt-interior-hero--<?php echo esc_attr( $variant ); ?>">

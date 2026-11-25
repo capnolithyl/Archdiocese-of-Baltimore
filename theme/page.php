@@ -7,5 +7,5 @@
  */
 
 get_header();
-get_template_part( 'template-parts/layout/interior-content', null, array( 'hero' => 'auto' ) );
+get_template_part( 'template-parts/layout/interior-content' );
 get_footer();
