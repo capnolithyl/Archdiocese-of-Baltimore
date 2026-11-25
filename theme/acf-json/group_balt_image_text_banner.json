@@ -3,6 +3,24 @@
   "title": "Image & Text Banner",
   "fields": [
     {
+      "key": "field_balt_image_text_banner_style",
+      "label": "Style",
+      "name": "style",
+      "type": "select",
+      "instructions": "Choose a split banner or text over a full-width background image.",
+      "required": 0,
+      "conditional_logic": 0,
+      "choices": {
+        "split": "Split Image & Text",
+        "background": "Full Background"
+      },
+      "default_value": "split",
+      "return_format": "value",
+      "allow_null": 0,
+      "multiple": 0,
+      "ui": 1
+    },
+    {
       "key": "field_balt_image_text_banner_eyebrow",
       "label": "Eyebrow",
       "name": "eyebrow",
@@ -41,7 +59,15 @@
       "type": "text",
       "instructions": "",
       "required": 0,
-      "conditional_logic": 0,
+      "conditional_logic": [
+        [
+          {
+            "field": "field_balt_image_text_banner_style",
+            "operator": "!=",
+            "value": "background"
+          }
+        ]
+      ],
       "wrapper": {
         "width": "",
         "class": "",
@@ -57,7 +83,15 @@
       "type": "textarea",
       "instructions": "",
       "required": 0,
-      "conditional_logic": 0,
+      "conditional_logic": [
+        [
+          {
+            "field": "field_balt_image_text_banner_style",
+            "operator": "!=",
+            "value": "background"
+          }
+        ]
+      ],
       "wrapper": {
         "width": "",
         "class": "",
@@ -69,11 +103,31 @@
       "placeholder": "Optional highlighted quotation"
     },
     {
+      "key": "field_balt_image_text_banner_description",
+      "label": "Description",
+      "name": "description",
+      "type": "textarea",
+      "instructions": "Optional supporting paragraph below the main heading.",
+      "required": 0,
+      "conditional_logic": [
+        [
+          {
+            "field": "field_balt_image_text_banner_style",
+            "operator": "==",
+            "value": "background"
+          }
+        ]
+      ],
+      "default_value": "",
+      "rows": 4,
+      "new_lines": ""
+    },
+    {
       "key": "field_balt_image_text_banner_image",
       "label": "Image",
       "name": "image",
       "type": "image",
-      "instructions": "Background photo, cropped to fill the right side on desktop and the top of the section on smaller screens.",
+      "instructions": "Split: photo on the right (above text on mobile). Full Background: photo covers the entire section with a navy overlay.",
       "required": 1,
       "conditional_logic": 0,
       "wrapper": {
@@ -90,7 +144,7 @@
       "label": "Buttons",
       "name": "buttons",
       "type": "repeater",
-      "instructions": "Add up to two links. The first is red, the second is outlined.",
+      "instructions": "Up to two links. Split: red, then outlined. Full Background: gold, then outlined.",
       "required": 0,
       "conditional_logic": 0,
       "wrapper": {
@@ -140,6 +194,7 @@
   "instruction_placement": "label",
   "hide_on_screen": "",
   "active": true,
-  "description": "Reusable navy image and text banner with an optional quote and 0–2 CTAs.",
-  "show_in_rest": 0
+  "description": "Reusable split photo/text or full-background editorial banner with optional supporting copy and 0–2 CTAs.",
+  "show_in_rest": 0,
+  "modified": 1795639800
 }
