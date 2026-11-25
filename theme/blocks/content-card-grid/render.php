@@ -9,6 +9,7 @@ $subheading = trim( (string) get_field( 'subheading' ) );
 $source     = get_field( 'source' ) ?: 'manual';
 $show_date  = (bool) get_field( 'show_date' );
 $cards = match ( $source ) {
+	'policy_categories' => balt_policy_category_cards( (array) get_field( 'policy_categories' ) ),
 	'selected' => balt_content_grid_post_cards( (array) get_field( 'selected_posts' ), $show_date ),
 	'latest'   => balt_content_grid_latest_cards( (string) ( get_field( 'post_type' ) ?: 'post' ), (int) ( get_field( 'post_count' ) ?: 6 ), (int) get_field( 'category' ), $show_date ),
 	default    => balt_content_grid_manual_cards( (array) get_field( 'cards' ) ),

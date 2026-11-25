@@ -1,0 +1,45 @@
+{
+  "key": "group_balt_policy_details",
+  "title": "Policy Details",
+  "fields": [
+    {
+      "key": "field_balt_policy_resources",
+      "name": "balt_policy_resources",
+      "label": "Additional Resources",
+      "type": "repeater",
+      "required": 0,
+      "conditional_logic": 0,
+      "layout": "block",
+      "min": 0,
+      "max": 0,
+      "button_label": "Add Resource",
+      "instructions": "Optional links to related pages, PDFs or external resources, displayed beside the policy.",
+      "sub_fields": [
+        {
+          "key": "field_balt_policy_resource_link",
+          "name": "link",
+          "label": "Link",
+          "type": "link",
+          "return_format": "array",
+          "required": 1
+        }
+      ]
+    }
+  ],
+  "location": [
+    [
+      {
+        "param": "post_type",
+        "operator": "==",
+        "value": "balt_policy"
+      }
+    ]
+  ],
+  "position": "normal",
+  "style": "default",
+  "label_placement": "top",
+  "instruction_placement": "label",
+  "active": true,
+  "show_in_rest": 0,
+  "modified": 1795650000
+}

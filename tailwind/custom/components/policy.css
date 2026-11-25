@@ -1,0 +1,97 @@
+/* Policy category and detail layouts (Figma 357:8327, 357:5230). */
+.balt-policy-page {
+	--policy-blue: var(--wp--preset--color--primary, #002d62);
+	--policy-ink: var(--wp--preset--color--foreground, #0f1a2e);
+	--policy-border: #e5e7eb;
+	color: var(--policy-ink);
+	background: #fff;
+	font-family: var(--wp--preset--font-family--body, Lato, sans-serif);
+}
+.balt-policy-page [hidden] { display: none !important; }
+.balt-policy-page .balt-interior-hero { min-height: 340px; }
+.balt-policy-index {
+	box-sizing: border-box;
+	max-width: 1504px;
+	margin-inline: auto;
+	padding: 40px clamp(24px, 3.275vw, 56px);
+}
+.balt-policy-index__header { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; }
+.balt-policy-back {
+	color: var(--wp--preset--color--tertiary, #be2026);
+	font-size: 14px;
+	font-weight: 600;
+	line-height: 21px;
+	letter-spacing: 1px;
+	text-transform: uppercase;
+	text-decoration: none;
+}
+.balt-policy-page a:hover { text-decoration: underline; }
+.balt-policy-page :is(a,button,input):focus-visible { outline: 2px solid var(--policy-blue); outline-offset: 3px; }
+.balt-policy-groups { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); column-gap: 48px; margin-top: 32px; }
+.balt-policy-group { min-width: 0; padding-block: 24px; border-top: 1px solid var(--policy-border); }
+.balt-policy-group:nth-child(-n+3) { border-top-color: transparent; }
+.balt-policy-group h2 { margin: 0; font-family: inherit; font-size: 15px; font-weight: 700; line-height: 20.625px; }
+.balt-policy-group a { display: flex; align-items: flex-start; gap: 12px; color: var(--policy-blue); text-decoration: none; overflow-wrap: anywhere; }
+.balt-policy-star { color: var(--wp--preset--color--secondary,#c9a840); flex: 0 0 15px; font-size: 16px; line-height: 20.625px; text-align: center; }
+.balt-policy-group ul { list-style: none; margin: 0; padding: 0; }
+.balt-policy-group li { margin-top: 12px; font-size: 15px; font-weight: 500; line-height: 20.625px; }
+.balt-policy-group li a::before { content: ''; flex: 0 0 9px; height: 9px; margin: 6px 3px 0; border-radius: 50%; background: var(--policy-blue); }
+.balt-policy-empty { padding-block: 16px; color: #6b6b7b; font-size: 14px; }
+.balt-policy-detail { display: grid; grid-template-columns: 300px minmax(0,1fr); min-height: 600px; }
+.balt-policy-sidebar { background: #f4f4f4; border-inline-end: 1px solid var(--policy-border); min-width: 0; }
+.balt-policy-sidebar__header { padding: 24px 20px 20px; display: grid; gap: 16px; }
+.balt-policy-sidebar__header .balt-policy-back { font-size: 12px; line-height: 18px; letter-spacing: 1.5px; }
+.balt-policy-sidebar__header .balt-policy-filter { width: 100%; }
+.balt-policy-sidebar__list { list-style: none; margin: 0; padding: 0 0 16px; }
+.balt-policy-sidebar__list a {
+	position: relative;
+	display: block;
+	padding: 12px 28px;
+	color: var(--policy-blue);
+	font-size: 13px;
+	font-weight: 700;
+	line-height: 17.875px;
+	text-decoration: none;
+	overflow-wrap: anywhere;
+}
+.balt-policy-sidebar__list a:hover { background: #e5e7eb; }
+.balt-policy-sidebar__list a[aria-current="page"] { background: var(--policy-blue); color: #fff; }
+.balt-policy-sidebar__list a[aria-current="page"]::after { content: ''; position: absolute; inset-inline-start: 100%; top: 50%; transform: translateY(-50%); border-block: 11px solid transparent; border-inline-start: 11px solid var(--policy-blue); }
+.balt-policy-sidebar .balt-policy-empty { padding-inline: 20px; }
+.balt-policy-detail__main { min-width: 0; display: grid; align-content: start; padding: clamp(24px, 2.34vw, 40px); gap: 48px; grid-template-columns: minmax(0,1fr); }
+.balt-policy-detail--resources .balt-policy-detail__main { grid-template-columns: minmax(0,1fr) 300px; }
+.balt-policy-document { min-width: 0; overflow-wrap: anywhere; }
+.balt-policy-document__title { font-family: var(--wp--preset--font-family--heading,Georgia,serif); font-size: clamp(1.75rem, 2.5vw, 2.2rem); font-weight: 800; line-height: 1.5; padding-bottom: 16px; border-bottom: 1px solid var(--policy-border); margin: 0 0 24px; }
+.balt-policy-document__body { font-size: 15px; line-height: 25.5px; }
+.balt-policy-document__body > p { margin: 0 0 16px; padding-inline-start: 40px; }
+.balt-policy-document__body :is(h2,h3,h4,h5,h6) { font-family: inherit; color: var(--policy-blue); font-size: 18px; font-weight: 700; line-height: 27px; margin: 32px 0 12px; }
+.balt-policy-document__body :is(ul,ol) { margin: 0 0 16px; padding-inline-start: 56px; }
+.balt-policy-document__body ul { list-style: disc; }
+.balt-policy-document__body ol { list-style: decimal; }
+.balt-policy-document__body li + li { margin-top: 8px; }
+.balt-policy-document__body a, .balt-policy-resources a { color: var(--policy-blue); text-decoration: underline; }
+.balt-policy-document__body img { max-width: 100%; height: auto; }
+.balt-policy-resources { min-width: 0; border-inline-start: 1px solid var(--policy-border); padding-inline-start: 32px; overflow-wrap: anywhere; }
+.balt-policy-resources h2 { font-family: inherit; font-size: 18px; font-weight: 700; line-height: 27px; margin: 0 0 16px; }
+.balt-policy-resources ul { list-style: disc; padding-inline-start: 16px; margin: 0; color: #4a5565; font-size: 14px; line-height: 19.25px; }
+.balt-policy-resources li + li { margin-top: 8px; }
+.balt-policy-resources a { text-decoration: none; }
+@media(max-width: 1199px) {
+	.balt-policy-detail--resources .balt-policy-detail__main { grid-template-columns: minmax(0,1fr); gap: 32px; }
+	.balt-policy-resources { border-inline-start: 0; border-top: 1px solid var(--policy-border); padding: 24px 0 0; }
+}
+@media(max-width: 991px) {
+	.balt-policy-groups { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 0 32px; }
+	.balt-policy-group:nth-child(3) { border-top-color: var(--policy-border); }
+	.balt-policy-detail { grid-template-columns: minmax(0,1fr); }
+	.balt-policy-sidebar { border-inline-end: 0; border-bottom: 1px solid var(--policy-border); }
+	.balt-policy-sidebar__list { max-height: 280px; overflow-y: auto; }
+	.balt-policy-sidebar__list a[aria-current="page"]::after { display: none; }
+	.balt-policy-document__body > p { padding-inline-start: 0; }
+	.balt-policy-document__body :is(ul,ol) { padding-inline-start: 24px; }
+}
+@media(max-width: 639px) {
+	.balt-policy-page .balt-interior-hero { min-height: 300px; }
+	.balt-policy-groups { grid-template-columns: minmax(0,1fr); margin-top: 20px; }
+	.balt-policy-group:nth-child(2) { border-top-color: var(--policy-border); }
+}

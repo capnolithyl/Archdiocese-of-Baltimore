@@ -37,7 +37,9 @@ jobs:
         run: find theme -type f -name '*.php' -print0 | xargs -0 -n 1 php -l
 
       - name: Verify Policy post type and scoped search
-        run: php tests/policy-post-type-smoke.php
+        run: |
+          php tests/policy-post-type-smoke.php
+          node tests/policy-layout-smoke.mjs
 
       - name: Verify Resource Directory block
         run: |

@@ -27,4 +27,10 @@ check($q->vars['post_status']==='publish'&&$q->vars['has_password']===false,'Onl
 foreach([new WP_Query(['s'=>'security']),new WP_Query(['post_type'=>'post']),new WP_Query(['post_type'=>'balt_policy'],false),new WP_Query(['post_type'=>'balt_policy'],true,false)] as $other){
  $before=$other->vars;balt_policy_search_query($other);check($before===$other->vars,'Unrelated queries unchanged');
 }
-echo "Policy CPT, taxonomy and scoped public search passed\n";
+check($args['hierarchical']===true,'Parent policies must be supported');
+function policy_fixture($id,$parent=0,$status='publish',$password=''){return (object)['ID'=>$id,'post_parent'=>$parent,'post_type'=>'balt_policy','post_status'=>$status,'post_password'=>$password];}
+$groups=balt_policy_groups([policy_fixture(1),policy_fixture(2,1),policy_fixture(3,2),policy_fixture(4),policy_fixture(5,99),policy_fixture(6,1,'draft'),policy_fixture(7,1,'publish','secret')]);
+check(count($groups)===3,'Root and orphan groups');
+check(array_map(fn($p)=>$p->ID,$groups[0]['children'])===[2,3],'Nested children ordered, protected records omitted');
+check($groups[2]['parent']->ID===5,'Orphan should remain visible');
+echo "Policy CPT, taxonomy, grouped index and scoped public search passed\n";

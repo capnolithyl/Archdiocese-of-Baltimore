@@ -6,7 +6,7 @@ const block=JSON.parse(read('theme/blocks/content-card-grid/block.json'));
 assert.equal(block.name,'balt/content-card-grid');
 assert.equal(group.location[0][0].value,block.name);
 const fields=Object.fromEntries(group.fields.map(f=>[f.name,f]));
-assert.deepEqual(Object.keys(fields.source.choices),['manual','selected','latest']);
+assert.deepEqual(Object.keys(fields.source.choices),['manual','selected','latest','policy_categories']);
 assert.equal(fields.cards.max,12);
 assert.equal(fields.selected_posts.return_format,'id');
 assert.equal(fields.cards.sub_fields.find(f=>f.name==='image').return_format,'id');

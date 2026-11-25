@@ -152,11 +152,36 @@
       "choices": {
         "manual": "Manual Cards",
         "selected": "Selected WordPress Content",
-        "latest": "Latest WordPress Content"
+        "latest": "Latest WordPress Content",
+        "policy_categories": "Policy Categories"
       },
       "default_value": "manual",
       "return_format": "value",
       "ui": 1
+    },
+    {
+      "key": "field_balt_card_grid_policy_categories",
+      "label": "Select Policy Categories",
+      "name": "policy_categories",
+      "type": "taxonomy",
+      "taxonomy": "balt_policy_category",
+      "field_type": "multi_select",
+      "return_format": "id",
+      "allow_null": 1,
+      "add_term": 0,
+      "save_terms": 0,
+      "load_terms": 0,
+      "required": 0,
+      "conditional_logic": [
+        [
+          {
+            "field": "field_balt_card_grid_source",
+            "operator": "==",
+            "value": "policy_categories"
+          }
+        ]
+      ],
+      "instructions": "Leave empty to display all top-level categories alphabetically. Select categories to limit the grid and set their order."
     },
     {
       "key": "field_balt_card_grid_cards",
@@ -385,5 +410,5 @@
   "active": true,
   "description": "Reusable content card grid with manual, selected and latest modes.",
   "show_in_rest": 0,
-  "modified": 1795648000
+  "modified": 1795650000
 }

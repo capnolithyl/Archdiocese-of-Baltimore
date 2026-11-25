@@ -1,0 +1,53 @@
+{
+  "key": "group_balt_policy_category",
+  "title": "Policy Category Details",
+  "fields": [
+    {
+      "key": "field_balt_policy_category_image",
+      "name": "balt_policy_category_image",
+      "label": "Category Image",
+      "type": "image",
+      "required": 0,
+      "conditional_logic": 0,
+      "return_format": "id",
+      "preview_size": "medium",
+      "library": "all",
+      "instructions": "Used by the category card and the shared category/policy hero."
+    },
+    {
+      "key": "field_balt_policy_directory_page",
+      "name": "balt_policy_directory_page",
+      "label": "Policy Directory Page",
+      "type": "post_object",
+      "required": 0,
+      "conditional_logic": 0,
+      "post_type": [
+        "page"
+      ],
+      "post_status": [
+        "publish"
+      ],
+      "return_format": "id",
+      "multiple": 0,
+      "allow_null": 1,
+      "ui": 1,
+      "instructions": "Optional custom landing page for the Back to Policy Directory link. Defaults to Policies or Archdiocese Policies page, then the policy library archive."
+    }
+  ],
+  "location": [
+    [
+      {
+        "param": "taxonomy",
+        "operator": "==",
+        "value": "balt_policy_category"
+      }
+    ]
+  ],
+  "position": "normal",
+  "style": "default",
+  "label_placement": "top",
+  "instruction_placement": "label",
+  "active": true,
+  "show_in_rest": 0,
+  "modified": 1795650000
+}
