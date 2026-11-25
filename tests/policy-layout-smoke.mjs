@@ -29,3 +29,5 @@ input.value='governance';input.update();assert.equal(child.hidden,false);
 input.value='none';input.update();assert.equal(empty.hidden,false);
 input.value='';input.update();assert.equal(empty.hidden,true);assert.ok(!group.hidden&&!group2.hidden);
 console.log('Policy filtering keeps matching group context and accurate counts');
+
+assert.ok(category.includes('if ( $directory_url )') && single.includes('if ( $term_url )'),'Missing landing page must not render dead back links');

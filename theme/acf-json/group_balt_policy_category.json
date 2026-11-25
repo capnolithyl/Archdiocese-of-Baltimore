@@ -31,7 +31,7 @@
       "multiple": 0,
       "allow_null": 1,
       "ui": 1,
-      "instructions": "Optional custom landing page for the Back to Policy Directory link. Defaults to Policies or Archdiocese Policies page, then the policy library archive."
+      "instructions": "Optional published landing page for the Back to Policy Directory link. Defaults to a published page with slug policies, archdiocese-policies, or policy-library. The link is hidden until an eligible page exists."
     }
   ],
   "location": [
@@ -49,5 +49,5 @@
   "instruction_placement": "label",
   "active": true,
   "show_in_rest": 0,
-  "modified": 1795650000
+  "modified": 1795650001
 }

@@ -23,7 +23,7 @@ function balt_register_policy_post_type(): void {
 			'public'              => true,
 			'hierarchical'        => true,
 			'exclude_from_search' => false,
-			'has_archive'         => 'policy-library',
+			'has_archive'         => false,
 			'rewrite'             => array( 'slug' => 'policy', 'with_front' => false ),
 			'show_in_rest'        => true,
 			'menu_icon'           => 'dashicons-media-document',
@@ -130,16 +130,23 @@ function balt_policy_term( int $post_id ): ?WP_Term {
 	return $terms[0] instanceof WP_Term ? $terms[0] : null;
 }
 
+/** Link only to an actual published, unprotected Gutenberg landing page. */
 function balt_policy_directory_url( ?WP_Term $term = null ): string {
 	$id = $term && function_exists( 'get_field' ) ? absint( get_field( 'balt_policy_directory_page', $term ) ) : 0;
-	$page = $id ? get_post( $id ) : null;
-	if ( ! $page ) {
-		$page = get_page_by_path( 'policies' ) ?: get_page_by_path( 'archdiocese-policies' );
+	$pages = array( $id ? get_post( $id ) : null );
+	foreach ( array( 'policies', 'archdiocese-policies', 'policy-library' ) as $slug ) {
+		$pages[] = get_page_by_path( $slug );
 	}
-	if ( $page && 'page' === $page->post_type && 'publish' === $page->post_status && '' === $page->post_password ) {
-		return (string) get_permalink( $page );
+	foreach ( $pages as $page ) {
+		if ( $page && 'page' === $page->post_type && 'publish' === $page->post_status && '' === $page->post_password ) {
+			$url = get_permalink( $page );
+			if ( $url ) {
+				return (string) $url;
+			}
+		}
 	}
-	return (string) get_post_type_archive_link( 'balt_policy' );
+	// Until the landing page exists, do not generate a dead archive link.
+	return '';
 }
 
 function balt_policy_term_image( ?WP_Term $term ): int {

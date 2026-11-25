@@ -2,6 +2,7 @@
 /** Policy category index (Figma 357:8327). */
 get_header();
 $term = get_queried_object();
+$directory_url = balt_policy_directory_url( $term );
 global $wp_query;
 $groups = balt_policy_groups( $wp_query->posts );
 wp_enqueue_script( 'balt-policy-filter', get_template_directory_uri() . '/assets/js/policy-filter.js', array(), BALT_VERSION, true );
@@ -10,7 +11,9 @@ wp_enqueue_script( 'balt-policy-filter', get_template_directory_uri() . '/assets
 	<?php get_template_part( 'template-parts/layout/interior-hero', null, array( 'hero_title' => $term->name, 'eyebrow' => __( 'Archdiocese Policies', 'baltimore' ), 'image_id' => balt_policy_term_image( $term ) ) ); ?>
 	<div class="balt-policy-index" data-policy-filter>
 		<div class="balt-policy-index__header">
-			<a class="balt-policy-back" href="<?php echo esc_url( balt_policy_directory_url( $term ) ); ?>"><?php esc_html_e( '← Policy Directory', 'baltimore' ); ?></a>
+			<?php if ( $directory_url ) : ?>
+				<a class="balt-policy-back" href="<?php echo esc_url( $directory_url ); ?>"><?php esc_html_e( '← Policy Directory', 'baltimore' ); ?></a>
+			<?php endif; ?>
 			<?php get_template_part( 'template-parts/components/policy-filter', null, array( 'placeholder' => sprintf( __( 'Search %s...', 'baltimore' ), $term->name ) ) ); ?>
 		</div>
 		<div class="balt-policy-groups">

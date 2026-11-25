@@ -17,7 +17,9 @@ while ( have_posts() ) :
 		<div class="balt-policy-detail<?php echo $resources ? ' balt-policy-detail--resources' : ''; ?>">
 			<nav class="balt-policy-sidebar" aria-label="<?php esc_attr_e( 'Policies in this category', 'baltimore' ); ?>" data-policy-filter>
 				<div class="balt-policy-sidebar__header">
-					<a class="balt-policy-back" href="<?php echo esc_url( $term_url ); ?>"><?php echo esc_html( sprintf( __( '← All %s Policies', 'baltimore' ), $name ) ); ?></a>
+					<?php if ( $term_url ) : ?>
+						<a class="balt-policy-back" href="<?php echo esc_url( $term_url ); ?>"><?php echo esc_html( $term ? sprintf( __( '← All %s Policies', 'baltimore' ), $name ) : __( '← Policy Directory', 'baltimore' ) ); ?></a>
+					<?php endif; ?>
 					<?php get_template_part( 'template-parts/components/policy-filter' ); ?>
 				</div>
 				<ul class="balt-policy-sidebar__list">
