@@ -1,0 +1,179 @@
+{
+  "key": "group_balt_resource_directory",
+  "title": "Resource Directory",
+  "fields": [
+    {
+      "key": "field_balt_resource_directory_mode",
+      "name": "mode",
+      "label": "Directory View",
+      "type": "radio",
+      "required": 1,
+      "conditional_logic": 0,
+      "choices": {
+        "landing": "Directory Landing Page",
+        "category": "Category Page"
+      },
+      "default_value": "landing",
+      "layout": "vertical",
+      "return_format": "value",
+      "instructions": "Landing lists this page's published child pages. Category uses this page's parent to list sibling categories."
+    },
+    {
+      "key": "field_balt_resource_directory_intro",
+      "name": "intro",
+      "label": "Introduction",
+      "type": "textarea",
+      "required": 0,
+      "conditional_logic": [
+        [
+          {
+            "field": "field_balt_resource_directory_mode",
+            "operator": "==",
+            "value": "landing"
+          }
+        ]
+      ],
+      "rows": 3,
+      "new_lines": "",
+      "default_value": "Use the navigation to select a resource category. Once selected, you will see its sections and their respective files."
+    },
+    {
+      "key": "field_balt_resource_directory_sections",
+      "name": "sections",
+      "label": "Resource Sections",
+      "type": "repeater",
+      "required": 0,
+      "conditional_logic": [
+        [
+          {
+            "field": "field_balt_resource_directory_mode",
+            "operator": "==",
+            "value": "category"
+          }
+        ]
+      ],
+      "layout": "block",
+      "min": 0,
+      "max": 0,
+      "collapsed": "field_balt_resource_directory_section_heading",
+      "button_label": "Add Section",
+      "instructions": "Add as many groups as needed. The jump menu is built from their headings. Choose which desktop column each group belongs to.",
+      "sub_fields": [
+        {
+          "key": "field_balt_resource_directory_section_heading",
+          "name": "heading",
+          "label": "Section Heading",
+          "type": "text",
+          "required": 1,
+          "conditional_logic": 0
+        },
+        {
+          "key": "field_balt_resource_directory_section_column",
+          "name": "column",
+          "label": "Desktop Column",
+          "type": "radio",
+          "required": 0,
+          "conditional_logic": 0,
+          "choices": {
+            "left": "Left",
+            "right": "Right"
+          },
+          "default_value": "left",
+          "layout": "horizontal",
+          "return_format": "value"
+        },
+        {
+          "key": "field_balt_resource_directory_section_links",
+          "name": "links",
+          "label": "Links / Files",
+          "type": "repeater",
+          "required": 0,
+          "conditional_logic": 0,
+          "layout": "block",
+          "min": 1,
+          "max": 0,
+          "button_label": "Add Resource",
+          "collapsed": "field_balt_resource_directory_item_label",
+          "sub_fields": [
+            {
+              "key": "field_balt_resource_directory_item_type",
+              "name": "type",
+              "label": "Destination Type",
+              "type": "radio",
+              "required": 0,
+              "conditional_logic": 0,
+              "choices": {
+                "link": "Link / URL",
+                "file": "Media Library File"
+              },
+              "default_value": "link",
+              "layout": "horizontal",
+              "return_format": "value"
+            },
+            {
+              "key": "field_balt_resource_directory_item_link",
+              "name": "link",
+              "label": "Link",
+              "type": "link",
+              "required": 1,
+              "conditional_logic": [
+                [
+                  {
+                    "field": "field_balt_resource_directory_item_type",
+                    "operator": "==",
+                    "value": "link"
+                  }
+                ]
+              ],
+              "return_format": "array"
+            },
+            {
+              "key": "field_balt_resource_directory_item_file",
+              "name": "file",
+              "label": "File",
+              "type": "file",
+              "required": 1,
+              "conditional_logic": [
+                [
+                  {
+                    "field": "field_balt_resource_directory_item_type",
+                    "operator": "==",
+                    "value": "file"
+                  }
+                ]
+              ],
+              "return_format": "id",
+              "library": "all"
+            },
+            {
+              "key": "field_balt_resource_directory_item_label",
+              "name": "label",
+              "label": "Display Label (optional)",
+              "type": "text",
+              "required": 0,
+              "conditional_logic": 0,
+              "instructions": "Override the link label or the Media Library attachment title."
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "location": [
+    [
+      {
+        "param": "block",
+        "operator": "==",
+        "value": "balt/resource-directory"
+      }
+    ]
+  ],
+  "position": "normal",
+  "style": "default",
+  "label_placement": "top",
+  "instruction_placement": "label",
+  "active": true,
+  "description": "Landing and category layouts share an automatic page hierarchy sidebar. Links are managed in ordered groups without separate resource posts.",
+  "show_in_rest": 0,
+  "modified": 1795645500
+}

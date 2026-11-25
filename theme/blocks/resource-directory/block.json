@@ -1,0 +1,36 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "balt/resource-directory",
+  "version": "1.0.0",
+  "title": "Resource Directory",
+  "category": "baltimore",
+  "icon": "list-view",
+  "description": "A page-based directory with category navigation and grouped file or web links.",
+  "keywords": [
+    "resources",
+    "directory",
+    "documents",
+    "links"
+  ],
+  "textdomain": "baltimore",
+  "acf": {
+    "mode": "preview",
+    "renderCallback": "balt_render_resource_directory_block",
+    "blockVersion": 3
+  },
+  "supports": {
+    "anchor": true,
+    "align": [
+      "full"
+    ],
+    "html": false,
+    "multiple": false
+  },
+  "attributes": {
+    "align": {
+      "type": "string",
+      "default": "full"
+    }
+  }
+}
