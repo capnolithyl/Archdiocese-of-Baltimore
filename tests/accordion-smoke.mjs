@@ -6,7 +6,7 @@ const code=read('theme/assets/js/accordion-motion.js');
 const editor=read('javascript/accordion-editor.js');
 assert.ok(editor.includes("props.name !== 'core/accordion'"));
 assert.ok(editor.includes('InspectorControls')&&editor.includes('setAttributes({ baltEyebrow: value })')&&editor.includes('setAttributes({ baltHeading: value })'));
-let hidden=true, inert=false, animated=false, cb, animation, frames, currentHeight=160;
+let hidden=true, inert=false, animated=false, cb, animation, frames, currentHeight=160, animationActive=false;
 const motion={matches:false,addEventListener(){}};
 const panel={
  hasAttribute:n=>n==='hidden'?hidden:inert,
@@ -14,8 +14,8 @@ const panel={
  removeAttribute:n=>{assert.equal(n,'inert');inert=false;},
  classList:{add(){animated=true;},remove(){animated=false;}},
  contains:()=>false,
- getBoundingClientRect:()=>({height:currentHeight}),
- animate:(f,opts)=>{frames=f;assert.equal(opts.duration,260);animation={cancel(){this.oncancel?.();}};return animation;},
+ getBoundingClientRect:()=>({height:animationActive?currentHeight:160}),
+ animate:(f,opts)=>{frames=f;assert.equal(opts.duration,260);animationActive=true;animation={cancel(){animationActive=false;this.oncancel?.();}};return animation;},
 };
 vm.runInNewContext(code,{window:{matchMedia:()=>motion},document:{readyState:'complete',querySelectorAll:()=>[panel],activeElement:null},MutationObserver:class{constructor(fn){cb=fn;}observe(target,opts){assert.equal(target,panel);assert.deepEqual(Array.from(opts.attributeFilter),['hidden']);}}});
 hidden=false;cb();assert.equal(frames[0].height,'0px');assert.equal(frames[1].height,'160px');assert.equal(animated,true);animation.onfinish();assert.equal(animated,false);
