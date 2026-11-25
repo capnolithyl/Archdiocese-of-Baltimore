@@ -146,3 +146,129 @@
 		transition: none;
 	}
 }
+
+
+/* Native, unsynced Contact & Form pattern. Keep the left column unlocked. */
+.balt-contact-pattern {
+	box-sizing: border-box;
+	width: 100%;
+	max-width: none;
+	margin-block-start: 0;
+	padding-block: clamp(3rem, 5.62vw, 6rem);
+	background: var(--wp--preset--color--foreground, #0f1a2e);
+	color: #fff;
+	font-family: var(--wp--preset--font-family--body, Lato, sans-serif);
+}
+.balt-contact-pattern .balt-contact-form__columns {
+	box-sizing: border-box;
+	width: 100%;
+	max-width: var(--wp--style--global--wide-size, 1504px);
+	margin: 0 auto;
+	padding-inline: clamp(1.25rem, 3vw, 2.5rem);
+	gap: clamp(2rem, 4.68vw, 5rem);
+	align-items: flex-start !important;
+}
+.balt-contact-pattern .balt-contact-form__columns > .wp-block-column {
+	min-width: 0;
+}
+.balt-contact-pattern .balt-contact-form__card {
+	box-sizing: border-box;
+	border: 1px solid rgba(255, 255, 255, .1);
+	border-radius: 16px;
+	background: rgba(255, 255, 255, .05);
+	padding: clamp(1.25rem, 3vw, 2rem);
+}
+.balt-contact-pattern .balt-contact-form__intro {
+	color: rgba(255, 255, 255, .85);
+	overflow-wrap: anywhere;
+}
+.balt-contact-pattern .balt-contact-form__intro > * {
+	margin-block: 0 1rem;
+}
+.balt-contact-pattern .balt-contact-form__intro > :last-child {
+	margin-bottom: 0;
+}
+.balt-contact-pattern .balt-contact-form__intro :is(h2,h3,h4,strong) {
+	color: #fff;
+}
+.balt-contact-pattern .balt-contact-form__intro h2 {
+	font-family: var(--wp--preset--font-family--heading, Georgia, serif);
+	font-size: clamp(2rem, 3.6vw, 3rem);
+	font-weight: 800;
+	line-height: 1.25;
+}
+.balt-contact-pattern .balt-contact-form__intro p {
+	font-size: 16px;
+	line-height: 26px;
+}
+.balt-contact-pattern .balt-contact-form__intro .is-style-balt-eyebrow {
+	color: var(--wp--preset--color--secondary, #c9a840);
+	font-size: 14px;
+	font-weight: 600;
+	line-height: 20px;
+	letter-spacing: 3px;
+	text-transform: uppercase;
+}
+.balt-contact-pattern .balt-contact-form__intro a:not(.wp-block-button__link) {
+	color: var(--wp--preset--color--secondary, #c9a840);
+	text-decoration: underline;
+	text-underline-offset: 3px;
+}
+.balt-contact-pattern .balt-contact-form__intro a:focus-visible {
+	outline: 2px solid #c9a840;
+	outline-offset: 3px;
+}
+.balt-contact-pattern .balt-contact-form__intro ul {
+	list-style: disc;
+	padding-inline-start: 1.5rem;
+}
+.balt-contact-pattern .balt-contact-form__intro ol {
+	list-style: decimal;
+	padding-inline-start: 1.5rem;
+}
+.balt-contact-pattern .balt-contact-form__intro .balt-contact-form__details {
+	margin-top: 32px;
+}
+.balt-contact-pattern .balt-contact-form__details p {
+	position: relative;
+	margin: 0 0 16px;
+	padding-inline-start: 30px;
+	font-size: 14px;
+	line-height: 20px;
+	color: rgba(255, 255, 255, .75);
+}
+.balt-contact-pattern .balt-contact-form__details p:last-child {
+	margin-bottom: 0;
+}
+.balt-contact-pattern .balt-contact-form__details p.balt-contact-detail-hours {
+	margin-top: -14px;
+	font-size: 12px;
+	line-height: 16px;
+	color: rgba(255, 255, 255, .6);
+}
+.balt-contact-pattern :is(.balt-contact-detail-phone,.balt-contact-detail-email,.balt-contact-detail-location)::before {
+	content: '';
+	position: absolute;
+	inset-inline-start: 0;
+	top: 2px;
+	width: 18px;
+	height: 18px;
+	background: var(--wp--preset--color--secondary, #c9a840);
+	mask-repeat: no-repeat;
+	mask-position: center;
+	mask-size: contain;
+}
+.balt-contact-pattern .balt-contact-detail-phone::before { mask-image: url("assets/footer/phone.svg"); }
+.balt-contact-pattern .balt-contact-detail-email::before { mask-image: url("assets/footer/email.svg"); }
+.balt-contact-pattern .balt-contact-detail-location::before { mask-image: url("assets/footer/location.svg"); }
+.balt-contact-pattern .balt-contact-form__details a:not(.wp-block-button__link) {
+	color: inherit;
+}
+@media (max-width: 61.999rem) {
+	.balt-contact-pattern .balt-contact-form__columns:not(.is-not-stacked-on-mobile) {
+		flex-wrap: wrap !important;
+	}
+	.balt-contact-pattern .balt-contact-form__columns:not(.is-not-stacked-on-mobile) > .wp-block-column {
+		flex-basis: 100% !important;
+	}
+}

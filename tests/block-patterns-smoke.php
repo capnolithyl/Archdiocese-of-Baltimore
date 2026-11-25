@@ -31,5 +31,15 @@ check(str_contains($p['content']??'','<!-- wp:media-text'),'Native Media & Text 
 check(str_contains($p['content']??'','<!-- wp:buttons -->'),'Native buttons missing');
 check(!str_contains($p['content']??'','<?php'),'Pattern must contain rendered markup, not PHP');
 balt_register_block_patterns();
-check(count($GLOBALS['patterns'])===1,'Do not duplicate existing pattern registration');
+check(count($GLOBALS['patterns'])===2,'Both theme patterns must register exactly once');
+$c=$GLOBALS['patterns']['baltimore/contact-form']??[];
+check(($c['inserter']??false)===true && in_array('baltimore',$c['categories']??[],true),'Contact pattern must be discoverable');
+check(str_contains($c['content'],'<!-- wp:group')&&str_contains($c['content'],'<!-- wp:columns'),'Use native editable layout blocks');
+check(substr_count($c['content'],'<!-- wp:column ')===2,'Two editable columns');
+check(str_contains($c['content'],'<!-- wp:gravityforms/form /-->'),'Native Gravity Forms selector with no fixed ID');
+check(!str_contains($c['content'],'<!-- wp:balt/contact-form')&&!str_contains($c['content'],'"lock"'),'No legacy block or content locks');
+check(!str_contains($c['content'],'<?php'),'Render pattern PHP before registration');
+unset($GLOBALS['patterns']['baltimore/contact-form']);
+balt_register_block_patterns();
+check(count($GLOBALS['patterns'])===2,'Register missing contact pattern even when media pattern exists');
 echo "Baltimore pattern registration and inserter content passed\n";

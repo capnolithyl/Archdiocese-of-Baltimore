@@ -2,11 +2,11 @@
   "$schema": "https://schemas.wp.org/trunk/block.json",
   "apiVersion": 3,
   "name": "balt/contact-form",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "title": "Contact & Form",
   "category": "baltimore",
   "icon": "email-alt",
-  "description": "A reusable dark contact section with optional contact details and a selected Gravity Form.",
+  "description": "Legacy contact section. Use the Contact & Form pattern for new sections.",
   "keywords": [
     "contact",
     "form",
@@ -24,7 +24,8 @@
     "align": [
       "full"
     ],
-    "html": false
+    "html": false,
+    "inserter": false
   },
   "attributes": {
     "align": {
