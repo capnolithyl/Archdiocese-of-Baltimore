@@ -253,6 +253,7 @@ jobs:
 
       - name: Verify Image and Text Banner fields and styling
         run: |
+          php tests/image-text-banner-styles-smoke.php
           node --input-type=module <<'NODE'
           import { readFileSync } from 'node:fs';
 
@@ -265,10 +266,15 @@ jobs:
           if (block.name !== 'balt/image-text-banner' || block.acf.renderCallback !== 'balt_render_image_text_banner_block') {
             throw new Error('Image & Text Banner registration is incorrect');
           }
-          for (const [name, type] of [['eyebrow', 'text'], ['heading', 'text'], ['subheading', 'text'], ['quote', 'textarea'], ['image', 'image'], ['buttons', 'repeater']]) {
+          for (const [name, type] of [['style', 'select'], ['eyebrow', 'text'], ['heading', 'text'], ['subheading', 'text'], ['quote', 'textarea'], ['description', 'textarea'], ['image', 'image'], ['buttons', 'repeater']]) {
             if (group.fields.find(field => field.name === name)?.type !== type) {
               throw new Error('Image & Text Banner missing ACF field: ' + name);
             }
+          }
+          const style = group.fields.find(field => field.name === 'style');
+          if (style.default_value !== 'split' || !style.choices.background) throw new Error('Banner default must remain split');
+          for (const [name, operator] of [['description', '=='], ['subheading', '!='], ['quote', '!=']]) {
+            if (!group.fields.find(f => f.name === name).conditional_logic?.[0]?.some(rule => rule.field === style.key && rule.operator === operator && rule.value === 'background')) throw new Error('Banner field visibility: ' + name);
           }
           const buttons = group.fields.find(field => field.name === 'buttons');
           if (buttons.min !== 0 || buttons.max !== 2 || buttons.sub_fields.length !== 1 || buttons.sub_fields[0].type !== 'link') {
@@ -277,7 +283,7 @@ jobs:
           if (group.fields.find(field => field.name === 'image').return_format !== 'id') {
             throw new Error('Banner image must be returned as an attachment ID');
           }
-          for (const token of ["get_field( 'quote' )", "get_field( 'image' )", 'lg:grid-cols-2', 'lg:order-1', 'lg:order-2', 'bg-linear-to-r', 'bg-linear-to-t', 'lg:min-h-[632px]', 'btn btn-red', 'btn btn-outline-subtle']) {
+          for (const token of ["get_field( 'quote' )", "get_field( 'image' )", 'lg:grid-cols-2', 'lg:order-1', 'lg:order-2', 'bg-linear-to-r', 'bg-linear-to-t', 'lg:min-h-[632px]', 'btn btn-red', 'btn btn-outline-subtle', 'balt-image-text-banner--background', 'from-primary/95', 'via-primary/80', 'to-primary/0', 'desktop:min-h-[694px]', 'max-w-[600px]', 'btn btn-gold', 'rounded-[4px]']) {
             if (!php.includes(token)) throw new Error('Image & Text Banner markup missing: ' + token);
           }
           if (!source.includes('@source "./theme/blocks/image-text-banner";') || !util.includes('@utility btn-red') || !util.includes('@utility btn-outline-subtle')) {
@@ -285,7 +291,7 @@ jobs:
           }
           for (const stylesheet of ['theme/style.css', 'theme/style-editor.css']) {
             const css = readFileSync(stylesheet, 'utf8');
-            for (const token of ['.btn-red', '.btn-outline-subtle', '632px', '390px']) {
+            for (const token of ['.btn-red', '.btn-outline-subtle', '.btn-gold', '632px', '390px', '694px', '29.25px']) {
               if (!css.includes(token)) throw new Error('Missing compiled Image & Text Banner utility: ' + token + ' in ' + stylesheet);
             }
           }
