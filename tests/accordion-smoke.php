@@ -23,3 +23,7 @@ $old=balt_render_accordion_section($native,[]);
 check(!str_contains($old,'<header')&&!str_contains($old,'<section')&&str_contains($old,$native),'Old blocks must remain renderable without empty headings');
 check(balt_render_accordion_section('',[])==='','Empty output');
 echo "Native accordion attributes, escaped section heading and original markup passed\n";
+
+check($a['attributes']['baltHeadingAlignment']['default']==='default','Alignment must preserve default');
+check(str_contains(balt_render_accordion_section($native,['attrs'=>['baltHeading'=>'FAQ','baltHeadingAlignment'=>'left']]),'balt-accordion-section__header--left'),'Left heading alignment');
+check(!str_contains(balt_render_accordion_section($native,['attrs'=>['baltHeading'=>'FAQ','baltHeadingAlignment'=>'center']]),'balt-accordion-section__header--left'),'Centered heading alignment');

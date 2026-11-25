@@ -21,6 +21,9 @@
 	text-align: center;
 	margin: 0 0 48px;
 }
+.balt-accordion-section__header--left {
+	text-align: left;
+}
 .balt-accordion-section .balt-accordion-section__eyebrow {
 	margin: 0;
 	font-family: var(--wp--preset--font-family--body, Lato, sans-serif);

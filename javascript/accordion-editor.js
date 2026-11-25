@@ -4,7 +4,7 @@
  */
 const { createElement: el, Fragment } = wp.element;
 const { InspectorControls } = wp.blockEditor;
-const { PanelBody, TextControl } = wp.components;
+const { PanelBody, TextControl, SelectControl } = wp.components;
 const { __ } = wp.i18n;
 
 wp.hooks.addFilter('editor.BlockEdit', 'baltimore/accordion-section', (BlockEdit) => {
@@ -13,8 +13,9 @@ wp.hooks.addFilter('editor.BlockEdit', 'baltimore/accordion-section', (BlockEdit
 		const { attributes, setAttributes, isSelected } = props;
 		const eyebrow = attributes.baltEyebrow || '';
 		const heading = attributes.baltHeading || '';
+		const alignment = attributes.baltHeadingAlignment || 'default';
 		const header = eyebrow.trim() || heading.trim()
-			? el('header', { className: 'balt-accordion-section__header' },
+			? el('header', { className: 'balt-accordion-section__header' + (alignment === 'left' ? ' balt-accordion-section__header--left' : '') },
 				eyebrow.trim() && el('p', { className: 'balt-accordion-section__eyebrow' }, eyebrow),
 				heading.trim() && el('h2', { className: 'balt-accordion-section__heading' }, heading))
 			: null;
@@ -30,6 +31,16 @@ wp.hooks.addFilter('editor.BlockEdit', 'baltimore/accordion-section', (BlockEdit
 						label: __('Heading', 'baltimore'), value: heading,
 						onChange: (value) => setAttributes({ baltHeading: value }),
 						help: __('Optional section title, separate from the accordion questions.', 'baltimore'),
+					}),
+					el(SelectControl, {
+						label: __('Heading Alignment', 'baltimore'),
+						value: alignment,
+						options: [
+							{ label: __('Default', 'baltimore'), value: 'default' },
+							{ label: __('Left', 'baltimore'), value: 'left' },
+							{ label: __('Center', 'baltimore'), value: 'center' },
+						],
+						onChange: (value) => setAttributes({ baltHeadingAlignment: value }),
 					}))),
 			el('div', { className: 'balt-accordion-section balt-accordion-section--editor' },
 				el('div', { className: 'balt-accordion-section__inner' }, header, el(BlockEdit, props)))

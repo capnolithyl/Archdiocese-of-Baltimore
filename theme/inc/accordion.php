@@ -16,6 +16,7 @@ function balt_accordion_attributes( array $args, string $name ): array {
 	}
 	$args['attributes']['baltEyebrow'] = array( 'type' => 'string', 'default' => '' );
 	$args['attributes']['baltHeading'] = array( 'type' => 'string', 'default' => '' );
+	$args['attributes']['baltHeadingAlignment'] = array( 'type' => 'string', 'default' => 'default' );
 	return $args;
 }
 add_filter( 'register_block_type_args', 'balt_accordion_attributes', 10, 2 );
@@ -31,7 +32,7 @@ function balt_render_accordion_section( string $html, array $block ): string {
 	$header = '';
 	$heading_id = '';
 	if ( '' !== $eyebrow || '' !== $heading ) {
-		$header = '<header class="balt-accordion-section__header">';
+		$header = '<header class="balt-accordion-section__header' . ( 'left' === ( $attrs['baltHeadingAlignment'] ?? '' ) ? ' balt-accordion-section__header--left' : '' ) . '">';
 		if ( '' !== $eyebrow ) {
 			$header .= '<p class="balt-accordion-section__eyebrow">' . esc_html( $eyebrow ) . '</p>';
 		}
