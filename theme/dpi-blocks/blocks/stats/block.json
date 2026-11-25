@@ -2,11 +2,11 @@
   "$schema": "https://schemas.wp.org/trunk/block.json",
   "apiVersion": 3,
   "name": "dpi/stats",
-  "version": "1.5.0",
+  "version": "1.6.0",
   "title": "Stats / Impact",
   "category": "baltimore",
   "icon": "chart-pie",
-  "description": "Full-width statistics with heading, background photo and optional CTA links.",
+  "description": "Full-width statistics in a dark impact banner or compact light strip.",
   "keywords": [
     "statistics",
     "numbers",

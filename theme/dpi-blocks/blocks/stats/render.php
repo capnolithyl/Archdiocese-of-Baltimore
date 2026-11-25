@@ -11,7 +11,7 @@ foreach ( array_slice( (array) $stats, 0, 6 ) as $stat ) {
 	$value = trim( (string) ( $stat['value'] ?? '' ) );
 	$label = trim( (string) ( $stat['label'] ?? '' ) );
 
-	if ( $value || $label ) {
+	if ( '' !== $value || '' !== $label ) {
 		$items[] = array( 'value' => $value, 'label' => $label );
 	}
 }
@@ -20,6 +20,38 @@ if ( ! $items ) {
 	if ( ! empty( $is_preview ) ) {
 		echo '<p ' . get_block_wrapper_attributes() . '>' . esc_html__( 'Add at least one statistic.', 'baltimore' ) . '</p>';
 	}
+	return;
+}
+
+// Only the compact style opts out of the existing impact-banner layout.
+// Missing or unknown values retain the original homepage behavior.
+if ( 'compact' === get_field( 'style' ) ) {
+	$compact_columns = match ( count( $items ) ) {
+		1       => 'grid-cols-1',
+		2       => 'grid-cols-1 min-[360px]:grid-cols-2',
+		3       => 'grid-cols-1 min-[360px]:grid-cols-2 sm:grid-cols-3',
+		4       => 'grid-cols-1 min-[360px]:grid-cols-2 desktop:grid-cols-4',
+		5       => 'grid-cols-1 min-[360px]:grid-cols-2 md:grid-cols-3 desktop:grid-cols-5',
+		default => 'grid-cols-1 min-[360px]:grid-cols-2 md:grid-cols-3 desktop:grid-cols-6',
+	};
+	?>
+	<section <?php echo get_block_wrapper_attributes( array( 'class' => 'not-prose balt-full-bleed balt-stats-compact mt-0! w-full max-w-none border-y border-[#E5E7EB] bg-[#F5F3EE] py-10' ) ); ?> aria-label="<?php esc_attr_e( 'Statistics', 'baltimore' ); ?>">
+		<div class="mx-auto w-full max-w-wide px-gutter">
+			<ul class="m-0 grid list-none items-start gap-6 p-0 text-center <?php echo esc_attr( $compact_columns ); ?>">
+				<?php foreach ( $items as $item ) : ?>
+					<li class="flex min-w-0 flex-col items-center gap-1 wrap-break-word">
+						<?php if ( '' !== $item['value'] ) : ?>
+							<strong class="font-heading text-[clamp(2rem,3vw,2.75rem)] font-extrabold leading-none text-primary"><?php echo esc_html( $item['value'] ); ?></strong>
+						<?php endif; ?>
+						<?php if ( '' !== $item['label'] ) : ?>
+							<span class="font-body text-sm leading-5 tracking-[0.025em] text-muted"><?php echo esc_html( $item['label'] ); ?></span>
+						<?php endif; ?>
+					</li>
+				<?php endforeach; ?>
+			</ul>
+		</div>
+	</section>
+	<?php
 	return;
 }
 
@@ -65,10 +97,10 @@ $columns = match ( count( $items ) ) {
 		<ul class="mx-auto mt-14 grid w-full overflow-hidden rounded-card border-2 border-white/15 p-0 list-none <?php echo esc_attr( $columns . ' ' . $grid_style ); ?>">
 			<?php foreach ( $items as $item ) : ?>
 				<li class="flex min-h-[160px] flex-col items-center justify-center gap-3 px-3 py-7 text-center sm:px-4 <?php echo esc_attr( $item_style ); ?>">
-					<?php if ( $item['value'] ) : ?>
+					<?php if ( '' !== $item['value'] ) : ?>
 						<strong class="font-body text-[clamp(1.75rem,2.9vw,3rem)] font-extrabold leading-none tracking-[-0.025em] text-white"><?php echo esc_html( $item['value'] ); ?></strong>
 					<?php endif; ?>
-					<?php if ( $item['label'] ) : ?>
+					<?php if ( '' !== $item['label'] ) : ?>
 						<span class="font-body text-sm leading-[1.375] text-white/60"><?php echo esc_html( $item['label'] ); ?></span>
 					<?php endif; ?>
 				</li>

@@ -293,6 +293,7 @@ jobs:
 
       - name: Verify Stats / Impact fields and Tailwind layout
         run: |
+          php tests/stats-styles-smoke.php
           node --input-type=module <<'NODE'
           import { readFileSync } from 'node:fs';
 
@@ -307,7 +308,7 @@ jobs:
           }
 
           const expected = [
-            ['eyebrow', 'text'], ['heading', 'text'], ['description', 'textarea'],
+            ['style', 'select'], ['eyebrow', 'text'], ['heading', 'text'], ['description', 'textarea'],
             ['background_image', 'image'], ['item_background', 'select'], ['stats', 'repeater'], ['buttons', 'repeater']
           ];
           if (group.fields.length !== expected.length) throw new Error('Unexpected Stats ACF field count');
@@ -317,6 +318,13 @@ jobs:
             }
           }
 
+          const style = group.fields.find(f => f.name === 'style');
+          if (style.default_value !== 'impact' || !style.choices.compact) throw new Error('Stats styles must default to the original impact banner');
+          for (const field of group.fields.filter(f => !['style', 'stats'].includes(f.name))) {
+            if (!field.conditional_logic?.[0]?.some(r => r.field === style.key && r.operator === '!=' && r.value === 'compact')) {
+              throw new Error('Hide impact-only controls in compact style: ' + field.name);
+            }
+          }
           const itemBackground = group.fields.find(f => f.name === 'item_background');
           if (itemBackground.default_value !== 'transparent' ||
               itemBackground.choices.transparent !== 'Transparent (Figma)' ||
@@ -349,7 +357,7 @@ jobs:
 
           for (const path of ['theme/style.css', 'theme/style-editor.css']) {
             const css = readFileSync(path, 'utf8');
-            if (!css.includes('160px') || !css.includes('158deg')) {
+            if (!css.includes('160px') || !css.includes('158deg') || !css.includes('2.75rem') || !css.toLowerCase().includes('f5f3ee') || !css.toLowerCase().includes('e5e7eb')) {
               throw new Error('Stats grid or overlay missing from compiled CSS: ' + path);
             }
           }

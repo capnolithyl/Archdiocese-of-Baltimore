@@ -3,13 +3,44 @@
   "title": "Stats / Impact",
   "fields": [
     {
+      "key": "field_dpi_stats_style",
+      "label": "Style",
+      "name": "style",
+      "type": "select",
+      "instructions": "Choose the full impact banner or a compact row of statistics.",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "choices": {
+        "impact": "Impact Banner (Dark)",
+        "compact": "Compact (Light)"
+      },
+      "default_value": "impact",
+      "return_format": "value",
+      "allow_null": 0,
+      "multiple": 0,
+      "ui": 1
+    },
+    {
       "key": "field_dpi_stats_eyebrow",
       "label": "Eyebrow",
       "name": "eyebrow",
       "type": "text",
       "instructions": "",
       "required": 0,
-      "conditional_logic": 0,
+      "conditional_logic": [
+        [
+          {
+            "field": "field_dpi_stats_style",
+            "operator": "!=",
+            "value": "compact"
+          }
+        ]
+      ],
       "wrapper": {
         "width": "",
         "class": "",
@@ -25,7 +56,15 @@
       "type": "text",
       "instructions": "",
       "required": 0,
-      "conditional_logic": 0,
+      "conditional_logic": [
+        [
+          {
+            "field": "field_dpi_stats_style",
+            "operator": "!=",
+            "value": "compact"
+          }
+        ]
+      ],
       "wrapper": {
         "width": "",
         "class": "",
@@ -41,7 +80,15 @@
       "type": "textarea",
       "instructions": "",
       "required": 0,
-      "conditional_logic": 0,
+      "conditional_logic": [
+        [
+          {
+            "field": "field_dpi_stats_style",
+            "operator": "!=",
+            "value": "compact"
+          }
+        ]
+      ],
       "wrapper": {
         "width": "",
         "class": "",
@@ -59,7 +106,15 @@
       "type": "image",
       "instructions": "Optional full-width background photo. A navy gradient is always applied over the image for legibility.",
       "required": 0,
-      "conditional_logic": 0,
+      "conditional_logic": [
+        [
+          {
+            "field": "field_dpi_stats_style",
+            "operator": "!=",
+            "value": "compact"
+          }
+        ]
+      ],
       "wrapper": {
         "width": "",
         "class": "",
@@ -76,7 +131,15 @@
       "type": "select",
       "instructions": "Transparent matches Figma. Tinted Overlay keeps the existing shaded statistic cells.",
       "required": 0,
-      "conditional_logic": 0,
+      "conditional_logic": [
+        [
+          {
+            "field": "field_dpi_stats_style",
+            "operator": "!=",
+            "value": "compact"
+          }
+        ]
+      ],
       "wrapper": {
         "width": "",
         "class": "",
@@ -160,7 +223,15 @@
       "type": "repeater",
       "instructions": "Optional calls to action. First outlined, second gold. Maximum two.",
       "required": 0,
-      "conditional_logic": 0,
+      "conditional_logic": [
+        [
+          {
+            "field": "field_dpi_stats_style",
+            "operator": "!=",
+            "value": "compact"
+          }
+        ]
+      ],
       "wrapper": {
         "width": "",
         "class": "",
@@ -208,6 +279,7 @@
   "instruction_placement": "label",
   "hide_on_screen": "",
   "active": true,
-  "description": "Full-width impact statistics section with an optional background image, heading, description and two CTAs.",
-  "show_in_rest": 0
+  "description": "Reusable full-width impact banner or compact light statistic strip. Both use the same 1–6 statistics.",
+  "show_in_rest": 0,
+  "modified": 1795638300
 }
