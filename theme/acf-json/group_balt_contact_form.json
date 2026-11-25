@@ -1,0 +1,175 @@
+{
+  "key": "group_balt_contact_form",
+  "title": "Contact & Form",
+  "fields": [
+    {
+      "key": "field_balt_contact_form_eyebrow",
+      "name": "eyebrow",
+      "label": "Eyebrow",
+      "type": "text",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      }
+    },
+    {
+      "key": "field_balt_contact_form_heading",
+      "name": "heading",
+      "label": "Heading",
+      "type": "text",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      }
+    },
+    {
+      "key": "field_balt_contact_form_description",
+      "name": "description",
+      "label": "Description",
+      "type": "textarea",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "rows": 4,
+      "new_lines": ""
+    },
+    {
+      "key": "field_balt_contact_form_heading_alignment",
+      "name": "heading_alignment",
+      "label": "Heading Alignment",
+      "type": "select",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "choices": {
+        "default": "Default",
+        "left": "Left",
+        "center": "Center"
+      },
+      "default_value": "default",
+      "return_format": "value",
+      "ui": 1,
+      "instructions": "Align the introduction text. Contact information remains left-aligned."
+    },
+    {
+      "key": "field_balt_contact_form_phone",
+      "name": "phone",
+      "label": "Phone",
+      "type": "text",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "instructions": "Optional phone number for this office."
+    },
+    {
+      "key": "field_balt_contact_form_phone_hours",
+      "name": "phone_hours",
+      "label": "Phone Availability",
+      "type": "text",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "instructions": "Optional hours displayed below the phone number."
+    },
+    {
+      "key": "field_balt_contact_form_email",
+      "name": "email",
+      "label": "Email",
+      "type": "email",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      }
+    },
+    {
+      "key": "field_balt_contact_form_address",
+      "name": "address",
+      "label": "Address",
+      "type": "textarea",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "rows": 2,
+      "new_lines": ""
+    },
+    {
+      "key": "field_balt_contact_form_form",
+      "name": "form",
+      "label": "Gravity Form",
+      "type": "forms",
+      "required": 1,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "return_format": "id",
+      "multiple": 0,
+      "allow_null": 0,
+      "instructions": "Select an existing Gravity Form. Manage fields, notifications, confirmations and submit label in Gravity Forms."
+    },
+    {
+      "key": "field_balt_contact_form_ajax",
+      "name": "ajax",
+      "label": "AJAX Submission",
+      "type": "true_false",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "default_value": 1,
+      "ui": 1,
+      "instructions": "Submit without reloading the entire page. Turn off if the selected form or an add-on requires normal submission."
+    }
+  ],
+  "location": [
+    [
+      {
+        "param": "block",
+        "operator": "==",
+        "value": "balt/contact-form"
+      }
+    ]
+  ],
+  "position": "normal",
+  "style": "default",
+  "label_placement": "top",
+  "instruction_placement": "label",
+  "active": true,
+  "description": "Reusable contact and form section. All contact details are local to this block.",
+  "show_in_rest": 0,
+  "modified": 1795644000
+}

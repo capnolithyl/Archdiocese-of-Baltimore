@@ -1,0 +1,148 @@
+/**
+ * Contact & Form (Figma 320:2530).
+ * Keep GF layouts, conditional visibility, validation and submission intact.
+ * All overrides are scoped to this block, never site-wide Gravity Forms.
+ */
+.balt-contact-icon {
+	display: block;
+	flex: 0 0 18px;
+	width: 18px;
+	height: 18px;
+	background: var(--wp--preset--color--secondary, #c9a840);
+	mask-repeat: no-repeat;
+	mask-position: center;
+	mask-size: contain;
+}
+.balt-contact-icon--phone { mask-image: url("assets/footer/phone.svg"); }
+.balt-contact-icon--email { mask-image: url("assets/footer/email.svg"); }
+.balt-contact-icon--location { mask-image: url("assets/footer/location.svg"); }
+
+.balt-contact-form .gform_wrapper {
+	--gf-color-primary: #c9a840;
+	--gf-color-primary-contrast: #002d62;
+	--gf-color-in-ctrl: #fff;
+	--gf-color-in-ctrl-contrast: #fff;
+	--gf-color-in-ctrl-bg: rgba(255, 255, 255, .1);
+	--gf-color-in-ctrl-border: rgba(255, 255, 255, .2);
+	--gf-ctrl-radius: 4px;
+	--gf-ctrl-size: 42px;
+	--gf-form-gap-y: 20px;
+	--gf-form-gap-x: 16px;
+	color: rgba(255, 255, 255, .85);
+	font-family: var(--wp--preset--font-family--body, Lato, sans-serif);
+}
+.balt-contact-form .gform_wrapper .gform_fields {
+	row-gap: 20px;
+	column-gap: 16px;
+}
+.balt-contact-form .gform_wrapper .gfield_label,
+.balt-contact-form .gform_wrapper .gform-field-label,
+.balt-contact-form .gform_wrapper .ginput_complex label {
+	color: rgba(255, 255, 255, .75);
+	font-size: 12px;
+	font-weight: 600;
+	line-height: 16px;
+	letter-spacing: .3px;
+}
+.balt-contact-form .gform_wrapper .gfield_label,
+.balt-contact-form .gform_wrapper .ginput_complex label {
+	text-transform: uppercase;
+	margin-bottom: 6px;
+}
+.balt-contact-form .gform_wrapper .gfield_required,
+.balt-contact-form .gform_wrapper .gfield_required_asterisk,
+.balt-contact-form .gform_wrapper .gfield_required_text {
+	color: #e4c76c;
+}
+.balt-contact-form .gform_wrapper .gform_body :is(input:not([type]), input[type="text"], input[type="email"], input[type="tel"], input[type="url"], input[type="number"], input[type="password"], input[type="search"], input[type="date"], input[type="time"], select, textarea) {
+	box-sizing: border-box;
+	width: 100%;
+	min-height: 42px;
+	border: 1px solid rgba(255, 255, 255, .2);
+	border-radius: 4px;
+	background-color: rgba(255, 255, 255, .1);
+	color: #fff;
+	padding: 10px 16px;
+	font-family: inherit;
+	font-size: 14px;
+	line-height: 20px;
+	box-shadow: none;
+}
+.balt-contact-form .gform_wrapper .gform_body :is(input, textarea)::placeholder {
+	color: rgba(255, 255, 255, .55);
+	opacity: 1;
+}
+.balt-contact-form .gform_wrapper .gform_body select option {
+	background: #0f1a2e;
+	color: #fff;
+}
+.balt-contact-form .gform_wrapper .gform_body textarea {
+	min-height: 102px;
+	height: 102px;
+	resize: vertical;
+}
+.balt-contact-form .gform_wrapper :is(input, select, textarea, button, a):focus-visible {
+	outline: 2px solid #c9a840;
+	outline-offset: 2px;
+}
+.balt-contact-form .gform_wrapper :is(.gform_footer, .gform_page_footer) {
+	margin: 20px 0 0;
+	padding: 0;
+}
+.balt-contact-form .gform_wrapper :is(.gform_footer, .gform_page_footer) :is(input[type="submit"], button[type="submit"]) {
+	width: 100%;
+	min-height: 44px;
+	margin: 0;
+	padding: 12px 28px;
+	border: 1px solid transparent;
+	border-radius: 4px;
+	background: #c9a840;
+	color: #002d62;
+	font-family: inherit;
+	font-size: 14px;
+	font-weight: 700;
+	line-height: 20px;
+	letter-spacing: 1.4px;
+	text-transform: uppercase;
+	cursor: pointer;
+	transition: background-color 180ms ease;
+}
+.balt-contact-form .gform_wrapper :is(.gform_footer, .gform_page_footer) :is(input[type="submit"], button[type="submit"]):hover:not(:disabled) {
+	background: #e4c76c;
+}
+.balt-contact-form .gform_wrapper :is(input[type="submit"], button[type="submit"]):disabled {
+	opacity: .65;
+	cursor: not-allowed;
+}
+.balt-contact-form .gform_wrapper :is(.gfield_description, .gform_required_legend, .gform-field-label--type-sub) {
+	color: rgba(255, 255, 255, .75);
+}
+.balt-contact-form .gform_wrapper .gfield_validation_message,
+.balt-contact-form .gform_wrapper .validation_message,
+.balt-contact-form .gform_wrapper .gform_validation_errors {
+	color: #ffe1df;
+	background: #4b2228;
+	border: 1px solid #ef9690;
+	border-radius: 4px;
+}
+.balt-contact-form .gform_wrapper .gform_validation_errors :is(h2, ol, a) {
+	color: #ffe1df;
+}
+.balt-contact-form .gform_wrapper .gfield_error :is(input, select, textarea)[aria-invalid="true"] {
+	border-color: #ef9690;
+}
+.balt-contact-form .gform_confirmation_wrapper,
+.balt-contact-form .gform_confirmation_message {
+	color: #fff;
+	overflow-wrap: anywhere;
+}
+@media (max-width: 640px) {
+	.balt-contact-form .gform_wrapper .gform_fields > .gfield {
+		grid-column: 1 / -1;
+	}
+}
+@media (prefers-reduced-motion: reduce) {
+	.balt-contact-form .gform_wrapper :is(input, button) {
+		transition: none;
+	}
+}

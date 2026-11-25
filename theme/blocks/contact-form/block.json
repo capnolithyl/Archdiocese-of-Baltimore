@@ -1,0 +1,35 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "balt/contact-form",
+  "version": "1.0.0",
+  "title": "Contact & Form",
+  "category": "baltimore",
+  "icon": "email-alt",
+  "description": "A reusable dark contact section with optional contact details and a selected Gravity Form.",
+  "keywords": [
+    "contact",
+    "form",
+    "gravity forms",
+    "help"
+  ],
+  "textdomain": "baltimore",
+  "acf": {
+    "mode": "preview",
+    "renderCallback": "balt_render_contact_form_block",
+    "blockVersion": 3
+  },
+  "supports": {
+    "anchor": true,
+    "align": [
+      "full"
+    ],
+    "html": false
+  },
+  "attributes": {
+    "align": {
+      "type": "string",
+      "default": "full"
+    }
+  }
+}

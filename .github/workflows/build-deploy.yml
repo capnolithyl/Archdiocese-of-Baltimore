@@ -36,6 +36,11 @@ jobs:
       - name: Lint PHP templates
         run: find theme -type f -name '*.php' -print0 | xargs -0 -n 1 php -l
 
+      - name: Verify Contact and Form block
+        run: |
+          php tests/contact-form-smoke.php
+          node tests/contact-form-smoke.mjs
+
       - name: Verify reusable section heading alignment
         run: node tests/section-heading-smoke.mjs
 
