@@ -3,6 +3,29 @@
   "title": "Feature Grid",
   "fields": [
     {
+      "key": "field_balt_feature_grid_style",
+      "label": "Style",
+      "name": "style",
+      "type": "select",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "choices": {
+        "classic": "Classic Feature Grid",
+        "compact": "Compact Links"
+      },
+      "default_value": "classic",
+      "return_format": "value",
+      "allow_null": 0,
+      "multiple": 0,
+      "ui": 1,
+      "instructions": "Choose the original large icon feature cards or compact linked cards."
+    },
+    {
       "key": "field_balt_feature_grid_eyebrow",
       "label": "Eyebrow",
       "name": "eyebrow",
@@ -62,11 +85,34 @@
       "new_lines": ""
     },
     {
+      "key": "field_balt_feature_grid_view_all",
+      "label": "Section Link",
+      "name": "view_all",
+      "type": "link",
+      "required": 0,
+      "conditional_logic": [
+        [
+          {
+            "field": "field_balt_feature_grid_style",
+            "operator": "==",
+            "value": "compact"
+          }
+        ]
+      ],
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "return_format": "array",
+      "instructions": "Optional link beside the section heading (for example, View All Resources)."
+    },
+    {
       "key": "field_balt_feature_grid_items",
       "label": "Features",
       "name": "items",
       "type": "repeater",
-      "instructions": "Add 1 to 6 linked features. The layout adjusts automatically to the number of items.",
+      "instructions": "Add 1–12 linked cards. The grid adapts to the number of items.",
       "required": 1,
       "conditional_logic": 0,
       "wrapper": {
@@ -77,9 +123,9 @@
       "layout": "block",
       "pagination": 0,
       "min": 1,
-      "max": 6,
+      "max": 12,
       "collapsed": "field_balt_feature_grid_item_heading",
-      "button_label": "Add Feature",
+      "button_label": "Add Link",
       "rows_per_page": 20,
       "sub_fields": [
         {
@@ -106,6 +152,27 @@
           "default_value": ""
         },
         {
+          "key": "field_balt_feature_grid_item_icon_color",
+          "label": "Icon Color (Compact Links)",
+          "name": "icon_color",
+          "type": "select",
+          "required": 0,
+          "conditional_logic": 0,
+          "wrapper": {
+            "width": "50",
+            "class": "",
+            "id": ""
+          },
+          "choices": {
+            "primary": "Navy",
+            "tertiary": "Red",
+            "secondary": "Gold"
+          },
+          "default_value": "primary",
+          "return_format": "value",
+          "ui": 1
+        },
+        {
           "key": "field_balt_feature_grid_item_heading",
           "label": "Heading",
           "name": "heading",
@@ -125,12 +192,27 @@
           "append": ""
         },
         {
+          "key": "field_balt_feature_grid_item_eyebrow",
+          "label": "Card Eyebrow (Compact Links)",
+          "name": "eyebrow",
+          "type": "text",
+          "required": 0,
+          "conditional_logic": 0,
+          "wrapper": {
+            "width": "",
+            "class": "",
+            "id": ""
+          },
+          "instructions": "Optional label above the card heading, such as PDF Guide, Event, or Ministry.",
+          "placeholder": "Optional label"
+        },
+        {
           "key": "field_balt_feature_grid_item_description",
           "label": "Description",
           "name": "description",
           "type": "textarea",
-          "instructions": "A short description looks best (one to three lines).",
-          "required": 1,
+          "instructions": "Optional supporting text. Leave blank for compact links matching the Figma design.",
+          "required": 0,
           "conditional_logic": 0,
           "wrapper": {
             "width": "",
@@ -142,19 +224,93 @@
           "new_lines": ""
         },
         {
-          "key": "field_balt_feature_grid_item_link",
-          "label": "Link",
-          "name": "link",
-          "type": "link",
-          "instructions": "The whole card is clickable.",
-          "required": 1,
+          "key": "field_balt_feature_grid_item_destination_type",
+          "label": "Destination Type",
+          "name": "destination_type",
+          "type": "select",
+          "required": 0,
           "conditional_logic": 0,
           "wrapper": {
             "width": "",
             "class": "",
             "id": ""
           },
+          "choices": {
+            "link": "Link / URL",
+            "file": "Media Library File"
+          },
+          "default_value": "link",
+          "return_format": "value",
+          "ui": 1
+        },
+        {
+          "key": "field_balt_feature_grid_item_link",
+          "label": "Link",
+          "name": "link",
+          "type": "link",
+          "instructions": "The whole card is clickable. In Compact Links, the link text becomes the action label (e.g. Learn More, View, Download).",
+          "required": 1,
+          "conditional_logic": [
+            [
+              {
+                "field": "field_balt_feature_grid_item_destination_type",
+                "operator": "!=",
+                "value": "file"
+              }
+            ]
+          ],
+          "wrapper": {
+            "width": "",
+            "class": "",
+            "id": ""
+          },
           "return_format": "array"
+        },
+        {
+          "key": "field_balt_feature_grid_item_file",
+          "label": "File",
+          "name": "file",
+          "type": "file",
+          "required": 1,
+          "conditional_logic": [
+            [
+              {
+                "field": "field_balt_feature_grid_item_destination_type",
+                "operator": "==",
+                "value": "file"
+              }
+            ]
+          ],
+          "wrapper": {
+            "width": "",
+            "class": "",
+            "id": ""
+          },
+          "return_format": "id",
+          "library": "all"
+        },
+        {
+          "key": "field_balt_feature_grid_item_file_label",
+          "label": "File Action Label",
+          "name": "file_label",
+          "type": "text",
+          "required": 0,
+          "conditional_logic": [
+            [
+              {
+                "field": "field_balt_feature_grid_item_destination_type",
+                "operator": "==",
+                "value": "file"
+              }
+            ]
+          ],
+          "wrapper": {
+            "width": "",
+            "class": "",
+            "id": ""
+          },
+          "instructions": "Optional. Defaults to Download.",
+          "placeholder": "Download"
         }
       ]
     }
@@ -175,6 +331,7 @@
   "instruction_placement": "label",
   "hide_on_screen": "",
   "active": true,
-  "description": "Editable heading and 1–6 feature cards for the Navigate section.",
-  "show_in_rest": 0
+  "description": "Reusable icon-linked cards in classic and compact styles, with URL or Media Library file destinations.",
+  "show_in_rest": 0,
+  "modified": 1795640100
 }

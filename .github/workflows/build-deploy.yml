@@ -77,17 +77,21 @@ jobs:
 
       - name: Verify Feature Grid fields and responsive utilities
         run: |
+          php tests/feature-grid-styles-smoke.php
           node --input-type=module <<'NODE'
           import { readFileSync } from 'node:fs';
 
           const group = JSON.parse(readFileSync('theme/acf-json/group_balt_feature_grid.json', 'utf8'));
           const block = JSON.parse(readFileSync('theme/blocks/feature-grid/block.json', 'utf8'));
           const repeater = group.fields.find(field => field.name === 'items');
-          if (block.name !== 'balt/feature-grid' || repeater?.min !== 1 || repeater?.max !== 6) {
+          if (block.name !== 'balt/feature-grid' || repeater?.min !== 1 || repeater?.max !== 12) {
             throw new Error('Feature Grid name or ACF item limits are incorrect');
           }
+          const style = group.fields.find(field => field.name === 'style');
+          if (style?.default_value !== 'classic' || !style?.choices?.compact) throw new Error('Classic feature grid must remain default');
+          if (group.fields.find(field => field.name === 'view_all')?.type !== 'link') throw new Error('Missing optional section link');
           const fields = new Map(repeater.sub_fields.map(field => [field.name, field.type]));
-          for (const [name, type] of [['icon', 'font-awesome'], ['heading', 'text'], ['description', 'textarea'], ['link', 'link']]) {
+          for (const [name, type] of [['icon', 'font-awesome'], ['heading', 'text'], ['description', 'textarea'], ['link', 'link'], ['eyebrow', 'text'], ['icon_color', 'select'], ['destination_type', 'select'], ['file', 'file'], ['file_label', 'text']]) {
             if (fields.get(name) !== type) throw new Error('Missing Feature Grid ACF field: ' + name);
           }
           const iconAssets = readFileSync('theme/inc/feature-grid.php', 'utf8');
@@ -100,7 +104,7 @@ jobs:
 
           for (const path of ['theme/style.css', 'theme/style-editor.css']) {
             const css = readFileSync(path, 'utf8');
-            for (const token of ['grid-cols-6', 'col-span-2', 'col-span-3', '336px', 'bg-surface']) {
+            for (const token of ['grid-cols-6', 'col-span-2', 'col-span-3', '336px', 'bg-surface', '196px', '14px', 'grid-cols-4']) {
               if (!css.includes(token)) throw new Error('Feature Grid Tailwind utility missing: ' + token + ' in ' + path);
             }
           }

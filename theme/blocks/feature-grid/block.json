@@ -2,16 +2,19 @@
   "$schema": "https://schemas.wp.org/trunk/block.json",
   "apiVersion": 3,
   "name": "balt/feature-grid",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "title": "Navigate / Feature Grid",
   "category": "baltimore",
   "icon": "screenoptions",
-  "description": "Explore the Archdiocese with one to six icon-linked feature cards.",
+  "description": "One to twelve linked feature cards in classic or compact styles.",
   "keywords": [
     "navigate",
     "explore",
     "feature grid",
-    "icon links"
+    "icon links",
+    "featured links",
+    "resources",
+    "downloads"
   ],
   "textdomain": "baltimore",
   "acf": {
