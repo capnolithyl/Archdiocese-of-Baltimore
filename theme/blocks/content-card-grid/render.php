@@ -25,15 +25,17 @@ $heading_id = wp_unique_id( 'balt-content-card-grid-' );
 if ( 'directory' === get_field( 'style' ) ) {
 	$preview = ! empty( $is_preview );
 	$search_enabled = (bool) get_field( 'enable_card_search' );
+	$policy_search = 'policies' === get_field( 'search_mode' );
+	$local_search = $search_enabled && ! $policy_search;
 	$placeholder = trim( (string) get_field( 'search_placeholder' ) ) ?: __( 'Search resources...', 'baltimore' );
 	$search_id = $heading_id . '-search';
-	if ( $search_enabled && $cards && ! $preview ) {
+	if ( $local_search && $cards && ! $preview ) {
 		wp_enqueue_script( 'balt-card-directory-filter', get_template_directory_uri() . '/assets/js/card-directory-filter.js', array(), BALT_VERSION, true );
 	}
 	?>
 	<section <?php echo get_block_wrapper_attributes( array( 'class' => 'not-prose balt-full-bleed balt-card-directory relative mt-0! w-full max-w-none bg-white text-foreground' ) ); ?><?php if ( $heading || $eyebrow ) : ?> aria-labelledby="<?php echo esc_attr( $heading_id ); ?>"<?php endif; ?>>
 		<div class="balt-card-directory__inner">
-			<?php if ( $eyebrow || $heading || ( $search_enabled && $cards ) ) : ?>
+			<?php if ( $eyebrow || $heading || ( $search_enabled && ( $cards || $policy_search ) ) ) : ?>
 				<header class="balt-card-directory__header">
 					<div class="min-w-0">
 						<?php if ( $eyebrow ) : ?>
@@ -43,7 +45,18 @@ if ( 'directory' === get_field( 'style' ) ) {
 							<h2 id="<?php echo esc_attr( $heading_id ); ?>" class="font-heading text-[clamp(2rem,3vw,2.5rem)] font-extrabold leading-[1.25] text-foreground"><?php echo esc_html( $heading ); ?></h2>
 						<?php endif; ?>
 					</div>
-					<?php if ( $search_enabled && $cards ) : ?>
+					<?php if ( $search_enabled && $policy_search ) : ?>
+						<?php if ( ! $preview ) : ?>
+							<form class="balt-card-directory__search" role="search" method="get" action="<?php echo esc_url( home_url( '/' ) ); ?>">
+						<?php else : ?>
+							<div class="balt-card-directory__search">
+						<?php endif; ?>
+							<label class="sr-only" for="<?php echo esc_attr( $search_id ); ?>"><?php esc_html_e( 'Search policies', 'baltimore' ); ?></label>
+							<input type="hidden" name="post_type" value="balt_policy">
+							<button class="balt-card-directory__search-submit" type="submit" aria-label="<?php esc_attr_e( 'Search policies', 'baltimore' ); ?>"<?php if ( $preview ) : ?> disabled<?php endif; ?>><span class="balt-card-directory__search-icon" aria-hidden="true"></span></button>
+							<input type="search" name="s" id="<?php echo esc_attr( $search_id ); ?>" placeholder="<?php echo esc_attr( $placeholder ); ?>" maxlength="200" required<?php if ( $preview ) : ?> disabled<?php endif; ?>>
+						<?php if ( ! $preview ) : ?></form><?php else : ?></div><?php endif; ?>
+					<?php elseif ( $local_search && $cards ) : ?>
 						<div class="balt-card-directory__search" data-card-search<?php if ( ! $preview ) : ?> hidden<?php endif; ?>>
 							<label class="sr-only" for="<?php echo esc_attr( $search_id ); ?>"><?php esc_html_e( 'Filter displayed cards', 'baltimore' ); ?></label>
 							<span class="balt-card-directory__search-icon" aria-hidden="true"></span>
@@ -57,7 +70,7 @@ if ( 'directory' === get_field( 'style' ) ) {
 			<?php endif; ?>
 			<?php if ( $cards ) : ?>
 				<?php get_template_part( 'template-parts/components/content-card-grid', null, array( 'cards' => $cards, 'accent' => true, 'preview' => $preview, 'compact_spacing' => true ) ); ?>
-				<?php if ( $search_enabled && ! $preview ) : ?>
+				<?php if ( $local_search && ! $preview ) : ?>
 					<p class="balt-card-directory__empty" data-card-empty hidden><?php esc_html_e( 'No matching cards found.', 'baltimore' ); ?></p>
 					<span class="sr-only" role="status" aria-live="polite" data-card-status data-count-template="<?php esc_attr_e( '%1$s of %2$s cards shown.', 'baltimore' ); ?>"></span>
 				<?php endif; ?>

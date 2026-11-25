@@ -36,6 +36,9 @@ jobs:
       - name: Lint PHP templates
         run: find theme -type f -name '*.php' -print0 | xargs -0 -n 1 php -l
 
+      - name: Verify Policy post type and scoped search
+        run: php tests/policy-post-type-smoke.php
+
       - name: Verify Resource Directory block
         run: |
           php tests/resource-directory-smoke.php

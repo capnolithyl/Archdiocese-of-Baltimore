@@ -10,6 +10,7 @@
 global $wp_query;
 
 $query = get_search_query();
+$policy_only = 'balt_policy' === get_query_var( 'post_type' );
 $count = isset( $wp_query->found_posts ) ? absint( $wp_query->found_posts ) : 0;
 
 get_header();
@@ -22,7 +23,7 @@ get_header();
 			'template-parts/layout/archive-header',
 			null,
 			array(
-				'eyebrow' => __( 'Search', 'baltimore' ),
+				'eyebrow' => $policy_only ? __( 'Policy Search', 'baltimore' ) : __( 'Search', 'baltimore' ),
 				'title'   => $query
 					? sprintf(
 						/* translators: %s: search query. */

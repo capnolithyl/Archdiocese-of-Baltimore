@@ -40,3 +40,6 @@ input.value='real FACILITIES';input.change();assert.deepEqual(cards.map(c=>c.hid
 input.value='not found';input.change();assert.equal(grid.hidden,true);assert.equal(empty.hidden,false);
 input.value='';input.change();assert.equal(grid.hidden,false);assert.equal(empty.hidden,true);assert.ok(cards.every(c=>!c.hidden));
 console.log('Directory CSS and local search behavior passed');
+
+assert.deepEqual(Object.keys(fields.search_mode.choices),['cards','policies']);
+assert.equal(fields.search_mode.default_value,'cards');

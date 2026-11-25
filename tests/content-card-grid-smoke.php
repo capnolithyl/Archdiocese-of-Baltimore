@@ -5,6 +5,7 @@ define('BALT_VERSION','test');
 function esc_html_e($v,$d):void{echo esc_html($v);}
 function esc_attr_e($v,$d):void{echo esc_attr($v);}
 function get_template_directory_uri():string{return '/theme';}
+function home_url($path):string{return $path;}
 function wp_enqueue_script(...$args):void{$GLOBALS['card_filter_script']=$args;}
 function add_action(...$args):void{}
 function add_filter(...$args):void{}
@@ -91,3 +92,9 @@ check(!str_contains(grid_render(['style'=>'directory','cards'=>$rows]),'data-car
 check(str_contains(grid_render(['style'=>'directory','cards'=>$rows,'enable_card_search'=>1],true),'autocomplete="off" disabled'),'Preview input inert');
 check(!str_contains($center,'balt-card-directory'),'Standard layout remains default');
 echo "Directory header, optional search, editor and shared cards passed\n";
+
+$policy=grid_render(['style'=>'directory','cards'=>$rows,'enable_card_search'=>1,'search_mode'=>'policies']);
+foreach(['<form class="balt-card-directory__search"','name="post_type" value="balt_policy"','name="s"','role="search"'] as $token)check(str_contains($policy,$token),'Policy search missing '.$token);
+check(!str_contains($policy,'data-card-search')&&!str_contains($policy,'data-card-empty'),'Policy search must not filter cards');
+check(!str_contains(grid_render(['style'=>'directory','cards'=>$rows,'enable_card_search'=>1,'search_mode'=>'policies'],true),'<form '),'Preview should not submit');
+echo "Policy search mode and compatibility passed\n";

@@ -74,7 +74,7 @@
     {
       "key": "field_balt_card_grid_enable_card_search",
       "name": "enable_card_search",
-      "label": "Enable Card Search",
+      "label": "Enable Search",
       "type": "true_false",
       "ui": 1,
       "default_value": 1,
@@ -88,7 +88,36 @@
           }
         ]
       ],
-      "instructions": "Filters the currently displayed cards by title, description and metadata. Does not search linked pages or documents."
+      "instructions": "Enable a search box. Filter the displayed cards or search published Policy records. Does not search linked pages or PDF contents."
+    },
+    {
+      "key": "field_balt_card_grid_search_mode",
+      "name": "search_mode",
+      "label": "Search Mode",
+      "type": "select",
+      "choices": {
+        "cards": "Filter Displayed Cards",
+        "policies": "Search Policies"
+      },
+      "default_value": "cards",
+      "return_format": "value",
+      "ui": 1,
+      "required": 0,
+      "conditional_logic": [
+        [
+          {
+            "field": "field_balt_card_grid_style",
+            "operator": "==",
+            "value": "directory"
+          },
+          {
+            "field": "field_balt_card_grid_enable_card_search",
+            "operator": "==",
+            "value": "1"
+          }
+        ]
+      ],
+      "instructions": "Filter cards in place or submit a WordPress search limited to published Policy records."
     },
     {
       "key": "field_balt_card_grid_search_placeholder",
@@ -356,5 +385,5 @@
   "active": true,
   "description": "Reusable content card grid with manual, selected and latest modes.",
   "show_in_rest": 0,
-  "modified": 1795647000
+  "modified": 1795648000
 }

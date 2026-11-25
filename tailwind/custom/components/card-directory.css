@@ -87,3 +87,20 @@
 @media (max-width: 639px) {
 	.balt-card-directory__search { width: 100%; }
 }
+
+
+.balt-card-directory__search-submit {
+	display: flex;
+	flex: 0 0 14px;
+	align-items: center;
+	justify-content: center;
+	border: 0;
+	padding: 0;
+	background: transparent;
+	color: inherit;
+	cursor: pointer;
+}
+.balt-card-directory__search-submit:focus-visible {
+	outline: 2px solid var(--wp--preset--color--primary, #002d62);
+	outline-offset: 3px;
+}
