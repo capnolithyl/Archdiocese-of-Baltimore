@@ -51,7 +51,7 @@
 
 <!-- wp:column {"className":"balt-contact-form__card"} -->
 <div class="wp-block-column balt-contact-form__card">
-<!-- wp:gravityforms/form /-->
+<!-- wp:gravityforms/form {"title":false,"description":false} /-->
 </div>
 <!-- /wp:column -->
 </div>

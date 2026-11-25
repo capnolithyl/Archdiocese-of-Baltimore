@@ -21,7 +21,7 @@ for(const p of ['theme/style.css','theme/style-editor.css']){
 console.log('Contact form schema, GF integration and compiled scoped styles passed');
 
 const pattern=read('theme/patterns/contact-form.php');
-for(const token of ['balt-contact-pattern','balt-contact-form__columns','balt-contact-form__intro','balt-contact-form__card','<!-- wp:gravityforms/form /-->'])assert.ok(pattern.includes(token),token);
+for(const token of ['balt-contact-pattern','balt-contact-form__columns','balt-contact-form__intro','balt-contact-form__card','<!-- wp:gravityforms/form {"title":false,"description":false} /-->'])assert.ok(pattern.includes(token),token);
 assert.ok(!pattern.includes('formId')&&!pattern.includes('"lock"'),'No selected form or locked content');
 for(const p of ['theme/style.css','theme/style-editor.css']){
  const css=read(p);

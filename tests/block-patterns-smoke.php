@@ -36,7 +36,7 @@ $c=$GLOBALS['patterns']['baltimore/contact-form']??[];
 check(($c['inserter']??false)===true && in_array('baltimore',$c['categories']??[],true),'Contact pattern must be discoverable');
 check(str_contains($c['content'],'<!-- wp:group')&&str_contains($c['content'],'<!-- wp:columns'),'Use native editable layout blocks');
 check(substr_count($c['content'],'<!-- wp:column ')===2,'Two editable columns');
-check(str_contains($c['content'],'<!-- wp:gravityforms/form /-->'),'Native Gravity Forms selector with no fixed ID');
+check(str_contains($c['content'],'<!-- wp:gravityforms/form {"title":false,"description":false} /-->'),'Native Gravity Forms selector with no fixed ID');
 check(!str_contains($c['content'],'<!-- wp:balt/contact-form')&&!str_contains($c['content'],'"lock"'),'No legacy block or content locks');
 check(!str_contains($c['content'],'<?php'),'Render pattern PHP before registration');
 unset($GLOBALS['patterns']['baltimore/contact-form']);
