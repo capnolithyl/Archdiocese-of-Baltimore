@@ -28,3 +28,7 @@ for(const p of ['theme/style.css','theme/style-editor.css']){
  for(const token of ['balt-contact-pattern','balt-contact-form__columns','balt-contact-detail-phone','balt-contact-detail-hours'])assert.ok(css.includes(token),p+' missing '+token);
 }
 console.log('Contact pattern and legacy block compatibility passed');
+
+const source = read('tailwind/custom/components/contact-form.css');
+for (const token of ['--gf-ctrl-textarea-height: 102px', 'min-block-size: 102px !important', 'block-size: 102px;', '--gf-form-gap-y: 16px', '--gf-ctrl-label-font-size-primary: 12px', 'color: #e4c76c !important', '.ginput_counter', '.gform_heading :is(.gform_title, .gform_description)']) assert.ok(source.includes(token), 'Missing scoped GF styling: '+token);
+console.log('Contact form compact spacing, logical textarea sizing and accessible labels passed');

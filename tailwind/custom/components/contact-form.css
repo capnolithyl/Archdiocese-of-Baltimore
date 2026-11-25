@@ -26,19 +26,25 @@
 	--gf-color-in-ctrl-border: rgba(255, 255, 255, .2);
 	--gf-ctrl-radius: 4px;
 	--gf-ctrl-size: 42px;
-	--gf-form-gap-y: 20px;
+	--gf-ctrl-label-color-primary: rgba(255, 255, 255, .85);
+	--gf-ctrl-label-font-size-primary: 12px;
+	--gf-ctrl-label-font-weight-primary: 600;
+	--gf-ctrl-label-line-height-primary: 16px;
+	--gf-ctrl-label-color-secondary: rgba(255, 255, 255, .85);
+	--gf-ctrl-label-font-size-secondary: 12px;
+	--gf-ctrl-desc-color: rgba(255, 255, 255, .75);
+	--gf-ctrl-textarea-height: 102px;
+	--gf-form-gap-y: 16px;
 	--gf-form-gap-x: 16px;
 	color: rgba(255, 255, 255, .85);
 	font-family: var(--wp--preset--font-family--body, Lato, sans-serif);
 }
 .balt-contact-form .gform_wrapper .gform_fields {
-	row-gap: 20px;
+	row-gap: 16px;
 	column-gap: 16px;
 }
-.balt-contact-form .gform_wrapper .gfield_label,
-.balt-contact-form .gform_wrapper .gform-field-label,
-.balt-contact-form .gform_wrapper .ginput_complex label {
-	color: rgba(255, 255, 255, .75);
+.balt-contact-form .gform_wrapper .gform_body :is(.gfield_label, .gform-field-label, .ginput_complex label) {
+	color: rgba(255, 255, 255, .85);
 	font-size: 12px;
 	font-weight: 600;
 	line-height: 16px;
@@ -52,7 +58,13 @@
 .balt-contact-form .gform_wrapper .gfield_required,
 .balt-contact-form .gform_wrapper .gfield_required_asterisk,
 .balt-contact-form .gform_wrapper .gfield_required_text {
-	color: #e4c76c;
+	color: #e4c76c !important;
+	font-size: 11px;
+	font-weight: 600;
+	font-style: normal;
+}
+.balt-contact-form .gform_wrapper .gfield_required {
+	margin-inline-start: 4px;
 }
 .balt-contact-form .gform_wrapper .gform_body :is(input:not([type]), input[type="text"], input[type="email"], input[type="tel"], input[type="url"], input[type="number"], input[type="password"], input[type="search"], input[type="date"], input[type="time"], select, textarea) {
 	box-sizing: border-box;
@@ -76,8 +88,15 @@
 	background: #0f1a2e;
 	color: #fff;
 }
-.balt-contact-form .gform_wrapper .gform_body textarea {
-	min-height: 102px;
+/* Orbital sizes textareas using logical block-size, with field-size overrides.
+ * Scope these rules to the contact section; leave other forms untouched. */
+.balt-contact-form .gform_wrapper .gfield--type-textarea {
+	--gf-ctrl-textarea-height: 102px;
+}
+.balt-contact-form .gform_wrapper .gform_body .gfield textarea {
+	min-block-size: 102px !important;
+	block-size: 102px;
+	min-height: 102px !important;
 	height: 102px;
 	resize: vertical;
 }
@@ -86,7 +105,7 @@
 	outline-offset: 2px;
 }
 .balt-contact-form .gform_wrapper :is(.gform_footer, .gform_page_footer) {
-	margin: 20px 0 0;
+	margin: 16px 0 0;
 	padding: 0;
 }
 .balt-contact-form .gform_wrapper :is(.gform_footer, .gform_page_footer) :is(input[type="submit"], button[type="submit"]) {
@@ -114,8 +133,18 @@
 	opacity: .65;
 	cursor: not-allowed;
 }
-.balt-contact-form .gform_wrapper :is(.gfield_description, .gform_required_legend, .gform-field-label--type-sub) {
+.balt-contact-form .gform_wrapper :is(.gfield_description, .gform_required_legend, .gform-field-label--type-sub, .ginput_counter, .charleft) {
 	color: rgba(255, 255, 255, .75);
+}
+.balt-contact-form .gform_wrapper :is(.ginput_counter, .charleft) {
+	font-size: 12px;
+	line-height: 16px;
+}
+.balt-contact-form .gform_wrapper .gform_heading :is(.gform_title, .gform_description) {
+	color: #fff;
+}
+.balt-contact-form .gform_wrapper .gform_heading:empty {
+	display: none;
 }
 .balt-contact-form .gform_wrapper .gfield_validation_message,
 .balt-contact-form .gform_wrapper .validation_message,
