@@ -146,6 +146,11 @@ function balt_enqueue_block_editor_script()
 				'wp-blocks',
 				'wp-dom-ready',
 				'wp-edit-post',
+				'wp-block-editor',
+				'wp-components',
+				'wp-element',
+				'wp-hooks',
+				'wp-i18n',
 			),
 			BALT_VERSION,
 			true

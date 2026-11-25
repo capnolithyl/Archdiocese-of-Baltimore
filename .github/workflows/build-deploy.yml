@@ -36,6 +36,11 @@ jobs:
       - name: Lint PHP templates
         run: find theme -type f -name '*.php' -print0 | xargs -0 -n 1 php -l
 
+      - name: Verify native Accordion extension
+        run: |
+          php tests/accordion-smoke.php
+          node tests/accordion-smoke.mjs
+
       - name: Verify native Media and Text section
         run: |
           php tests/block-patterns-smoke.php

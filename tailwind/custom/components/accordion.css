@@ -1,0 +1,148 @@
+/**
+ * Figma 320:2598, native core/accordion and nested blocks.
+ * The original block markup, alignment anchors and Interactivity API stay intact.
+ */
+.balt-accordion-section {
+	background: #f5f3ee;
+	padding-block: clamp(3rem, 5.62vw, 6rem);
+	box-sizing: border-box;
+}
+.entry-content > .balt-accordion-section {
+	margin-block-start: 0;
+}
+.balt-accordion-section__inner {
+	box-sizing: border-box;
+	max-width: 900px;
+	width: 100%;
+	padding-inline: clamp(1.25rem, 3vw, 2.5rem);
+	margin-inline: auto;
+}
+.balt-accordion-section__header {
+	text-align: center;
+	margin: 0 0 48px;
+}
+.balt-accordion-section .balt-accordion-section__eyebrow {
+	margin: 0;
+	font-family: var(--wp--preset--font-family--body, Lato, sans-serif);
+	font-size: 14px;
+	font-weight: 700;
+	line-height: 20px;
+	letter-spacing: 3px;
+	text-transform: uppercase;
+	color: var(--wp--preset--color--tertiary, #be2026);
+}
+.balt-accordion-section .balt-accordion-section__heading {
+	margin: 0;
+	font-family: var(--wp--preset--font-family--heading, Georgia, serif);
+	font-size: clamp(2rem, 3vw, 2.5rem);
+	font-weight: 800;
+	line-height: 1.5;
+	color: var(--wp--preset--color--foreground, #0f1a2e);
+	text-wrap: balance;
+}
+.balt-accordion-section__eyebrow + .balt-accordion-section__heading {
+	margin-top: 12px;
+}
+.balt-accordion-section__inner > .wp-block-accordion {
+	width: 100%;
+	max-width: none;
+	margin: 0;
+}
+.balt-accordion-section .wp-block-accordion > .wp-block-accordion-item {
+	margin-block: 0;
+	border-bottom: 1px solid #e5e7eb;
+}
+.balt-accordion-section .wp-block-accordion-item > .wp-block-accordion-heading {
+	margin: 0;
+	padding: 0;
+	font-family: var(--wp--preset--font-family--body, Lato, sans-serif);
+	font-size: 16px;
+	font-weight: 700;
+	line-height: 24px;
+	text-transform: none;
+	color: var(--wp--preset--color--foreground, #0f1a2e);
+}
+.balt-accordion-section .wp-block-accordion-heading__toggle {
+	display: flex;
+	width: 100%;
+	align-items: center;
+	justify-content: space-between;
+	gap: 16px;
+	padding: 20px 0;
+	border: 0;
+	background: transparent;
+	color: inherit;
+	font: inherit;
+	text-align: start;
+	cursor: pointer;
+}
+.balt-accordion-section .wp-block-accordion-heading__toggle-title {
+	min-width: 0;
+	overflow-wrap: anywhere;
+}
+.balt-accordion-section .wp-block-accordion-heading__toggle:hover {
+	color: var(--wp--preset--color--primary, #002d62);
+}
+.balt-accordion-section .wp-block-accordion-heading__toggle:focus-visible {
+	outline: 2px solid var(--wp--preset--color--primary, #002d62);
+	outline-offset: 3px;
+}
+.balt-accordion-section .wp-block-accordion-heading__toggle-icon {
+	display: inline-flex;
+	flex: 0 0 18px;
+	width: 18px;
+	height: 18px;
+	align-items: center;
+	justify-content: center;
+	font-size: 0;
+	color: var(--wp--preset--color--primary, #002d62);
+	transition: transform 260ms ease;
+}
+.balt-accordion-section .wp-block-accordion-heading__toggle-icon > * {
+	display: none;
+}
+.balt-accordion-section .wp-block-accordion-heading__toggle-icon::before {
+	content: '';
+	width: 7px;
+	height: 7px;
+	border-right: 1.5px solid currentColor;
+	border-bottom: 1.5px solid currentColor;
+	transform: translateY(-2px) rotate(45deg);
+}
+.balt-accordion-section .wp-block-accordion-heading__toggle[aria-expanded="true"] .wp-block-accordion-heading__toggle-icon,
+.balt-accordion-section .wp-block-accordion-item.is-open > .wp-block-accordion-heading .wp-block-accordion-heading__toggle-icon {
+	transform: rotate(180deg);
+}
+.balt-accordion-section .wp-block-accordion-item > .wp-block-accordion-panel {
+	margin-block-start: 0;
+	padding: 0;
+	color: var(--wp--preset--color--body, #4a5565);
+	font-size: 16px;
+	line-height: 1.625;
+}
+.balt-accordion-section .wp-block-accordion-panel > :first-child {
+	margin-block-start: 0;
+}
+.balt-accordion-section .wp-block-accordion-panel > :last-child {
+	margin-block-end: 0;
+}
+/* Space is part of the natural height, not a separately animated padding. */
+.balt-accordion-section .wp-block-accordion-panel:not([hidden])::after,
+.balt-accordion-section .wp-block-accordion-panel.balt-accordion-animating::after {
+	content: '';
+	display: block;
+	height: 20px;
+}
+/* Only while a measured transition is running. After it, core's native
+ * hidden/hidden-until-found behavior resumes, including find-in-page. */
+.balt-accordion-section .wp-block-accordion-panel.balt-accordion-animating {
+	display: block !important;
+	content-visibility: visible !important;
+	overflow: hidden;
+	box-sizing: border-box;
+}
+@media (prefers-reduced-motion: reduce) {
+	.balt-accordion-section .wp-block-accordion-heading__toggle-icon {
+		transition: none;
+	}
+}

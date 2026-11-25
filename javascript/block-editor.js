@@ -18,6 +18,7 @@
  * post type when modifying the block editor’s appearance.
  */
 import '@_tw/typography/block-editor-classes';
+import './accordion-editor.js';
 
 wp.domReady(() => {
 	/**
