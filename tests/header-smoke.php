@@ -13,7 +13,7 @@ $logo_id = 0;
 
 function add_filter( ...$args ): void {}
 function add_action( ...$args ): void {}
-function is_singular(): bool { return $GLOBALS['singular']; }
+function is_singular( $type = '' ): bool { return $GLOBALS['singular'] && ( ! $type || $type === ( $GLOBALS['test_post_type'] ?? 'post' ) ); }
 function is_page(): bool { return $GLOBALS['test_is_page'] ?? false; }
 function is_front_page(): bool { return $GLOBALS['test_is_front_page'] ?? false; }
 function get_queried_object_id(): int { return 123; }
@@ -84,6 +84,10 @@ $override = 'solid';
 $blocks = array( array( 'blockName' => 'dpi/hero' ) );
 check( balt_header_variant() === 'solid', 'Manual blue override ignored' );
 
+$GLOBALS['test_post_type'] = 'balt_policy';
+$override = 'transparent';
+check( balt_header_variant() === 'solid', 'Policy document hero requires solid header' );
+$GLOBALS['test_post_type'] = 'post';
 $override = '';
 $singular = false;
 check( balt_header_variant() === 'solid', 'Archives should use blue navbar' );
