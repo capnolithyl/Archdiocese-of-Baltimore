@@ -74,7 +74,7 @@ check($center===grid_render($fixture+['heading_alignment'=>'center']),'Explicit 
 check(str_contains($center,'mt-14 grid') && str_contains($center,'btn btn-primary'),'Center retains bottom button and original grid spacing');
 $left=grid_render($fixture+['heading_alignment'=>'left']);
 check(str_contains($left,'items-end justify-between gap-4 text-left')&&str_contains($left,'mt-10 grid'),'Left heading layout and spacing');
-check(str_contains($left,'href="/news/"')&&strpos($left,'All News')<strpos($left,'balt-content-card-grid'),'All News must appear above cards');
+check(str_contains($left,'href="/news/"')&&strpos($left,'All News')<strpos($left,'class="balt-content-card-grid '),'All News must appear above cards');
 check(!str_contains($left,'btn btn-primary'),'Do not duplicate section CTA');
 check(!str_contains(grid_render($fixture+['heading_alignment'=>'left'],true),'href="/news/"'),'Section CTA preview should be inert');
 echo "Latest News header, CTA location and default grid layout passed\n";
