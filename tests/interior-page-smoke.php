@@ -24,15 +24,17 @@ test_ok(balt_is_interior_page_template(22),'Title-only template missing');
 $GLOBALS['template_slug']='default';
 test_ok(!balt_is_interior_page_template(22),'Default should be excluded');
 $GLOBALS['fields']['balt_interior_eyebrow']='Institute for';
-$hero=render_part('interior-hero',['variant'=>'featured']);
+$hero=render_part('interior-hero',['variant'=>'auto']);
 test_ok(substr_count($hero,'<h1 ')===1,'Hero has duplicate or missing H1');
-test_ok(str_contains($hero,'/uploads/42.jpg'),'WordPress featured image missing');
+test_ok(str_contains($hero,'/uploads/42.jpg'),'Default page must display WordPress featured image');
+test_ok(str_contains($hero,'balt-interior-hero--image'),'Featured image should activate image appearance');
 test_ok(str_contains($hero,'Institute for'),'Eyebrow missing');
 $noimg=render_part('interior-hero',['variant'=>'title']);
 test_ok(!str_contains($noimg,'<img '),'Title-only hero displays image');
 $GLOBALS['image_id']=0;
-$noimg=render_part('interior-hero',['variant'=>'featured']);
-test_ok(!str_contains($noimg,'<img '),'Missing image fallback broken');
+$noimg=render_part('interior-hero',['variant'=>'auto']);
+test_ok(!str_contains($noimg,'<img '),'Default page must render title-only hero when no image exists');
+test_ok(str_contains($noimg,'balt-interior-hero--title'),'Default no-image page must use navy hero');
 $GLOBALS['fields']['balt_section_nav_enabled']=1;
 $GLOBALS['fields']['balt_section_nav_links']=[
  ['label'=>'About','link'=>['url'=>'#mission']],

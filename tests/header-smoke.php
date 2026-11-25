@@ -14,6 +14,8 @@ $logo_id = 0;
 function add_filter( ...$args ): void {}
 function add_action( ...$args ): void {}
 function is_singular(): bool { return $GLOBALS['singular']; }
+function is_page(): bool { return $GLOBALS['test_is_page'] ?? false; }
+function is_front_page(): bool { return $GLOBALS['test_is_front_page'] ?? false; }
 function get_queried_object_id(): int { return 123; }
 function get_field( string $field, $location = null ) {
 	return match ( $field ) {
@@ -62,6 +64,17 @@ $override = 'transparent';
 check( balt_header_variant() === 'transparent', 'Manual override should still work' );
 $override = '';
 $GLOBALS['test_interior_template'] = '';
+$GLOBALS['test_is_page'] = true;
+$GLOBALS['test_is_front_page'] = false;
+$blocks = array( array( 'blockName' => 'dpi/hero', 'attrs' => array() ) );
+check( balt_header_variant() === 'solid', 'Default interior page should use solid header despite a hero-like first content block' );
+$override = 'transparent';
+check( balt_header_variant() === 'transparent', 'Manual transparent header override must work on Default pages' );
+$override = '';
+$GLOBALS['test_is_front_page'] = true;
+check( balt_header_variant() === 'transparent', 'Front page must preserve transparent hero header' );
+$GLOBALS['test_is_page'] = false;
+$GLOBALS['test_is_front_page'] = false;
 $blocks = array( array( 'blockName' => 'dpi/hero', 'attrs' => array() ) );
 check( balt_header_variant() === 'transparent', 'First Hero block should be transparent' );
 
