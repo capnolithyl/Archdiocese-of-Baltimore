@@ -11,7 +11,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$hero_variant = 'featured' === ( $args['hero'] ?? '' ) ? 'featured' : 'title';
+// Default pages automatically select the appropriate hero treatment.
+$requested = $args['hero'] ?? 'auto';
+$hero_variant = in_array( $requested, array( 'auto', 'featured', 'title' ), true ) ? $requested : 'auto';
 ?>
 <section id="primary" class="balt-interior-page">
 	<main id="main">

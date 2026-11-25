@@ -14,7 +14,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 $post_id  = get_the_ID();
 $eyebrow  = function_exists( 'get_field' ) ? trim( (string) get_field( 'balt_interior_eyebrow', $post_id ) ) : '';
-$image_id = 'featured' === ( $args['variant'] ?? '' ) ? (int) get_post_thumbnail_id( $post_id ) : 0;
+// Auto and featured use the actual WordPress Featured Image when present.
+$image_id = 'title' === ( $args['variant'] ?? 'auto' ) ? 0 : (int) get_post_thumbnail_id( $post_id );
 $variant  = $image_id > 0 ? 'image' : 'title';
 ?>
 <header class="balt-interior-hero balt-interior-hero--<?php echo esc_attr( $variant ); ?>">

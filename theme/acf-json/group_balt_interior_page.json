@@ -1,13 +1,13 @@
 {
   "key": "group_balt_interior_page",
-  "title": "Interior Page Settings",
+  "title": "Page Header & Section Navigation",
   "fields": [
     {
       "key": "field_balt_interior_eyebrow",
       "label": "Hero Eyebrow",
       "name": "balt_interior_eyebrow",
       "type": "text",
-      "instructions": "Optional small gold text above the page title (for example, Institute for). The large title always uses the WordPress page title.",
+      "instructions": "Optional gold line above the WordPress page title, e.g. Institute for. Add a Featured Image for a photo hero or leave it empty for a navy title-only hero. No special page template required.",
       "required": 0,
       "default_value": "",
       "maxlength": 90
@@ -17,7 +17,7 @@
       "label": "Show Gold Section Navigation",
       "name": "balt_section_nav_enabled",
       "type": "true_false",
-      "instructions": "Show the optional navigation bar immediately below the page hero. It is hidden if there are no complete links.",
+      "instructions": "Display the gold navigation below the page hero when valid links are configured.",
       "required": 0,
       "default_value": 0,
       "ui": 1,
@@ -67,16 +67,14 @@
   "location": [
     [
       {
-        "param": "post_template",
+        "param": "post_type",
         "operator": "==",
-        "value": "page-templates/interior-featured.php"
-      }
-    ],
-    [
+        "value": "page"
+      },
       {
-        "param": "post_template",
-        "operator": "==",
-        "value": "page-templates/interior-title.php"
+        "param": "page_type",
+        "operator": "!=",
+        "value": "front_page"
       }
     ]
   ],
@@ -86,7 +84,7 @@
   "label_placement": "top",
   "instruction_placement": "label",
   "active": true,
-  "description": "Editor-managed hero eyebrow and optional per-page section links for the two shared interior templates.",
+  "description": "Default page template automatically displays a featured-image hero or a navy title-only hero; optional page-level gold section navigation.",
   "show_in_rest": 0,
-  "modified": 1795207500
+  "modified": 1795635000
 }
