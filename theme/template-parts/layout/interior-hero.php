@@ -14,6 +14,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 $post_id  = get_the_ID();
 $eyebrow  = function_exists( 'get_field' ) ? trim( (string) get_field( 'balt_interior_eyebrow', $post_id ) ) : '';
+$custom_title = function_exists( 'get_field' ) ? trim( (string) get_field( 'balt_interior_title', $post_id ) ) : '';
+$hero_title   = '' !== $custom_title ? $custom_title : get_the_title( $post_id );
 // Auto and featured use the actual WordPress Featured Image when present.
 $image_id = 'title' === ( $args['variant'] ?? 'auto' ) ? 0 : (int) get_post_thumbnail_id( $post_id );
 $variant  = $image_id > 0 ? 'image' : 'title';
@@ -40,6 +42,6 @@ $variant  = $image_id > 0 ? 'image' : 'title';
 		<?php if ( '' !== $eyebrow ) : ?>
 			<p class="balt-interior-hero__eyebrow"><?php echo esc_html( $eyebrow ); ?></p>
 		<?php endif; ?>
-		<h1 class="balt-interior-hero__title"><?php echo esc_html( get_the_title( $post_id ) ); ?></h1>
+		<h1 class="balt-interior-hero__title"><?php echo esc_html( $hero_title ); ?></h1>
 	</div>
 </header>
