@@ -24,6 +24,7 @@ currentHeight=70;hidden=false;cb();assert.equal(frames[0].height,'70px');assert.
 motion.matches=true;hidden=true;cb();assert.equal(animated,false);assert.equal(inert,false);
 for(const p of ['theme/style.css','theme/style-editor.css']){
  const css=read(p);
- for(const token of ['balt-accordion-section','balt-accordion-animating','900px','260ms','f5f3ee'])assert.ok(css.includes(token),p+' missing '+token);
+ for(const token of ['balt-accordion-section','balt-accordion-animating','900px','f5f3ee'])assert.ok(css.includes(token),p+' missing '+token);
+ assert.ok(/(?:260ms|0?\.26s)/.test(css),p+' missing 260ms transition duration');
 }
 console.log('Accordion sidebar, motion state, reduced motion and compiled styles passed');
