@@ -11,11 +11,10 @@
 		const groups = Array.from(root.querySelectorAll('[data-policy-group]'));
 		function update() {
 			const terms = normalize(input.value).split(/\s+/).filter(Boolean);
-			let count = 0;
+			
 			for (const {item, text} of items) {
 				const match = terms.every(term => text.includes(term));
 				item.hidden = !match;
-				if (match) count++;
 			}
 			for (const group of groups) {
 				const parent = group.querySelector('h2 [data-policy-item]');
@@ -27,6 +26,7 @@
 				group.hidden = !visible;
 				if (parent && visible) parent.hidden = false;
 			}
+			const count = items.filter(({item}) => !item.hidden && !item.closest('[data-policy-group]')?.hidden).length;
 			empty.hidden = count > 0;
 			status.textContent = terms.length ? status.dataset.countTemplate.replace('%1$s', String(count)).replace('%2$s', String(items.length)) : '';
 		}

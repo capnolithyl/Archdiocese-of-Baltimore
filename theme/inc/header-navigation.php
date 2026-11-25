@@ -4,6 +4,11 @@
  * Editors can override the automatic choice on individual pages/posts.
  */
 function balt_header_variant(): string {
+	// Policy templates own their hero; never infer transparency from document content.
+	if ( is_singular( 'balt_policy' ) ) {
+		return 'solid';
+	}
+
 	if ( ! is_singular() ) {
 		return 'solid';
 	}
