@@ -2,11 +2,11 @@
 /** Render both stats styles with stubbed WordPress and ACF functions. */
 declare(strict_types=1);
 define('ABSPATH', __DIR__);
-$GLOBALS['fields'] = [];
+$GLOBALS['stats_test_fields'] = [];
 $GLOBALS['reads'] = [];
 function get_field(string $key) {
 	$GLOBALS['reads'][] = $key;
-	return $GLOBALS['fields'][$key] ?? null;
+	return $GLOBALS['stats_test_fields'][$key] ?? null;
 }
 function absint($v): int { return abs((int) $v); }
 function esc_html(string $v): string { return htmlspecialchars($v, ENT_QUOTES, 'UTF-8'); }
@@ -22,7 +22,7 @@ function dpi_blocks_render_link(array $link, string $class, bool $preview): stri
 function wp_kses_post(string $html): string { return $html; }
 function check(bool $ok, string $message): void { if (!$ok) throw new RuntimeException($message); }
 function render_stats(array $fields, bool $is_preview = false): string {
-	$GLOBALS['fields'] = $fields;
+	$GLOBALS['stats_test_fields'] = $fields;
 	$GLOBALS['reads'] = [];
 	ob_start();
 	require dirname(__DIR__) . '/theme/dpi-blocks/blocks/stats/render.php';
