@@ -1,0 +1,122 @@
+{
+  "key": "group_balt_staff_grid",
+  "title": "Staff Grid",
+  "fields": [
+    {
+      "key": "field_balt_staff_grid_eyebrow",
+      "name": "eyebrow",
+      "label": "Eyebrow",
+      "type": "text",
+      "required": 0,
+      "conditional_logic": 0
+    },
+    {
+      "key": "field_balt_staff_grid_heading",
+      "name": "heading",
+      "label": "Heading",
+      "type": "text",
+      "required": 0,
+      "conditional_logic": 0,
+      "default_value": "Our Team"
+    },
+    {
+      "key": "field_balt_staff_grid_members",
+      "name": "members",
+      "label": "Staff Members",
+      "type": "repeater",
+      "required": 1,
+      "conditional_logic": 0,
+      "layout": "block",
+      "min": 1,
+      "max": 0,
+      "collapsed": "field_balt_staff_grid_member_name",
+      "button_label": "Add Staff Member",
+      "instructions": "Add and reorder as many staff members as needed.",
+      "sub_fields": [
+        {
+          "key": "field_balt_staff_grid_member_photo",
+          "name": "photo",
+          "label": "Portrait",
+          "type": "image",
+          "required": 0,
+          "conditional_logic": 0,
+          "return_format": "id",
+          "preview_size": "medium",
+          "library": "all",
+          "wrapper": {
+            "width": "35",
+            "class": "",
+            "id": ""
+          }
+        },
+        {
+          "key": "field_balt_staff_grid_member_name",
+          "name": "name",
+          "label": "Full Name",
+          "type": "text",
+          "required": 1,
+          "conditional_logic": 0,
+          "wrapper": {
+            "width": "65",
+            "class": "",
+            "id": ""
+          }
+        },
+        {
+          "key": "field_balt_staff_grid_member_role",
+          "name": "role",
+          "label": "Position / Role",
+          "type": "text",
+          "required": 0,
+          "conditional_logic": 0,
+          "instructions": "Optional job title or role."
+        }
+      ]
+    },
+    {
+      "key": "field_balt_staff_grid_team_link",
+      "name": "team_link",
+      "label": "Team Link (optional)",
+      "type": "link",
+      "required": 0,
+      "conditional_logic": 0,
+      "return_format": "array",
+      "instructions": "Adds a final tile linking to the full team or directory. Leave blank to hide."
+    },
+    {
+      "key": "field_balt_staff_grid_team_icon",
+      "name": "team_icon",
+      "label": "Team Link Icon",
+      "type": "font-awesome",
+      "required": 0,
+      "conditional_logic": 0,
+      "instructions": "Optional icon for the team link tile. Defaults to a people icon.",
+      "icon_sets": [
+        "classic_solid",
+        "classic_regular"
+      ],
+      "save_format": "class",
+      "enqueue_fa": 1,
+      "allow_null": 1,
+      "show_preview": 1,
+      "default_value": "fa-solid fa-users"
+    }
+  ],
+  "location": [
+    [
+      {
+        "param": "block",
+        "operator": "==",
+        "value": "balt/staff-grid"
+      }
+    ]
+  ],
+  "menu_order": 0,
+  "position": "normal",
+  "style": "default",
+  "label_placement": "top",
+  "instruction_placement": "label",
+  "active": true,
+  "description": "Manually editable staff portraits, names and roles, with unlimited repeater rows and optional team link.",
+  "show_in_rest": 0
+}

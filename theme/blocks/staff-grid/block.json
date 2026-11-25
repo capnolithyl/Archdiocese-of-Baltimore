@@ -1,0 +1,35 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "balt/staff-grid",
+  "version": "1.0.0",
+  "title": "Staff Grid",
+  "category": "baltimore",
+  "icon": "groups",
+  "description": "A staff or team section with editable portraits, names, roles and an optional team link.",
+  "keywords": [
+    "staff",
+    "team",
+    "people",
+    "directory"
+  ],
+  "textdomain": "baltimore",
+  "acf": {
+    "mode": "preview",
+    "renderCallback": "balt_render_staff_grid_block",
+    "blockVersion": 3
+  },
+  "supports": {
+    "anchor": true,
+    "align": [
+      "full"
+    ],
+    "html": false
+  },
+  "attributes": {
+    "align": {
+      "type": "string",
+      "default": "full"
+    }
+  }
+}

@@ -75,6 +75,11 @@ jobs:
           }
           NODE
 
+      - name: Verify Staff Grid registration, repeater and responsive utilities
+        run: |
+          php tests/staff-grid-smoke.php
+          node tests/staff-grid-smoke.mjs
+
       - name: Verify Feature Grid fields and responsive utilities
         run: |
           php tests/feature-grid-styles-smoke.php
