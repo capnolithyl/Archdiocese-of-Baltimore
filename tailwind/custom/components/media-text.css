@@ -1,0 +1,184 @@
+/**
+ * Native Gutenberg Media & Text, based on Figma 320:2209.
+ * Keep WordPress's media position, custom width, alignment and mobile toggle.
+ * Imported into both the frontend and editor stylesheets.
+ */
+.wp-block-media-text {
+	--balt-media-gap: clamp(1.5rem, 4.68vw, 5rem);
+	box-sizing: border-box;
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+	column-gap: var(--balt-media-gap);
+	row-gap: 2rem;
+}
+
+.wp-block-media-text.has-media-on-the-right {
+	grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+}
+
+/* Wide sections use the same 1504px container and 40px gutters as Figma.
+ * Inline custom media widths and user-specified block padding still win. */
+.wp-block-media-text.alignwide,
+.wp-block-media-text.alignfull {
+	width: 100%;
+	padding-block: clamp(3rem, 5.62vw, 6rem);
+	padding-inline: clamp(1.25rem, 2.34vw, 2.5rem);
+	margin-inline: auto;
+}
+
+.wp-block-media-text > .wp-block-media-text__media,
+.wp-block-media-text > .wp-block-media-text__content {
+	min-width: 0;
+	margin: 0;
+}
+
+.wp-block-media-text > .wp-block-media-text__content {
+	padding: 0;
+	overflow-wrap: anywhere;
+}
+
+.wp-block-media-text > .wp-block-media-text__media {
+	position: relative;
+	overflow: hidden;
+	border-radius: 1rem;
+}
+
+/* Apply the editorial crop to normal images, not videos or WordPress's
+ * native fill/crop mode, which retains its own focal-point behavior. */
+.wp-block-media-text:not(.is-image-fill):not(.is-image-fill-element) > .wp-block-media-text__media img {
+	display: block;
+	width: 100%;
+	max-width: 100%;
+	height: auto;
+	aspect-ratio: 4 / 3;
+	object-fit: cover;
+	margin: 0;
+	border-radius: inherit;
+}
+
+.wp-block-media-text > .wp-block-media-text__media video {
+	display: block;
+	width: 100%;
+	max-width: 100%;
+	height: auto;
+	margin: 0;
+}
+
+.wp-block-media-text > .wp-block-media-text__media:has(img)::after {
+	content: '';
+	position: absolute;
+	inset: 0;
+	background: linear-gradient(to top, rgb(0 45 98 / 30%), transparent);
+	pointer-events: none;
+}
+
+/* Explicit spacing avoids Tailwind Typography's default paragraph/image
+ * margins, which would otherwise change the measured Figma layout. */
+.wp-block-media-text .wp-block-media-text__content > :where(p, h2, h3, .wp-block-buttons) {
+	margin-block: 0;
+}
+.wp-block-media-text .wp-block-media-text__content > :where(p, h2, h3) + :where(p, h2, h3) {
+	margin-top: 1.5rem;
+}
+.wp-block-media-text .wp-block-media-text__content h2 {
+	font-family: var(--wp--preset--font-family--heading, Georgia, serif);
+	font-size: clamp(2rem, 2.81vw, 3rem);
+	font-weight: 800;
+	line-height: 1.25;
+	text-wrap: wrap;
+	color: var(--wp--preset--color--foreground, #0f1a2e);
+}
+.wp-block-media-text .wp-block-media-text__content p {
+	font-size: 1rem;
+	line-height: 1.625;
+}
+
+p.is-style-balt-eyebrow,
+.wp-block-media-text .wp-block-media-text__content p.is-style-balt-eyebrow {
+	font-family: var(--wp--preset--font-family--body, Lato, sans-serif);
+	font-size: 0.875rem;
+	font-weight: 700;
+	line-height: 1.25rem;
+	letter-spacing: 3px;
+	text-transform: uppercase;
+	color: var(--wp--preset--color--tertiary, #be2026);
+}
+.wp-block-media-text .wp-block-media-text__content > p.is-style-balt-eyebrow + h2 {
+	margin-top: 1rem;
+}
+p.is-style-balt-lead,
+.wp-block-media-text .wp-block-media-text__content p.is-style-balt-lead {
+	font-size: 1.125rem;
+	line-height: 1.625;
+}
+
+.wp-block-media-text .wp-block-media-text__content .wp-block-buttons {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.75rem;
+	margin-top: 2rem;
+}
+.wp-block-media-text .wp-block-media-text__content .wp-block-button {
+	margin: 0;
+}
+.wp-block-media-text .wp-block-media-text__content .wp-block-button__link {
+	display: inline-flex;
+	min-height: 48px;
+	max-width: 100%;
+	align-items: center;
+	justify-content: center;
+	padding: 12px 28px;
+	border: 2px solid transparent;
+	border-radius: 4px;
+	font-family: var(--wp--preset--font-family--body, Lato, sans-serif);
+	font-size: 0.875rem;
+	font-weight: 700;
+	line-height: 1.25rem;
+	letter-spacing: 0.1em;
+	text-align: center;
+	text-transform: uppercase;
+	text-decoration: none;
+	transition: background-color 180ms ease, color 180ms ease, border-color 180ms ease;
+}
+.wp-block-media-text .wp-block-button:not(.is-style-outline) .wp-block-button__link:not(.has-background) {
+	background-color: var(--wp--preset--color--primary, #002d62);
+}
+.wp-block-media-text .wp-block-button:not(.is-style-outline) .wp-block-button__link:not(.has-text-color) {
+	color: #fff;
+}
+.wp-block-media-text .wp-block-button.is-style-outline .wp-block-button__link:not(.has-background) {
+	background-color: transparent;
+}
+.wp-block-media-text .wp-block-button.is-style-outline .wp-block-button__link:not(.has-text-color) {
+	color: var(--wp--preset--color--primary, #002d62);
+}
+.wp-block-media-text .wp-block-button.is-style-outline .wp-block-button__link {
+	border-color: currentColor;
+}
+.wp-block-media-text .wp-block-button:not(.is-style-outline) .wp-block-button__link:not(.has-background):hover {
+	background-color: var(--wp--preset--color--primary-light, #003a7a);
+}
+.wp-block-media-text .wp-block-button.is-style-outline .wp-block-button__link:not(.has-background):hover {
+	background-color: rgb(0 45 98 / 6%);
+}
+
+/* Honor the native stack-on-mobile setting; the design needs a little
+ * more reading space than the core block's default 600px breakpoint. */
+@media (max-width: 61.999rem) {
+	.wp-block-media-text.is-stacked-on-mobile {
+		grid-template-columns: minmax(0, 1fr) !important;
+	}
+	.wp-block-media-text.is-stacked-on-mobile > .wp-block-media-text__media {
+		grid-column: 1;
+		grid-row: 1;
+	}
+	.wp-block-media-text.is-stacked-on-mobile > .wp-block-media-text__content {
+		grid-column: 1;
+		grid-row: 2;
+	}
+}
+@media (prefers-reduced-motion: reduce) {
+	.wp-block-media-text .wp-block-button__link {
+		transition: none;
+	}
+}
