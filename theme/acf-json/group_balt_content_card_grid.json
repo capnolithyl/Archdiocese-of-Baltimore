@@ -19,6 +19,25 @@
       "conditional_logic": 0
     },
     {
+      "key": "field_balt_card_grid_heading_alignment",
+      "name": "heading_alignment",
+      "label": "Heading Alignment",
+      "type": "select",
+      "instructions": "Align the section eyebrow, heading and supporting text. Default preserves the original layout.",
+      "required": 0,
+      "conditional_logic": 0,
+      "choices": {
+        "default": "Default",
+        "left": "Left",
+        "center": "Center"
+      },
+      "default_value": "default",
+      "return_format": "value",
+      "allow_null": 0,
+      "multiple": 0,
+      "ui": 1
+    },
+    {
       "key": "field_balt_card_grid_subheading",
       "label": "Subheading",
       "name": "subheading",
@@ -250,7 +269,8 @@
       "type": "link",
       "required": 0,
       "conditional_logic": 0,
-      "return_format": "array"
+      "return_format": "array",
+      "instructions": "Left alignment places this link beside the heading; centered alignment keeps the button below the cards."
     }
   ],
   "location": [
@@ -269,5 +289,6 @@
   "instruction_placement": "label",
   "active": true,
   "description": "Reusable content card grid with manual, selected and latest modes.",
-  "show_in_rest": 0
+  "show_in_rest": 0,
+  "modified": 1795643000
 }

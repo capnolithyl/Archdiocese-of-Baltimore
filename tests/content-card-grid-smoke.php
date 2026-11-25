@@ -60,3 +60,21 @@ $latest=balt_content_grid_latest_cards('post',99,5,true);
 check(count($latest)===1 && $GLOBALS['query']['posts_per_page']===12 && $GLOBALS['query']['cat']===5,'Latest post query/filter limits');
 check(balt_content_grid_latest_cards('attachment',3,0,false)===[],'Disallowed type must not query');
 echo "Manual, selected and latest content cards; RSS shared rendering and safe links passed\n";
+
+function get_field($key){return $GLOBALS['grid_fixture'][$key]??null;}
+function wp_unique_id($prefix){return $prefix.'test';}
+function get_block_wrapper_attributes($attrs){return 'class="'.esc_attr($attrs['class']).'"';}
+function get_template_part($slug,$name=null,$args=[]){require dirname(__DIR__).'/theme/'.$slug.'.php';}
+function wp_kses_post($html){return $html;}
+function dpi_blocks_render_link($link,$class,$preview){return '<span class="'.esc_attr($class).'">'.esc_html($link['title']).'</span>';}
+function grid_render($fields,$is_preview=false){$GLOBALS['grid_fixture']=$fields;ob_start();require dirname(__DIR__).'/theme/blocks/content-card-grid/render.php';return ob_get_clean();}
+$fixture=['eyebrow'=>'Stay Informed','heading'=>'Latest News','subheading'=>'Sample','cards'=>$rows,'view_all_link'=>['url'=>'/news/','title'=>'All News']];
+$center=grid_render($fixture);
+check($center===grid_render($fixture+['heading_alignment'=>'center']),'Explicit center should preserve original layout');
+check(str_contains($center,'mt-14 grid') && str_contains($center,'btn btn-primary'),'Center retains bottom button and original grid spacing');
+$left=grid_render($fixture+['heading_alignment'=>'left']);
+check(str_contains($left,'items-end justify-between gap-4 text-left')&&str_contains($left,'mt-10 grid'),'Left heading layout and spacing');
+check(str_contains($left,'href="/news/"')&&strpos($left,'All News')<strpos($left,'balt-content-card-grid'),'All News must appear above cards');
+check(!str_contains($left,'btn btn-primary'),'Do not duplicate section CTA');
+check(!str_contains(grid_render($fixture+['heading_alignment'=>'left'],true),'href="/news/"'),'Section CTA preview should be inert');
+echo "Latest News header, CTA location and default grid layout passed\n";

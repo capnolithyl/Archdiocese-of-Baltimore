@@ -33,6 +33,25 @@
       "default_value": "Archdiocese News"
     },
     {
+      "key": "field_balt_rss_news_heading_alignment",
+      "name": "heading_alignment",
+      "label": "Heading Alignment",
+      "type": "select",
+      "instructions": "Align the section eyebrow, heading and supporting text. Default preserves the original layout.",
+      "required": 0,
+      "conditional_logic": 0,
+      "choices": {
+        "default": "Default",
+        "left": "Left",
+        "center": "Center"
+      },
+      "default_value": "default",
+      "return_format": "value",
+      "allow_null": 0,
+      "multiple": 0,
+      "ui": 1
+    },
+    {
       "key": "field_balt_rss_news_subheading",
       "label": "Subheading",
       "name": "subheading",
@@ -93,7 +112,7 @@
       "label": "View All Link (optional)",
       "name": "view_all_link",
       "type": "link",
-      "instructions": "Optional button URL and label. Opens in a new tab. If empty, links to the first feed's website/category page, not the XML feed.",
+      "instructions": "Left alignment places this link beside the heading; centered alignment keeps the button below the cards.",
       "required": 0,
       "conditional_logic": 0,
       "wrapper": {
@@ -121,5 +140,6 @@
   "hide_on_screen": "",
   "active": true,
   "description": "Figma Archdiocese News section. Fetches up to six newest items from RSS/Atom feeds.",
-  "show_in_rest": 0
+  "show_in_rest": 0,
+  "modified": 1795643000
 }

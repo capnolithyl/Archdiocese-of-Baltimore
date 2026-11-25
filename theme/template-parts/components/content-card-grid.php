@@ -15,7 +15,7 @@ $accent = ! empty( $args['accent'] );
 $preview = ! empty( $args['preview'] );
 $zoom_class = 'size-full object-cover transition-transform duration-300 ease-out group-hover:scale-105 group-focus-within:scale-105 motion-reduce:transition-none';
 ?>
-<div class="balt-content-card-grid mt-14 grid grid-cols-1 gap-px overflow-hidden rounded-card border border-[#E8E3D8] bg-[#E8E3D8] sm:grid-cols-2 lg:grid-cols-3">
+<div class="balt-content-card-grid <?php echo ! empty( $args['compact_spacing'] ) ? 'mt-10' : 'mt-14'; ?> grid grid-cols-1 gap-px overflow-hidden rounded-card border border-[#E8E3D8] bg-[#E8E3D8] sm:grid-cols-2 lg:grid-cols-3">
 	<?php foreach ( $cards as $card ) :
 		$url = esc_url( $card['link'] ?? '' );
 		$linked = '' !== $url && ! $preview;
