@@ -29,17 +29,67 @@
       "layout": "block",
       "min": 1,
       "max": 0,
-      "collapsed": "field_balt_staff_grid_member_name",
+      "collapsed": "",
       "button_label": "Add Staff Member",
-      "instructions": "Add and reorder as many staff members as needed.",
+      "instructions": "Add as many staff members as needed. Each row can select an existing Staff record or contain a custom person. Drag to reorder.",
       "sub_fields": [
+        {
+          "key": "field_balt_staff_grid_member_source",
+          "name": "source",
+          "label": "Source",
+          "type": "radio",
+          "choices": {
+            "custom": "Custom Staff Member",
+            "staff": "Existing Staff Record"
+          },
+          "default_value": "custom",
+          "return_format": "value",
+          "layout": "horizontal",
+          "required": 1,
+          "conditional_logic": 0
+        },
+        {
+          "key": "field_balt_staff_grid_member_staff",
+          "name": "staff_member",
+          "label": "Staff Member",
+          "type": "post_object",
+          "post_type": [
+            "balt_staff"
+          ],
+          "post_status": [
+            "publish"
+          ],
+          "return_format": "id",
+          "multiple": 0,
+          "allow_null": 0,
+          "ui": 1,
+          "required": 1,
+          "conditional_logic": [
+            [
+              {
+                "field": "field_balt_staff_grid_member_source",
+                "operator": "==",
+                "value": "staff"
+              }
+            ]
+          ],
+          "instructions": "Select a published Staff record. Its name, role and portrait update automatically when the record changes."
+        },
         {
           "key": "field_balt_staff_grid_member_photo",
           "name": "photo",
           "label": "Portrait",
           "type": "image",
           "required": 0,
-          "conditional_logic": 0,
+          "conditional_logic": [
+            [
+              {
+                "field": "field_balt_staff_grid_member_source",
+                "operator": "!=",
+                "value": "staff"
+              }
+            ]
+          ],
           "return_format": "id",
           "preview_size": "medium",
           "library": "all",
@@ -55,7 +105,15 @@
           "label": "Full Name",
           "type": "text",
           "required": 1,
-          "conditional_logic": 0,
+          "conditional_logic": [
+            [
+              {
+                "field": "field_balt_staff_grid_member_source",
+                "operator": "!=",
+                "value": "staff"
+              }
+            ]
+          ],
           "wrapper": {
             "width": "65",
             "class": "",
@@ -68,7 +126,15 @@
           "label": "Position / Role",
           "type": "text",
           "required": 0,
-          "conditional_logic": 0,
+          "conditional_logic": [
+            [
+              {
+                "field": "field_balt_staff_grid_member_source",
+                "operator": "!=",
+                "value": "staff"
+              }
+            ]
+          ],
           "instructions": "Optional job title or role."
         }
       ]
@@ -117,6 +183,7 @@
   "label_placement": "top",
   "instruction_placement": "label",
   "active": true,
-  "description": "Manually editable staff portraits, names and roles, with unlimited repeater rows and optional team link.",
-  "show_in_rest": 0
+  "description": "Unlimited mixed Staff record and custom staff member rows with optional team link.",
+  "show_in_rest": 0,
+  "modified": 1795638000
 }

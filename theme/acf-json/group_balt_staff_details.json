@@ -1,0 +1,31 @@
+{
+  "key": "group_balt_staff_details",
+  "title": "Staff Details",
+  "fields": [
+    {
+      "key": "field_balt_staff_role",
+      "label": "Position / Role",
+      "name": "balt_staff_role",
+      "type": "text",
+      "required": 0,
+      "default_value": "",
+      "instructions": "Job title displayed in Staff Grid and available for the future staff directory."
+    }
+  ],
+  "location": [
+    [
+      {
+        "param": "post_type",
+        "operator": "==",
+        "value": "balt_staff"
+      }
+    ]
+  ],
+  "position": "side",
+  "style": "default",
+  "label_placement": "top",
+  "instruction_placement": "label",
+  "active": true,
+  "show_in_rest": 0,
+  "description": "Use the post title for the full name, featured image for portrait, editor for biography, and Departments and Order for future directory organization."
+}

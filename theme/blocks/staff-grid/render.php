@@ -11,15 +11,10 @@ foreach ( (array) get_field( 'members' ) as $member ) {
 	if ( ! is_array( $member ) ) {
 		continue;
 	}
-	$name = trim( (string) ( $member['name'] ?? '' ) );
-	if ( '' === $name ) {
-		continue;
+	$data = balt_staff_grid_member_data( $member );
+	if ( null !== $data ) {
+		$members[] = $data;
 	}
-	$members[] = array(
-		'name' => $name,
-		'role' => trim( (string) ( $member['role'] ?? '' ) ),
-		'photo' => absint( $member['photo'] ?? 0 ),
-	);
 }
 
 if ( ! $members && ! $preview ) {

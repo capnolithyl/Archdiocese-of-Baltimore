@@ -2,11 +2,11 @@
   "$schema": "https://schemas.wp.org/trunk/block.json",
   "apiVersion": 3,
   "name": "balt/staff-grid",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "title": "Staff Grid",
   "category": "baltimore",
   "icon": "groups",
-  "description": "A staff or team section with editable portraits, names, roles and an optional team link.",
+  "description": "A staff or team section with selected Staff records, custom people, and an optional team link.",
   "keywords": [
     "staff",
     "team",
