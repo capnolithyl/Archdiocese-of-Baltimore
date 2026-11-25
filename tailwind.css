@@ -8,6 +8,8 @@
 @source "./theme/blocks/image-cta-grid";
 @source "./theme/blocks/media-center";
 @source "./theme/blocks/rss-news";
+@source "./theme/blocks/content-card-grid";
+@source "./theme/template-parts/components/content-card-grid.php";
 @source "./theme/blocks/image-text-banner";
 @source "./theme/template-parts/layout/footer-content.php";
 @source "./theme/template-parts/layout/header-content.php";

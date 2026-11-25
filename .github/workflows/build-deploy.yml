@@ -367,12 +367,15 @@ jobs:
         run: |
           php tests/rss-news-smoke.php
           node tests/rss-news-hover-smoke.mjs
+          php tests/content-card-grid-smoke.php
+          node tests/content-card-grid-smoke.mjs
           node --input-type=module <<'NODE'
           import { readFileSync } from 'node:fs';
 
           const block = JSON.parse(readFileSync('theme/blocks/rss-news/block.json', 'utf8'));
           const acf = JSON.parse(readFileSync('theme/acf-json/group_balt_rss_news.json', 'utf8'));
           const php = readFileSync('theme/blocks/rss-news/render.php', 'utf8');
+          const shared = readFileSync('theme/template-parts/components/content-card-grid.php', 'utf8');
           const helper = readFileSync('theme/inc/rss-news.php', 'utf8');
           const source = readFileSync('tailwind.css', 'utf8');
 
@@ -394,7 +397,7 @@ jobs:
             throw new Error('Catholic Review default is missing');
           }
           for (const token of ['get_field( \'feeds\' )', 'balt_rss_news_articles(', 'lg:grid-cols-3', 'h-[200px]', 'btn btn-primary', 'target="_blank"', 'rel="noopener noreferrer"']) {
-            if (!php.includes(token)) throw new Error('RSS News card or external link missing: ' + token);
+            if (!(php + shared).includes(token)) throw new Error('RSS News card or external link missing: ' + token);
           }
           for (const token of ['fetch_feed(', 'wp_feed_cache_transient_lifetime', 'wp_http_validate_url(', 'WP_HTML_Tag_Processor', 'usort(', "array_slice( $articles, 0, 6 )"]) {
             if (!helper.includes(token)) throw new Error('RSS helper missing: ' + token);

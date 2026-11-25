@@ -1,0 +1,36 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "balt/content-card-grid",
+  "version": "1.0.0",
+  "title": "Content Card Grid",
+  "category": "baltimore",
+  "icon": "grid-view",
+  "description": "A reusable grid of manually entered cards, selected WordPress content, or latest posts.",
+  "keywords": [
+    "cards",
+    "offices",
+    "ministries",
+    "posts",
+    "grid"
+  ],
+  "textdomain": "baltimore",
+  "acf": {
+    "mode": "preview",
+    "renderCallback": "balt_render_content_card_grid_block",
+    "blockVersion": 3
+  },
+  "supports": {
+    "anchor": true,
+    "align": [
+      "full"
+    ],
+    "html": false
+  },
+  "attributes": {
+    "align": {
+      "type": "string",
+      "default": "full"
+    }
+  }
+}

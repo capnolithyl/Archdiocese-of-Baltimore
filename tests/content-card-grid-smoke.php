@@ -1,0 +1,62 @@
+<?php
+declare(strict_types=1);
+define('ABSPATH',__DIR__);
+function add_action(...$args):void{}
+function add_filter(...$args):void{}
+function absint($v):int{return abs((int)$v);}
+function esc_html($v):string{return htmlspecialchars((string)$v,ENT_QUOTES,'UTF-8');}
+function esc_attr($v):string{return esc_html($v);}
+function __($v,$domain):string{return $v;}
+function esc_url_raw($v):string{return preg_match('~^(?:https?://|/|#)~',$v)?$v:'';}
+function esc_url($v):string{return esc_attr(esc_url_raw($v));}
+function wp_get_attachment_image($id,$size,$icon,$attrs):string{return '<img src="/media/'.$id.'.jpg" alt="" class="'.esc_attr($attrs['class']).'">';}
+function wp_date($format,$date):string{return gmdate($format,$date);}
+function get_post_types($args,$format):array{return ['post'=>'post','page'=>'page','attachment'=>'attachment'];}
+function is_post_type_viewable($type):bool{return true;}
+function get_post($record){return is_object($record)?$record:($GLOBALS['posts'][$record]??null);}
+function get_permalink($post):string{return '/post/'.$post->ID;}
+function get_the_title($post):string{return $post->post_title;}
+function get_the_excerpt($post):string{return $post->post_excerpt;}
+function wp_strip_all_tags($s):string{return strip_tags($s);}
+function wp_trim_words($s,$len,$more):string{return $s;}
+function balt_get_featured_image_id($id):int{return 42;}
+function get_post_timestamp($post):int{return 1795622400;}
+function get_posts($query):array{$GLOBALS['query']=$query;return [1,2,3];}
+function check(bool $ok,string $message):void{if(!$ok)throw new RuntimeException($message);}
+function render_cards(array $args):string{ob_start();require dirname(__DIR__).'/theme/template-parts/components/content-card-grid.php';return ob_get_clean();}
+require dirname(__DIR__).'/theme/inc/content-card-grid.php';
+$rows=[
+ ['title'=>'Family Formation','description'=>'Support & care','image'=>42,'link'=>['url'=>'/family/']],
+ ['title'=>'Adult Formation','link'=>['url'=>'https://example.org/','title'=>'Explore','target'=>'_blank']],
+ ['title'=>'No link','link'=>['url'=>'javascript:alert(1)']],
+ ['title'=>'']
+];
+$cards=balt_content_grid_manual_cards($rows);
+check(count($cards)===3,'Skip untitled rows');
+check($cards[0]['image_id']===42 && $cards[0]['target']==='','Manual image and same-tab link');
+check($cards[2]['link']==='','Unsafe URL must be rejected');
+$html=render_cards(['cards'=>$cards,'accent'=>true]);
+check(substr_count($html,'<article ')===3,'Card count incorrect');
+check(str_contains($html,'/media/42.jpg'),'Attachment image missing');
+check(str_contains($html,'Support &amp; care'),'Escape text');
+check(str_contains($html,'target="_blank" rel="noopener noreferrer"'),'External target missing');
+check(str_contains($html,'Learn More: Family Formation'),'Default CTA accessible label');
+check(str_contains($html,'Explore: Adult Formation'),'Custom CTA missing');
+check(!str_contains($html,'javascript:'),'Unsafe link leaked');
+check(!str_contains(render_cards(['cards'=>$cards,'preview'=>true]),'<a '),'Preview links must be inert');
+$rss=render_cards(['cards'=>[['title'=>'RSS','link'=>'https://example.org/news','image'=>'https://example.org/photo.jpg','date'=>1795622400,'excerpt'=>'Story']],'external'=>true]);
+check(str_contains($rss,'target="_blank" rel="noopener noreferrer"'),'RSS should remain external');
+check(str_contains($rss,'<time ') && str_contains($rss,'https://example.org/photo.jpg'),'RSS date and image missing');
+check(str_contains($rss,'before:scale-x-0'),'RSS hover accent changed');
+$GLOBALS['posts']=[
+ 1=>(object)['ID'=>1,'post_status'=>'publish','post_password'=>'','post_type'=>'post','post_title'=>'News','post_excerpt'=>'Excerpt'],
+ 2=>(object)['ID'=>2,'post_status'=>'draft','post_password'=>'','post_type'=>'post','post_title'=>'Hidden','post_excerpt'=>''],
+ 3=>(object)['ID'=>3,'post_status'=>'publish','post_password'=>'secret','post_type'=>'page','post_title'=>'Protected','post_excerpt'=>'']
+];
+$selected=balt_content_grid_post_cards([1,2,3,1],true);
+check(count($selected)===1 && $selected[0]['date']>0,'Only unique, published, unprotected content should render');
+check(balt_content_grid_post_cards([1],false)[0]['date']===0,'Date must be optional');
+$latest=balt_content_grid_latest_cards('post',99,5,true);
+check(count($latest)===1 && $GLOBALS['query']['posts_per_page']===12 && $GLOBALS['query']['cat']===5,'Latest post query/filter limits');
+check(balt_content_grid_latest_cards('attachment',3,0,false)===[],'Disallowed type must not query');
+echo "Manual, selected and latest content cards; RSS shared rendering and safe links passed\n";

@@ -1,7 +1,10 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 
-const news = readFileSync('theme/blocks/rss-news/render.php', 'utf8');
+const news = readFileSync('theme/template-parts/components/content-card-grid.php', 'utf8');
+const rss = readFileSync('theme/blocks/rss-news/render.php', 'utf8');
+const curated = readFileSync('theme/blocks/content-card-grid/render.php', 'utf8');
+for (const renderer of [rss,curated]) assert.ok(renderer.includes("'template-parts/components/content-card-grid'"), 'Both blocks must use the shared grid');
 const featureGrid = readFileSync('theme/blocks/feature-grid/render.php', 'utf8');
 
 // RSS News cards should share the proven Feature Grid interaction pattern.

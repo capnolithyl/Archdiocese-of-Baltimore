@@ -1,0 +1,273 @@
+{
+  "key": "group_balt_content_card_grid",
+  "title": "Content Card Grid",
+  "fields": [
+    {
+      "key": "field_balt_card_grid_eyebrow",
+      "label": "Eyebrow",
+      "name": "eyebrow",
+      "type": "text",
+      "required": 0,
+      "conditional_logic": 0
+    },
+    {
+      "key": "field_balt_card_grid_heading",
+      "label": "Heading",
+      "name": "heading",
+      "type": "text",
+      "required": 0,
+      "conditional_logic": 0
+    },
+    {
+      "key": "field_balt_card_grid_subheading",
+      "label": "Subheading",
+      "name": "subheading",
+      "type": "textarea",
+      "required": 0,
+      "conditional_logic": 0,
+      "rows": 3,
+      "new_lines": ""
+    },
+    {
+      "key": "field_balt_card_grid_source",
+      "label": "Content Source",
+      "name": "source",
+      "type": "select",
+      "required": 0,
+      "conditional_logic": 0,
+      "choices": {
+        "manual": "Manual Cards",
+        "selected": "Selected WordPress Content",
+        "latest": "Latest WordPress Content"
+      },
+      "default_value": "manual",
+      "return_format": "value",
+      "ui": 1
+    },
+    {
+      "key": "field_balt_card_grid_cards",
+      "label": "Cards",
+      "name": "cards",
+      "type": "repeater",
+      "required": 0,
+      "conditional_logic": [
+        [
+          {
+            "field": "field_balt_card_grid_source",
+            "operator": "==",
+            "value": "manual"
+          }
+        ]
+      ],
+      "instructions": "Add and reorder up to twelve cards. Use a WordPress image and an optional link.",
+      "layout": "block",
+      "min": 1,
+      "max": 12,
+      "collapsed": "field_balt_card_grid_title",
+      "button_label": "Add Card",
+      "sub_fields": [
+        {
+          "key": "field_balt_card_grid_image",
+          "label": "Image",
+          "name": "image",
+          "type": "image",
+          "required": 0,
+          "conditional_logic": 0,
+          "return_format": "id",
+          "preview_size": "medium",
+          "library": "all"
+        },
+        {
+          "key": "field_balt_card_grid_title",
+          "label": "Title",
+          "name": "title",
+          "type": "text",
+          "required": 1,
+          "conditional_logic": 0
+        },
+        {
+          "key": "field_balt_card_grid_description",
+          "label": "Description",
+          "name": "description",
+          "type": "textarea",
+          "required": 0,
+          "conditional_logic": 0,
+          "rows": 3,
+          "new_lines": ""
+        },
+        {
+          "key": "field_balt_card_grid_meta",
+          "label": "Optional Metadata",
+          "name": "meta",
+          "type": "text",
+          "required": 0,
+          "conditional_logic": 0,
+          "instructions": "Leave blank for ordinary cards."
+        },
+        {
+          "key": "field_balt_card_grid_link",
+          "label": "Link",
+          "name": "link",
+          "type": "link",
+          "required": 0,
+          "conditional_logic": 0,
+          "return_format": "array",
+          "instructions": "Optional destination and CTA text. Use Learn More as the default label."
+        }
+      ]
+    },
+    {
+      "key": "field_balt_card_grid_selected_posts",
+      "label": "Select Content",
+      "name": "selected_posts",
+      "type": "relationship",
+      "required": 0,
+      "conditional_logic": [
+        [
+          {
+            "field": "field_balt_card_grid_source",
+            "operator": "==",
+            "value": "selected"
+          }
+        ]
+      ],
+      "post_status": [
+        "publish"
+      ],
+      "filters": [
+        "search",
+        "post_type",
+        "taxonomy"
+      ],
+      "return_format": "id",
+      "min": 1,
+      "max": 12,
+      "elements": [
+        "featured_image"
+      ]
+    },
+    {
+      "key": "field_balt_card_grid_post_type",
+      "label": "Content Type",
+      "name": "post_type",
+      "type": "select",
+      "required": 0,
+      "conditional_logic": [
+        [
+          {
+            "field": "field_balt_card_grid_source",
+            "operator": "==",
+            "value": "latest"
+          }
+        ]
+      ],
+      "choices": {
+        "post": "Post",
+        "page": "Page"
+      },
+      "default_value": "post",
+      "return_format": "value",
+      "ui": 1
+    },
+    {
+      "key": "field_balt_card_grid_post_count",
+      "label": "Number of Cards",
+      "name": "post_count",
+      "type": "number",
+      "required": 0,
+      "conditional_logic": [
+        [
+          {
+            "field": "field_balt_card_grid_source",
+            "operator": "==",
+            "value": "latest"
+          }
+        ]
+      ],
+      "default_value": 6,
+      "min": 1,
+      "max": 12,
+      "step": 1
+    },
+    {
+      "key": "field_balt_card_grid_category",
+      "label": "Post Category",
+      "name": "category",
+      "type": "taxonomy",
+      "required": 0,
+      "conditional_logic": [
+        [
+          {
+            "field": "field_balt_card_grid_source",
+            "operator": "==",
+            "value": "latest"
+          },
+          {
+            "field": "field_balt_card_grid_post_type",
+            "operator": "==",
+            "value": "post"
+          }
+        ]
+      ],
+      "taxonomy": "category",
+      "field_type": "select",
+      "allow_null": 1,
+      "add_term": 0,
+      "save_terms": 0,
+      "load_terms": 0,
+      "return_format": "id",
+      "instructions": "Optional category filter for regular WordPress posts."
+    },
+    {
+      "key": "field_balt_card_grid_show_date",
+      "label": "Show Published Date & Time",
+      "name": "show_date",
+      "type": "true_false",
+      "required": 0,
+      "conditional_logic": [
+        [
+          {
+            "field": "field_balt_card_grid_source",
+            "operator": "==",
+            "value": "selected"
+          }
+        ],
+        [
+          {
+            "field": "field_balt_card_grid_source",
+            "operator": "==",
+            "value": "latest"
+          }
+        ]
+      ],
+      "default_value": 0,
+      "ui": 1
+    },
+    {
+      "key": "field_balt_card_grid_view_all_link",
+      "label": "View All Link (optional)",
+      "name": "view_all_link",
+      "type": "link",
+      "required": 0,
+      "conditional_logic": 0,
+      "return_format": "array"
+    }
+  ],
+  "location": [
+    [
+      {
+        "param": "block",
+        "operator": "==",
+        "value": "balt/content-card-grid"
+      }
+    ]
+  ],
+  "menu_order": 0,
+  "position": "normal",
+  "style": "default",
+  "label_placement": "top",
+  "instruction_placement": "label",
+  "active": true,
+  "description": "Reusable content card grid with manual, selected and latest modes.",
+  "show_in_rest": 0
+}
