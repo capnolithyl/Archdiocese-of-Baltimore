@@ -2,9 +2,9 @@
 /**
  * Title: Media & Text Section
  * Slug: baltimore/media-text-section
- * Categories: featured, text
+ * Categories: baltimore, text
+ * Inserter: yes
  * Description: A wide image and text section with an eyebrow, heading, supporting copy and two buttons.
- * Block Types: core/media-text
  *
  * @package Archdiocese_of_Baltimore
  */

@@ -7,6 +7,8 @@ const styles = read('theme/inc/editorial-block-styles.php');
 const css = read('tailwind/custom/components/media-text.css');
 
 assert.match(pattern, /Slug: baltimore\/media-text-section/);
+assert.match(pattern, /Categories: baltimore, text/);
+assert.match(pattern, /Inserter: yes/);
 assert.match(pattern, /<!-- wp:media-text {"align":"wide","isStackedOnMobile":true,"verticalAlignment":"center"} -->/);
 assert.match(pattern, /<figure class="wp-block-media-text__media"><\/figure>/, 'Image must be editor-selected, not a fixed demo URL');
 for (const block of ['paragraph', 'heading', 'buttons', 'button']) {

@@ -37,7 +37,9 @@ jobs:
         run: find theme -type f -name '*.php' -print0 | xargs -0 -n 1 php -l
 
       - name: Verify native Media and Text section
-        run: node tests/media-text-smoke.mjs
+        run: |
+          php tests/block-patterns-smoke.php
+          node tests/media-text-smoke.mjs
 
       - name: Verify interior page templates and section navigation
         run: |
