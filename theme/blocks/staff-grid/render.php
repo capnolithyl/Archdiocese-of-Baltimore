@@ -32,7 +32,7 @@ $heading_id = wp_unique_id( 'balt-staff-grid-' );
 <section <?php echo get_block_wrapper_attributes( array( 'class' => 'not-prose balt-full-bleed balt-staff-grid relative mt-0! w-full max-w-none bg-white py-[clamp(3rem,5.62vw,6rem)] text-foreground' ) ); ?><?php if ( $heading ) : ?> aria-labelledby="<?php echo esc_attr( $heading_id ); ?>"<?php endif; ?>>
 	<div class="mx-auto w-full max-w-wide px-gutter">
 		<?php if ( $eyebrow || $heading ) : ?>
-			<header class="text-center">
+			<header class="<?php echo 'left' === get_field( 'heading_alignment' ) ? 'text-left' : 'text-center'; ?>">
 				<?php if ( $eyebrow ) : ?>
 					<p class="font-body text-sm font-bold leading-5 tracking-[3px] text-tertiary uppercase"><?php echo esc_html( $eyebrow ); ?></p>
 				<?php endif; ?>

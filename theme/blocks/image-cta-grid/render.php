@@ -55,7 +55,7 @@ $heading_id   = wp_unique_id( 'balt-image-cta-grid-' );
 			<?php endforeach; ?>
 		</div>
 
-		<div class="relative z-10 mx-auto mb-8 w-full max-w-[760px] rounded-card border-2 border-secondary bg-white px-5 py-10 text-center shadow-xl sm:px-14 desktop:-mt-20 desktop:mb-0">
+		<div class="relative z-10 mx-auto mb-8 w-full max-w-[760px] rounded-card border-2 border-secondary bg-white px-5 py-10 <?php echo 'left' === get_field( 'heading_alignment' ) ? 'text-left' : 'text-center'; ?> shadow-xl sm:px-14 desktop:-mt-20 desktop:mb-0">
 			<?php if ( $eyebrow ) : ?>
 				<p class="font-body text-xl font-semibold leading-[30px] tracking-[0.2em] text-secondary uppercase"><?php echo esc_html( $eyebrow ); ?></p>
 			<?php endif; ?>

@@ -36,6 +36,9 @@ jobs:
       - name: Lint PHP templates
         run: find theme -type f -name '*.php' -print0 | xargs -0 -n 1 php -l
 
+      - name: Verify reusable section heading alignment
+        run: node tests/section-heading-smoke.mjs
+
       - name: Verify native Accordion extension
         run: |
           php tests/accordion-smoke.php
@@ -237,7 +240,7 @@ jobs:
           if (block.name !== 'balt/media-center' || block.viewScript !== 'file:./view.js' || block.editorScript !== 'file:./view.js') {
             throw new Error('Media Center block registration is incorrect');
           }
-          if (group.fields.map(f => f.name).join(',') !== 'eyebrow,heading,tabs') {
+          if (group.fields.map(f => f.name).join(',') !== 'eyebrow,heading,heading_alignment,tabs') {
             throw new Error('Media Center block field schema is incorrect');
           }
           const tabs = group.fields.find(f => f.name === 'tabs');
@@ -328,7 +331,7 @@ jobs:
           }
 
           const expected = [
-            ['style', 'select'], ['eyebrow', 'text'], ['heading', 'text'], ['description', 'textarea'],
+            ['style', 'select'], ['eyebrow', 'text'], ['heading', 'text'], ['heading_alignment', 'select'], ['description', 'textarea'],
             ['background_image', 'image'], ['item_background', 'select'], ['stats', 'repeater'], ['buttons', 'repeater']
           ];
           if (group.fields.length !== expected.length) throw new Error('Unexpected Stats ACF field count');

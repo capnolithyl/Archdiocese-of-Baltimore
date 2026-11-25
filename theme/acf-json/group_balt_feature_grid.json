@@ -64,6 +64,30 @@
       "append": ""
     },
     {
+      "key": "field_balt_feature_grid_heading_alignment",
+      "name": "heading_alignment",
+      "label": "Heading Alignment",
+      "type": "select",
+      "instructions": "Align the section eyebrow, heading and supporting text. Default preserves the original layout.",
+      "required": 0,
+      "conditional_logic": 0,
+      "choices": {
+        "default": "Default",
+        "left": "Left",
+        "center": "Center"
+      },
+      "default_value": "default",
+      "return_format": "value",
+      "allow_null": 0,
+      "multiple": 0,
+      "ui": 1,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      }
+    },
+    {
       "key": "field_balt_feature_grid_subheading",
       "label": "Subheading",
       "name": "subheading",
@@ -333,5 +357,5 @@
   "active": true,
   "description": "Reusable icon-linked cards in classic and compact styles, with URL or Media Library file destinations.",
   "show_in_rest": 0,
-  "modified": 1795640100
+  "modified": 1795643000
 }

@@ -74,6 +74,38 @@
       "placeholder": "Our Faith in Action"
     },
     {
+      "key": "field_dpi_stats_heading_alignment",
+      "name": "heading_alignment",
+      "label": "Heading Alignment",
+      "type": "select",
+      "instructions": "Align the section eyebrow, heading and supporting text. Default preserves the original layout.",
+      "required": 0,
+      "conditional_logic": [
+        [
+          {
+            "field": "field_dpi_stats_style",
+            "operator": "!=",
+            "value": "compact"
+          }
+        ]
+      ],
+      "choices": {
+        "default": "Default",
+        "left": "Left",
+        "center": "Center"
+      },
+      "default_value": "default",
+      "return_format": "value",
+      "allow_null": 0,
+      "multiple": 0,
+      "ui": 1,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      }
+    },
+    {
       "key": "field_dpi_stats_description",
       "label": "Description",
       "name": "description",
@@ -281,5 +313,5 @@
   "active": true,
   "description": "Reusable full-width impact banner or compact light statistic strip. Both use the same 1–6 statistics.",
   "show_in_rest": 0,
-  "modified": 1795638300
+  "modified": 1795643000
 }

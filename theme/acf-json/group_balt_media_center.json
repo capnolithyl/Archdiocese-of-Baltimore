@@ -41,6 +41,30 @@
       "append": ""
     },
     {
+      "key": "field_balt_media_center_heading_alignment",
+      "name": "heading_alignment",
+      "label": "Heading Alignment",
+      "type": "select",
+      "instructions": "Align the section eyebrow, heading and supporting text. Default preserves the original layout.",
+      "required": 0,
+      "conditional_logic": 0,
+      "choices": {
+        "default": "Default",
+        "left": "Left",
+        "center": "Center"
+      },
+      "default_value": "default",
+      "return_format": "value",
+      "allow_null": 0,
+      "multiple": 0,
+      "ui": 1,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      }
+    },
+    {
       "key": "field_balt_media_center_tabs",
       "label": "Tabs",
       "name": "tabs",
@@ -122,5 +146,6 @@
   "hide_on_screen": "",
   "active": true,
   "description": "A configurable tabbed grid of the latest three published posts per selected content source.",
-  "show_in_rest": 0
+  "show_in_rest": 0,
+  "modified": 1795643000
 }

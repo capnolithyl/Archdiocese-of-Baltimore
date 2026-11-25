@@ -9,6 +9,7 @@ $heading    = (string) get_field( 'heading' );
 $subheading = (string) get_field( 'subheading' );
 $items      = array_slice( (array) ( get_field( 'items' ) ?: array() ), 0, 12 );
 $count      = count( $items );
+$alignment  = get_field( 'heading_alignment' );
 
 if ( ! $count && empty( $is_preview ) ) {
 	return;
@@ -25,7 +26,7 @@ if ( 'compact' === get_field( 'style' ) ) {
 	<section <?php echo get_block_wrapper_attributes( array( 'class' => 'not-prose balt-full-bleed balt-feature-grid--compact relative mt-0! w-full max-w-none bg-[#F5F3EE] py-[clamp(3rem,5.62vw,6rem)]' ) ); ?><?php if ( $heading ) : ?> aria-labelledby="<?php echo esc_attr( $heading_id ); ?>"<?php endif; ?>>
 		<div class="mx-auto w-full max-w-wide px-gutter">
 			<?php if ( $eyebrow || $heading || $subheading || ( $view_url && $view_label ) ) : ?>
-				<header class="flex flex-wrap items-end justify-between gap-4">
+				<header class="<?php echo 'center' === $alignment ? 'flex flex-col items-center gap-4 text-center' : 'flex flex-wrap items-end justify-between gap-4 text-left'; ?>">
 					<div class="min-w-0">
 						<?php if ( $eyebrow ) : ?>
 							<p class="font-body text-sm font-bold leading-5 tracking-[3px] text-tertiary uppercase"><?php echo esc_html( $eyebrow ); ?></p>
@@ -34,7 +35,7 @@ if ( 'compact' === get_field( 'style' ) ) {
 							<h2 id="<?php echo esc_attr( $heading_id ); ?>" class="mt-3 font-heading text-[clamp(2rem,3vw,2.5rem)] font-extrabold leading-[1.5] text-foreground"><?php echo esc_html( $heading ); ?></h2>
 						<?php endif; ?>
 						<?php if ( $subheading ) : ?>
-							<p class="mt-3 max-w-[700px] font-body text-base leading-[26px] text-muted"><?php echo esc_html( $subheading ); ?></p>
+							<p class="<?php echo 'center' === $alignment ? 'mx-auto ' : ''; ?>mt-3 max-w-[700px] font-body text-base leading-[26px] text-muted"><?php echo esc_html( $subheading ); ?></p>
 						<?php endif; ?>
 					</div>
 					<?php if ( $view_url && $view_label ) : ?>
@@ -108,7 +109,7 @@ $heading_id = wp_unique_id( 'balt-feature-grid-' );
 ?>
 <section <?php echo get_block_wrapper_attributes( array( 'class' => 'balt-full-bleed relative w-full max-w-none bg-surface py-section' ) ); ?><?php if ( $heading ) : ?> aria-labelledby="<?php echo esc_attr( $heading_id ); ?>"<?php endif; ?>>
 	<div class="mx-auto w-full max-w-wide px-gutter">
-		<header class="text-center">
+		<header class="<?php echo 'left' === $alignment ? 'text-left' : 'text-center'; ?>">
 			<?php if ( $eyebrow ) : ?>
 				<p class="font-body text-lg font-bold tracking-[0.19em] text-tertiary uppercase"><?php echo esc_html( $eyebrow ); ?></p>
 			<?php endif; ?>
@@ -118,7 +119,7 @@ $heading_id = wp_unique_id( 'balt-feature-grid-' );
 			<?php endif; ?>
 
 			<?php if ( $subheading ) : ?>
-				<p class="mx-auto mt-3 max-w-[520px] text-base leading-[26px] text-body"><?php echo esc_html( $subheading ); ?></p>
+				<p class="<?php echo 'left' === $alignment ? '' : 'mx-auto '; ?>mt-3 max-w-[520px] text-base leading-[26px] text-body"><?php echo esc_html( $subheading ); ?></p>
 			<?php endif; ?>
 		</header>
 

@@ -43,7 +43,7 @@ $heading_id = $instance . '-heading';
 ?>
 <section data-balt-media-center <?php echo get_block_wrapper_attributes( array( 'class' => 'not-prose balt-full-bleed relative mt-0! w-full max-w-none bg-white py-section' ) ); ?><?php if ( $heading ) : ?> aria-labelledby="<?php echo esc_attr( $heading_id ); ?>"<?php endif; ?>>
 	<div class="mx-auto w-full max-w-wide px-gutter">
-		<header>
+		<header class="<?php echo 'center' === get_field( 'heading_alignment' ) ? 'text-center' : 'text-left'; ?>">
 			<?php if ( $eyebrow ) : ?>
 				<p class="font-body text-lg font-semibold leading-[27px] tracking-[0.16em] text-tertiary uppercase"><?php echo esc_html( $eyebrow ); ?></p>
 			<?php endif; ?>

@@ -61,6 +61,7 @@ $description = trim( (string) get_field( 'description' ) );
 $image       = get_field( 'background_image' );
 $image_id    = absint( is_array( $image ) ? ( $image['ID'] ?? 0 ) : $image );
 $buttons     = array_slice( (array) ( get_field( 'buttons' ) ?: array() ), 0, 2 );
+$left_heading = 'left' === get_field( 'heading_alignment' );
 $heading_id  = wp_unique_id( 'balt-stats-' );
 $tinted      = 'tinted' === get_field( 'item_background' );
 $grid_style  = $tinted ? 'gap-px bg-white/15' : 'gap-0 bg-transparent';
@@ -82,6 +83,7 @@ $columns = match ( count( $items ) ) {
 	<div class="absolute inset-0 bg-linear-[158deg] from-[#001A3D]/95 via-primary/90 to-foreground/95" aria-hidden="true"></div>
 
 	<div class="relative mx-auto w-full max-w-wide px-gutter text-center">
+		<div class="<?php echo $left_heading ? 'text-left' : 'text-center'; ?>">
 		<?php if ( $eyebrow ) : ?>
 			<p class="font-body text-lg font-bold leading-[27px] tracking-[0.19em] text-white/60 uppercase"><?php echo esc_html( $eyebrow ); ?></p>
 		<?php endif; ?>
@@ -91,8 +93,10 @@ $columns = match ( count( $items ) ) {
 		<?php endif; ?>
 
 		<?php if ( $description ) : ?>
-			<p class="mx-auto mt-3 max-w-[580px] font-body text-lg leading-[1.625] text-white/75"><?php echo esc_html( $description ); ?></p>
+			<p class="<?php echo $left_heading ? '' : 'mx-auto '; ?>mt-3 max-w-[580px] font-body text-lg leading-[1.625] text-white/75"><?php echo esc_html( $description ); ?></p>
 		<?php endif; ?>
+
+		</div>
 
 		<ul class="mx-auto mt-14 grid w-full overflow-hidden rounded-card border-2 border-white/15 p-0 list-none <?php echo esc_attr( $columns . ' ' . $grid_style ); ?>">
 			<?php foreach ( $items as $item ) : ?>

@@ -20,6 +20,30 @@
       "default_value": "Our Team"
     },
     {
+      "key": "field_balt_staff_grid_heading_alignment",
+      "name": "heading_alignment",
+      "label": "Heading Alignment",
+      "type": "select",
+      "instructions": "Align the section eyebrow, heading and supporting text. Default preserves the original layout.",
+      "required": 0,
+      "conditional_logic": 0,
+      "choices": {
+        "default": "Default",
+        "left": "Left",
+        "center": "Center"
+      },
+      "default_value": "default",
+      "return_format": "value",
+      "allow_null": 0,
+      "multiple": 0,
+      "ui": 1,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      }
+    },
+    {
       "key": "field_balt_staff_grid_members",
       "name": "members",
       "label": "Staff Members",
@@ -185,5 +209,5 @@
   "active": true,
   "description": "Unlimited mixed Staff record and custom staff member rows with optional team link.",
   "show_in_rest": 0,
-  "modified": 1795638000
+  "modified": 1795643000
 }

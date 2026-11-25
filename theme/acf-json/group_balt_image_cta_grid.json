@@ -35,6 +35,30 @@
       "placeholder": "Section heading"
     },
     {
+      "key": "field_balt_image_cta_grid_heading_alignment",
+      "name": "heading_alignment",
+      "label": "Heading Alignment",
+      "type": "select",
+      "instructions": "Align the section eyebrow, heading and supporting text. Default preserves the original layout.",
+      "required": 0,
+      "conditional_logic": 0,
+      "choices": {
+        "default": "Default",
+        "left": "Left",
+        "center": "Center"
+      },
+      "default_value": "default",
+      "return_format": "value",
+      "allow_null": 0,
+      "multiple": 0,
+      "ui": 1,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      }
+    },
+    {
       "key": "field_balt_image_cta_grid_description",
       "label": "Description",
       "name": "description",
@@ -154,5 +178,6 @@
   "hide_on_screen": "",
   "active": true,
   "description": "Four linked image cards with an overlapping, editable text and CTA panel.",
-  "show_in_rest": 0
+  "show_in_rest": 0,
+  "modified": 1795643000
 }
